@@ -1,21 +1,15 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
-import InputFieldComponent from '../../src/component/signinCard';
+import {ScrollView, Text, View, StyleSheet} from 'react-native';
+import SigninCard from '../../src/component/signinCard';
+import OPSText from '../../src/component/OPSText';
 
-function SigninScreen() {
-  let [email, setEmail] = useState('');
-  let [pswd, setPswd] = useState('');
+function SigninScreen({navigation}) {
   return (
     <>
-      <View
-        style={{
-          backgroundColor: 'blue',
-          height: 250,
-          borderBottomLeftRadius: 30,
-          borderBottomRightRadius: 30,
-        }}>
-        <InputFieldComponent />
-      </View>
+      <ScrollView>
+        <OPSText />
+        <SigninCard navigation={navigation} />
+      </ScrollView>
     </>
   );
 }

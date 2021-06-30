@@ -28,24 +28,33 @@ import {
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import {NativeBaseProvider} from 'native-base';
 import SigninScreen from './src/screen/signinScreen';
+import SignupScreen from './src/screen/signupScreen';
 
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="signin-screen"
-            component={SigninScreen}
-            Header="false"
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="signin-screen"
+              component={SigninScreen}
+              Header="false"
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="signup-screen"
+              component={SignupScreen}
+              Header="false"
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
     </>
   );
 };

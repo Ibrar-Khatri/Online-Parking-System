@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {Input, Button} from 'native-base';
 
-function SigninCard(props) {
+function SignupCard(props) {
+  let [name, setName] = useState('');
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
 
@@ -16,8 +17,15 @@ function SigninCard(props) {
     <>
       <View style={styles.card}>
         <View>
-          <Text style={styles.loginText}>Login</Text>
+          <Text style={styles.signUpText}>Login</Text>
           <View style={styles.fieldView}>
+            <Input
+              variant="underlined"
+              placeholder="Name"
+              style={styles.emailInput}
+              onChangeText={setName}
+              value={name}
+            />
             <Input
               variant="underlined"
               placeholder="Email"
@@ -36,13 +44,13 @@ function SigninCard(props) {
           </View>
           <View>
             <Button colorScheme="blue" style={styles.loginButton}>
-              Login
+              Sign up
             </Button>
             <View style={styles.messageText}>
-              <Text>Don't have an account?</Text>
+              <Text>Already have an account?</Text>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('signup-screen')}>
-                <Text style={styles.signupText}> Sign up</Text>
+                onPress={() => props.navigation.goBack()}>
+                <Text style={styles.loginText}> Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -52,7 +60,7 @@ function SigninCard(props) {
   );
 }
 
-export default SigninCard;
+export default SignupCard;
 
 const styles = StyleSheet.create({
   card: {
@@ -63,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: -120,
     alignSelf: 'center',
   },
-  loginText: {
+  signUpText: {
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 25,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  signupText: {
+  loginText: {
     fontWeight: 'bold',
   },
   fieldView: {width: 250, marginLeft: 'auto', marginRight: 'auto'},
