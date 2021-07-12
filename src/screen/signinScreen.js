@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {ScrollView, Text, View, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import SigninCard from '../../src/component/signinCard';
 import OPSText from '../../src/component/OPSText';
 
-function SigninScreen({navigation}) {
+function SigninScreen({ navigation }) {
   return (
     <>
       <ScrollView>

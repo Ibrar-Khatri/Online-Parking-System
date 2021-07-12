@@ -1,6 +1,10 @@
-import React, {useState} from 'react';
-import {ScrollView, Text, View, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import InputFieldComponent from '../../src/component/signinCard';
+import { heightPercentageToDP } from '../responsive/responsive';
+
+
+const headerHeight = heightPercentageToDP(45)
 
 function OPSText() {
   return (
@@ -16,7 +20,7 @@ export default OPSText;
 const styles = StyleSheet.create({
   backgroundHeader: {
     backgroundColor: 'blue',
-    height: 250,
+    height: headerHeight,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
@@ -24,7 +28,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 30,
     alignSelf: 'center',
-    marginTop:40,
-    fontWeight:'bold'
+    marginTop: '18%',
+    fontWeight: 'bold'
   },
 });

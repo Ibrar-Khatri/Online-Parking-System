@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Input, Button} from 'native-base';
+import { Input, Button } from 'native-base';
+import { heightPercentageToDP, widthPercentageToDP } from '../responsive/responsive';
 
+const cardHeight = heightPercentageToDP(70)
+const cardWidth = widthPercentageToDP(85)
 function SigninCard(props) {
+
+
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
 
@@ -35,7 +39,7 @@ function SigninCard(props) {
             />
           </View>
           <View>
-            <Button colorScheme="blue" style={styles.loginButton}>
+            <Button colorScheme="blue" style={styles.loginButton} disabled={false}>
               Login
             </Button>
             <View style={styles.messageText}>
@@ -58,23 +62,21 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     borderRadius: 25,
-    height: 500,
-    width: 300,
-    marginTop: -120,
+    height: cardHeight,
+    width: cardWidth,
+    marginTop: '-50%',
     alignSelf: 'center',
   },
   loginText: {
     fontSize: 30,
-    fontWeight: 'bold',
-    marginTop: 25,
+    fontWeight: '900',
+    marginTop: '17%',
     alignSelf: 'center',
     marginBottom: 50,
   },
-  emailInput: {marginBottom: 20},
-  passwordInput: {marginTop: 20},
   loginButton: {
     borderRadius: 100,
-    width: 100,
+    width: '50%',
     marginTop: 60,
     marginBottom: 15,
     alignSelf: 'center',
@@ -88,5 +90,12 @@ const styles = StyleSheet.create({
   signupText: {
     fontWeight: 'bold',
   },
-  fieldView: {width: 250, marginLeft: 'auto', marginRight: 'auto'},
+  fieldView: {
+    width: '85%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    justifyContent: 'space-around',
+    height: '40%',
+  },
 });

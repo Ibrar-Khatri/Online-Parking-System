@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,9 +26,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NativeBaseProvider} from 'native-base';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NativeBaseProvider } from 'native-base';
 import SigninScreen from './src/screen/signinScreen';
 import SignupScreen from './src/screen/signupScreen';
 
@@ -44,13 +44,13 @@ const App: () => Node = () => {
               name="signin-screen"
               component={SigninScreen}
               Header="false"
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="signup-screen"
               component={SignupScreen}
               Header="false"
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
@@ -59,20 +59,6 @@ const App: () => Node = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
