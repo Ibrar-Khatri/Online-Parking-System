@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, View, StyleSheet } from 'react-native';
-import SigninCard from '../../src/component/signinCard';
-import OPSText from '../../src/component/OPSText';
+import SigninCard from '../component/signinCard/signinCard';
+import OPSText from '../component/OPSText/OPSText';
 
 function SigninScreen({ navigation }) {
   return (

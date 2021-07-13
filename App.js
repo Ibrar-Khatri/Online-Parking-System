@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type { Node } from 'react';
+import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,11 +26,13 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NativeBaseProvider } from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {NativeBaseProvider} from 'native-base';
 import SigninScreen from './src/screen/signinScreen';
 import SignupScreen from './src/screen/signupScreen';
+import MainScreen from './src/screen/mainScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,17 +42,31 @@ const App: () => Node = () => {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="signin-screen"
               component={SigninScreen}
               Header="false"
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="signup-screen"
               component={SignupScreen}
               Header="false"
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
+            /> */}
+            <Stack.Screen
+              name="main-screen"
+              component={MainScreen}
+              options={{
+                title: 'Online Parking System',
+                headerStyle: {
+                  backgroundColor: 'blue',
+                },
+                headerTintColor: 'white',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>
@@ -58,7 +74,5 @@ const App: () => Node = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
