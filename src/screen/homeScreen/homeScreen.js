@@ -1,7 +1,6 @@
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react';
-import {Text, View} from 'react-native';
-import {heightPercentageToDP as vh} from '../../responsive/responsive';
+import { heightPercentageToDP as vh } from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
 import Home from './home/home';
@@ -23,7 +22,6 @@ function HomeScreen() {
             backgroundColor: 'darkblue',
             height: 2.5,
           },
-
           labelStyle: {
             fontSize: vh(1.5),
           },
@@ -47,12 +45,12 @@ function HomeScreen() {
         <Tab.Screen
           name="account-screen"
           component={Account}
-          options={{title: 'Account'}}
+          options={{ title: 'Account' }}
         />
         <Tab.Screen
           name="admin-screen"
           component={Admin}
-          options={{title: 'Admin'}}
+          options={{ title: 'Admin' }}
         />
       </Tab.Navigator>
     </>

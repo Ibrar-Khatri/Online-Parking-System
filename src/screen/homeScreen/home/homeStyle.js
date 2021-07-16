@@ -1,21 +1,17 @@
-import {StyleSheet} from 'react-native';
-import {heightPercentageToDP as vh} from '../../../responsive/responsive';
-
-const fs = vh(5);
-const topMargin = vh(3);
-const leftMargin = vh(3);
+import { StyleSheet } from 'react-native';
+import { heightPercentageToDP as vh } from '../../../responsive/responsive';
 
 export default StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
   headingDtyle: {
-    marginTop: topMargin,
-    marginLeft: leftMargin,
+    marginTop: vh(3),
+    marginLeft: vh(3),
   },
   textStyle: {
     color: 'white',
-    fontSize: fs,
+    fontSize: vh(5),
     fontWeight: 'bold',
   },
 });

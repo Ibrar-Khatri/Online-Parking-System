@@ -3,18 +3,18 @@ import {
   Image,
   ImageBackground,
   ScrollView,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
 import SlotCard from '../../../component/slotCard/slotCard';
 import style from './homeStyle';
 
-function Home() {
+function Home({ navigation }) {
   return (
     <>
       <ImageBackground
-        source={require('../../../assets/photo-1578859695220-856a4f5edd39.jpeg')}
+        resizeMode='cover'
+        source={{ uri: 'https://i.gifer.com/RNQQ.gif' }}
         style={style.backgroundImage}>
         <ScrollView>
           <View style={style.headingDtyle}>
@@ -22,9 +22,9 @@ function Home() {
             <Text style={style.textStyle}>Best Parking</Text>
           </View>
           <View>
-            <SlotCard location="DHA Karachi" />
-            <SlotCard location="Gulshan-e-Iqbal Karachi" />
-            <SlotCard location="Clifton Karachi" />
+            <SlotCard location="DHA Karachi" navigation={navigation} />
+            <SlotCard location="Gulshan-e-Iqbal Karachi" navigation={navigation} />
+            <SlotCard location="Clifton Karachi" navigation={navigation} />
           </View>
         </ScrollView>
       </ImageBackground>

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -27,12 +27,13 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NativeBaseProvider} from 'native-base';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NativeBaseProvider } from 'native-base';
 import AuthenticationScreen from './src/screen/authenticationScreen/authenticationScreen';
 import HomeScreen from './src/screen/homeScreen/homeScreen';
+import FeatureScreen from './src/screen/featureScreen/featureScreen';
 
 const Stack = createStackNavigator();
 
@@ -62,13 +63,16 @@ const App: () => Node = () => {
                 headerTintColor: 'white',
                 headerTitleStyle: {
                   fontWeight: 'bold',
-                  fontFamily: Platform.OS
+                  fontFamily: Platform.OS === 'ios'
                     ? 'DM Serif Display'
                     : 'sans-serif-condensed',
                   fontSize: 25,
                 },
               }}
             />
+            <Stack.Screen name='featureScreen' component={FeatureScreen} options={{
+              headerShown: false,
+            }} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
