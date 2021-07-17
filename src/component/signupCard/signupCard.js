@@ -7,11 +7,15 @@ import {
 } from '../../responsive/responsive';
 import AuthenticationButton from '../button/button';
 import style from './signUpCardStyle';
+import firebase from 'firebase';
 
 function SignupCard(props) {
   let [name, setName] = useState('');
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
+
+
+
 
   return (
     <>
@@ -43,7 +47,7 @@ function SignupCard(props) {
             />
           </View>
           <View>
-            <AuthenticationButton buttonType="Signup" />
+            <AuthenticationButton buttonType="Signup" email={email} password={password} />
             <View style={style.messageText}>
               <Text>Already have an account?</Text>
               <TouchableOpacity onPress={() => props.navigation.goBack()}>

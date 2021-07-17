@@ -47,11 +47,11 @@ function HomeScreen() {
           component={Account}
           options={{ title: 'Account' }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="admin-screen"
           component={Admin}
           options={{ title: 'Admin' }}
-        />
+        /> */}
       </Tab.Navigator>
     </>
   );

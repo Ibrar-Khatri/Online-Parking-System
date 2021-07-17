@@ -34,6 +34,7 @@ import { NativeBaseProvider } from 'native-base';
 import AuthenticationScreen from './src/screen/authenticationScreen/authenticationScreen';
 import HomeScreen from './src/screen/homeScreen/homeScreen';
 import FeatureScreen from './src/screen/featureScreen/featureScreen';
+import { heightPercentageToDP as vh } from './src/responsive/responsive';
 
 const Stack = createStackNavigator();
 
@@ -66,7 +67,7 @@ const App: () => Node = () => {
                   fontFamily: Platform.OS === 'ios'
                     ? 'DM Serif Display'
                     : 'sans-serif-condensed',
-                  fontSize: 25,
+                  fontSize: vh(3.5),
                 },
               }}
             />

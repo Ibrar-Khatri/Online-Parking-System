@@ -11,21 +11,23 @@ export default StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         borderRadius: 40,
+        paddingTop: vh(9)
     },
     imageStyle: {
         height: vh(6),
-        width: vw(12),
-        marginTop: vh(10),
-        marginLeft: vw(5),
+        width: vw(10),
     },
     linkViewStyle: {
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        height: vh(8),
+        marginTop: vh(4),
+        marginLeft: vw(6)
+
     },
     linkTextStyle: {
-        marginTop: vh(11),
+        marginTop: vh(1),
         marginLeft: vw(3),
-
     }
 
 
