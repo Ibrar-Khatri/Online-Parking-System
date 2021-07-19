@@ -13,28 +13,15 @@ export default StyleSheet.create({
         marginRight: 'auto',
         borderRadius: vh(3)
     },
-    tabStyle: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        borderTopLeftRadius: vh(3),
-        borderTopRightRadius: vh(3),
-        overflow: 'hidden',
-        // height: vh(7),
-        backgroundColor: '#00bfff',
-    },
-    tabView: {
-        flex: 1, borderBottomWidth: vh(0.5)
-    },
-    tabText: {
-        height: vh(5),
-        fontWeight: 'bold',
-        fontSize: vh(3),
-        alignSelf: 'center',
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        justifyContent: 'center',
-        marginTop: 'auto',
-        marginBottom: 'auto'
-    }
 
+    tabStyle: {
+        borderColor: '#00bfff'
+    },
+    activeTabStyle: {
+        backgroundColor: '#00bfff'
+    },
+    tabTextStyle: {
+        color: '#00bfff',
+        fontSize: vh(2.2)
+    }
 })
