@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import SlotCard from '../../../component/slotCard/slotCard';
 import style from './homeStyle';
+import Animated from 'react-native-reanimated';
 
 function Home({ navigation }) {
   return (

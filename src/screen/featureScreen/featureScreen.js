@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { Button } from "react-native";
 import { heightPercentageToDP as vh } from "../../responsive/responsive";
 import AddBookingScreen from "./bookingScreen/bookingScreen";
 
@@ -8,10 +9,10 @@ import AddBookingScreen from "./bookingScreen/bookingScreen";
 
 let Stack = createStackNavigator()
 
-function FeatureScreen() {
+function FeatureScreen({ navigation }) {
     return <>
         <Stack.Navigator screenOptions={{
-            title: 'Parking Slots',
+            title: 'Add Booking',
             headerTitleAlign: 'center',
             headerStyle: {
                 backgroundColor: '#00bfff',
