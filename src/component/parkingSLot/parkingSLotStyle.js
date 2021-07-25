@@ -22,6 +22,6 @@ export default StyleSheet.create({
     },
     tabTextStyle: {
         color: '#00bfff',
-        fontSize: vh(2.2)
+        fontSize: vh(2.4)
     }
 })

@@ -77,6 +77,11 @@ import com.android.build.OutputFile
  * ]
  */
 
+dependencies {
+    implementation project(':@react-native-community_datetimepicker')
+}
+
+
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]

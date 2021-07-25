@@ -13,7 +13,7 @@ target 'parkingApp' do
   )
   
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+  # pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
   target 'parkingAppTests' do
     inherit! :complete
