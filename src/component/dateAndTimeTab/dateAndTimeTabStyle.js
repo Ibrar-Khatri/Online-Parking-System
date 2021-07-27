@@ -15,12 +15,4 @@ export default StyleSheet.create({
         fontSize: vh(3),
         alignSelf: 'center',
     },
-    iosPickerStyle: {
-        alignSelf: 'center',
-        height: vh(5),
-        width: vw(50),
-        borderWidth: vh(0.2),
-        borderRadius: vh(3),
-        marginTop: vh(2),
-    }
 })
