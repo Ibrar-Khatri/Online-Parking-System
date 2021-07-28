@@ -14,4 +14,8 @@ export default StyleSheet.create({
     fontSize: vh(5),
     fontWeight: 'bold',
   },
+  viewStyle: {
+    display: 'flex',
+    marginTop: vh(10)
+  }
 });
