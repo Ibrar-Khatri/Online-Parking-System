@@ -3,10 +3,9 @@ const app = express()
 const session = require('express-session')
 const port = 3000
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
+app.get("*", (req, res) => {
+    res.send("<h1>Welcome to OLX Server</h1>");
+});
 app.use(session({
     resave: false, // don't save session if unmodified
     saveUninitialized: false, // don't create session until something stored
