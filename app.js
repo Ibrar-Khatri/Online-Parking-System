@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const session = require('express-session')
-const port = 3000
+const port = process.env.PORT
 
 app.get("*", (req, res) => {
     res.send("<h1>Welcome to OLX Server</h1>");
