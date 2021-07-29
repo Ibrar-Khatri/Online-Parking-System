@@ -17,17 +17,16 @@ function Home({ navigation }) {
         resizeMode='cover'
         source={{ uri: 'https://i.gifer.com/RNQQ.gif' }}
         style={style.backgroundImage}>
-        <ScrollView>
-          {/* <View style={style.headingDtyle}>
+        {/* <View style={style.headingDtyle}>
             <Text style={style.textStyle}>Best Spaces</Text>
             <Text style={style.textStyle}>Best Parking</Text>
           </View> */}
-          <View style={style.viewStyle}>
-            <SlotCard location="DHA Karachi" navigation={navigation} />
-            <SlotCard location="Gulshan-e-Iqbal Karachi" navigation={navigation} />
-            <SlotCard location="Clifton Karachi" navigation={navigation} />
-          </View>
-        </ScrollView>
+        <View style={style.viewStyle}>
+          <SlotCard location="DHA Karachi" navigation={navigation} />
+          <SlotCard location="Gulshan-e-Iqbal Karachi" navigation={navigation} />
+          <SlotCard location="Clifton Karachi" navigation={navigation} />
+        </View>
+
       </ImageBackground>
     </>
   );

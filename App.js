@@ -64,16 +64,21 @@ const App: () => Node = () => {
                 headerTintColor: 'white',
                 headerTitleStyle: {
                   fontWeight: 'bold',
-                  fontFamily: Platform.OS === 'ios'
-                    ? 'DM Serif Display'
-                    : 'sans-serif-condensed',
+                  fontFamily:
+                    Platform.OS === 'ios'
+                      ? 'DM Serif Display'
+                      : 'sans-serif-condensed',
                   fontSize: vh(3.5),
                 },
               }}
             />
-            <Stack.Screen name='featureScreen' component={FeatureScreen} options={{
-              headerShown: false,
-            }} />
+            <Stack.Screen
+              name="featureScreen"
+              component={FeatureScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

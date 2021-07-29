@@ -14,12 +14,12 @@ function AuthenticationButton(props) {
     //         .catch(err => {
     //             console.log('unable to create user', err)
     //         })
-
     // }
 
 
     return <>
-        <Button colorScheme="blue" style={style.buttonStyle} onPress={signupWithDetails} >
+        {/* <Button colorScheme="blue" style={style.buttonStyle} onPress={signupWithDetails} > */}
+        <Button colorScheme="blue" style={style.buttonStyle} >
             {props.buttonType}
         </Button>
     </>

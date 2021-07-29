@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {width} from 'styled-system';
+import { StyleSheet } from 'react-native';
+import { width } from 'styled-system';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
@@ -13,13 +13,13 @@ export default StyleSheet.create({
     borderRadius: vw(5),
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: vh(5),
+    marginTop: vh(3),
+    marginBottom: vh(3),
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     padding: vh(2.5),
   },
-  imageStyle: {width: vw(7), height: vh(4)},
+  imageStyle: { width: vw(7), height: vh(4) },
   locationText: {
     fontSize: vh(3),
     color: 'white',

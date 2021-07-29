@@ -1,8 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { Button } from 'native-base'
-import Modal from 'react-native-modal'
-import style from './modalStyle'
+import { Modal, Button } from 'native-base'
 
 
 
@@ -10,18 +8,16 @@ import style from './modalStyle'
 function WarningModal(props) {
     return <>
 
-        <View  >
-            <Modal isVisible={props.showModal}  >
-                <View style={style.modalDisplay}>
-                    {console.warn(props.showModal, "showmodal")}
-                    <Text style={style.titleText}>Alert !!!</Text>
-                    <Text style={style.messageText}>End time should be greater than start time</Text>
-                    <TouchableOpacity onPress={() => props.setShowModal(false)}>
-                        <Text style={style.okButton}>OK</Text>
-                    </TouchableOpacity>
-                </View>
-            </Modal>
-        </View>
+        <Modal isOpen={props.showModal} onClose={() => props.setShowModal(false)} >
+            <Modal.Content maxWidth="400px">
+                <Modal.Header>Alert !!!</Modal.Header>
+                <Modal.Body>End time should be greater than start time
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onPress={() => props.setShowModal(false)}>OK</Button>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal>
     </>
 }
 

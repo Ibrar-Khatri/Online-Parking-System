@@ -16,6 +16,8 @@ export default StyleSheet.create({
   },
   viewStyle: {
     display: 'flex',
-    marginTop: vh(10)
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    marginTop: vh(13),
   }
 });

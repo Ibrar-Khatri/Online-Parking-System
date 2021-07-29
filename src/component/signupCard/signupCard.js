@@ -14,9 +14,6 @@ function SignupCard(props) {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
 
-
-
-
   return (
     <>
       <View style={style.card}>
