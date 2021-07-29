@@ -7,7 +7,6 @@ import {
 } from '../../responsive/responsive';
 import AuthenticationButton from '../button/button';
 import style from './signUpCardStyle';
-import firebase from 'firebase';
 
 function SignupCard(props) {
   let [name, setName] = useState('');

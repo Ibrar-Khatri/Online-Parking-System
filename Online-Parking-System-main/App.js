@@ -39,18 +39,25 @@ import { heightPercentageToDP as vh } from './src/responsive/responsive';
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
+
+
+
+
+
+
+
   return (
     <>
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {/* <Stack.Screen
+            <Stack.Screen
               name="authentication-screen"
               component={AuthenticationScreen}
               options={{
                 headerShown: false,
               }}
-            /> */}
+            />
 
             <Stack.Screen
               name="home-screen"
