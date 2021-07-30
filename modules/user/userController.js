@@ -9,6 +9,7 @@ module.exports.signupWithDetails = (req, res) => {
             })
         })
         .catch(err => {
+            console.log(err + 'Error')
             res.send({
                 status: 'false',
             })
