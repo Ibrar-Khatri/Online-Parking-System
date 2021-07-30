@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './buttonStyle';
 import { Button } from 'native-base';
-// import firebase from '../../firebase/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signupWithDetails } from '../../apis/user';
 
 function AuthenticationButton(props) {
@@ -12,8 +12,9 @@ function AuthenticationButton(props) {
             password: props.password,
         }
         signupWithDetails(userDetails)
-            .then(res => {
-                console.log(JSON.stringify(res.data) + 'responed data');
+            .then(async res => {
+                console.log(JSON.stringify(res.data.user.user.uid) + 'responed data');
+                await AsyncStorage.setItem('userID', res.data.user.user.uid)
             })
             .catch(err => {
                 console.log(err, 'error in signup');
