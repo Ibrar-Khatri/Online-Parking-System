@@ -1,7 +1,7 @@
 const firebase = require('../../firebase/firebase')
 
 module.exports.signupWithDetails = (req, res) => {
-    console.log(req, "email")
+    console.log(req.body, "email")
     // firebase.auth().createUserWithEmailAndPassword(req.email, req.password)
     //     .then(user => {
     //         console.log(user)
@@ -10,8 +10,8 @@ module.exports.signupWithDetails = (req, res) => {
     //         })
     //     })
     //     .catch(err => {
-    //         res.send({
-    //             status: 'false',
-    //         })
+    res.send({
+        status: 'false',
+    })
     //     })
 }
