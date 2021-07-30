@@ -1,8 +1,18 @@
-
+// import firebase from '../../firebase/firebase'
+const firebase = require('../../firebase/firebase')
 
 module.exports.signupWithDetails = (req, res) => {
     console.log(req.body + "requested data")
-    res.send({
-        status: 'true', res: req.body
-    })
+    firebase.auth().createUserWithEmailAndPassword(req.email, req.password)
+        .then(user => {
+            console.log(user)
+            res.send({
+                status: 'true', user: user
+            })
+        })
+        .catch(err => {
+            res.send({
+                status: 'false',
+            })
+        })
 }
