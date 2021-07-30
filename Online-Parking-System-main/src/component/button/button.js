@@ -7,10 +7,11 @@ import { signupWithDetails } from '../../apis/user';
 function AuthenticationButton(props) {
 
     function signupWithDet() {
-        signupWithDetails({
+        let userDetails = {
             email: props.email,
             password: props.password,
-        })
+        }
+        signupWithDetails(userDetails)
             .then(res => {
                 console.log(JSON.stringify(res.data) + 'responed data');
             })
