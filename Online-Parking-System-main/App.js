@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Node } from 'react';
 import {
   Platform,
@@ -42,15 +42,11 @@ const App: () => Node = () => {
 
 
 
-
-
-
-
   return (
     <>
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator >
             <Stack.Screen
               name="authentication-screen"
               component={AuthenticationScreen}
@@ -58,7 +54,6 @@ const App: () => Node = () => {
                 headerShown: false,
               }}
             />
-
             <Stack.Screen
               name="home-screen"
               component={HomeScreen}

@@ -43,7 +43,7 @@ function SignupCard(props) {
             />
           </View>
           <View>
-            <AuthenticationButton buttonType="Signup" email={email} password={password} />
+            <AuthenticationButton buttonType="Signup" email={email} password={password} navigation={props.navigation} />
             <View style={style.messageText}>
               <Text>Already have an account?</Text>
               <TouchableOpacity onPress={() => props.navigation.goBack()}>

@@ -39,7 +39,7 @@ function SigninCard(props) {
             />
           </View>
           <View>
-            <AuthenticationButton buttonType='Signin' />
+            <AuthenticationButton buttonType='Signin' email={email} password={password} navigation={props.navigation} />
             <View style={style.messageText}>
               <Text>Don't have an account?</Text>
               <TouchableOpacity
