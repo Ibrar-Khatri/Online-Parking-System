@@ -23,7 +23,7 @@ function AuthenticationButton(props) {
             password: props.password,
         })
             .then(res => {
-                console.log(res.data + 'responed data');
+                console.log(res + 'responed data');
             })
             .catch(err => {
                 console.log(err, 'error in signup');

@@ -1,8 +1,8 @@
 
 
 module.exports.signupWithDetails = (req, res) => {
-    console.log(req + "requested data")
+    console.log(req.body + "requested data")
     res.send({
-        status: 'true', res: req
+        status: 'true', res: req.body
     })
 }
