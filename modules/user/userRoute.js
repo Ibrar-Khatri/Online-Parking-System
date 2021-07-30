@@ -4,7 +4,7 @@ const userController = require('./userController')
 
 
 
-route.post('signup', userController.signupWithDetails)
+route.post('/signup', userController.signupWithDetails)
 
 
 
