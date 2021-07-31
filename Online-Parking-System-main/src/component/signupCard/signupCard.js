@@ -48,6 +48,7 @@ function SignupCard(props) {
               });
           })
           .catch(err => {
+              setIsLoading(false)
               console.log(err, 'error in signup');
           });    
     }
