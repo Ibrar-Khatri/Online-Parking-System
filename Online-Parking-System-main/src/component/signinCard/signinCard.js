@@ -33,7 +33,7 @@ function SigninCard(props) {
               variant="underlined"
               type="password"
               placeholder="Password"
-              style={style.passwordInput}
+              style={style.emailInput}
               onChangeText={setPassword}
               value={password}
             />
