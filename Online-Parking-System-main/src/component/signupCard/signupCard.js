@@ -40,12 +40,15 @@ function SignupCard(props) {
         signupWithDetails(userDetails)
           .then(async res => {
             console.log('Responed from signup' + res)
+            if(res.data.status){
               await AsyncStorage.setItem('userID', res.data.user.user.uid)
               setIsLoading(false)
               props.navigation.reset({
                   index: 0,
                   routes: [{ name: 'home-screen' }],
               });
+            }
+
           })
           .catch(err => {
               setIsLoading(false)
