@@ -50,16 +50,13 @@ function AuthenticationButton(props) {
     // }
     // let [isLoading, setIsLoading] = useState(false)
 
-    console.log('.....')
     return (
         <>
             <Button
                 colorScheme="blue"
-                // isLoading={isLoading}
-                style={style.buttonStyle}
-                disabled={!props.isValid}
-                //  onPress={signupWithDet} 
-                onPress={props.handleSubmit}>
+                isLoading={props.isLoading}
+                style={style.buttonStyle} 
+                onPress={() => {props.setShowInvalidInput(true); props.handleSubmit()} }>
                 {props.buttonType}
 
             </Button>

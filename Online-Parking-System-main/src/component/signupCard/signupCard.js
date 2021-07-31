@@ -4,16 +4,16 @@ import { Input } from 'native-base';
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import AuthenticationButton from '../button/button';
+import {signupWithDetails} from '../../apis/user'
 import style from './signUpCardStyle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SignupCard(props) {
-  let [name, setName] = useState('');
-  let [email, setEmail] = useState('');
-  let [password, setPassword] = useState('');
-
-
 
   const loginValidationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required('Name is required'),
     email: yup
       .string()
       .email("Please enter valid email")
@@ -26,7 +26,36 @@ function SignupCard(props) {
 
 
 
-  return (
+
+
+  function signupWithDet(value) {
+        setIsLoading(true)
+        let userDetails = {
+            name: value.name,
+            email: value.email,
+            password: value.password,
+        }
+        console.log(userDetails)
+
+        signupWithDetails(userDetails)
+          .then(async res => {
+            console.log('Responed from signup' + res)
+              await AsyncStorage.setItem('userID', res.data.user.user.uid)
+              setIsLoading(false)
+              props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'home-screen' }],
+              });
+          })
+          .catch(err => {
+              console.log(err, 'error in signup');
+          });    
+    }
+
+    let [isLoading, setIsLoading] = useState(false)
+    let [showInvalidInput,setShowInvalidInput] = useState(false)
+  
+    return (
     <>
       <View style={style.card}>
         <View>
@@ -34,7 +63,7 @@ function SignupCard(props) {
           <Formik
             initialValues={{ name: '', email: '', password: '' }}
             validationSchema={loginValidationSchema}
-            onSubmit={values => console.log(values)}>
+            onSubmit={(value) => signupWithDet(value)}>
             {(
               { handleChange,
                 handleBlur,
@@ -53,7 +82,7 @@ function SignupCard(props) {
                     style={style.emailInput}
                   />
                   {
-                    errors.name && <Text>{errors.name}</Text>
+                    showInvalidInput && errors.name && <Text>{errors.name}</Text>
                   }
 
                   <Input
@@ -61,11 +90,10 @@ function SignupCard(props) {
                     placeholder="Email"
                     style={style.emailInput}
                     onChangeText={handleChange('email')}
-                    // onChangeText={text => handleChange(text)}
                     value={values.email}
                   />
                   {
-                    errors.email && <Text>{errors.email}</Text>
+                    showInvalidInput && errors.email && <Text>{errors.email}</Text>
                   }
                   <Input
                     variant="underlined"
@@ -76,20 +104,20 @@ function SignupCard(props) {
                     value={values.password}
                   />
                   {
-                    errors.password && <Text>{errors.password}</Text>
+                   showInvalidInput && errors.password && <Text>{errors.password}</Text>
                   }
                 </View>
                 <AuthenticationButton
                   buttonType="Signup"
                   handleSubmit={handleSubmit}
-                  isValid={isValid}
+                  isLoading={isLoading}
+                  setShowInvalidInput = {setShowInvalidInput}
                 />
               </View>
             )}
           </Formik>
         </View>
         <View>
-          {/* <AuthenticationButton buttonType="Signup" email={email} password={password} navigation={props.navigation} /> */}
           <View style={style.messageText}>
             <Text>Already have an account?</Text>
             <TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -98,7 +126,6 @@ function SignupCard(props) {
           </View>
         </View>
       </View>
-      {/* </View> */}
     </>
   );
 }

@@ -1,7 +1,8 @@
 const firebase = require('../../firebase/firebase')
 
 module.exports.signupWithDetails = (req, res) => {
-    firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
+    console.log('Requested data ' + JSON.stringify(req))
+    firebase.auth().createUser({name :req.body.name, email: req.body.email, password:req.body.password})
         .then(user => {
             console.log(user)
             res.send({
@@ -11,7 +12,7 @@ module.exports.signupWithDetails = (req, res) => {
         .catch(err => {
             console.log(err + 'Error')
             res.send({
-                status: 'false',
+                status: 'false', error:err
             })
         })
 }
@@ -30,16 +31,20 @@ module.exports.signinWithDetails = (req, res) => {
                 status: 'false', errorMessage: err.message
             })
         })
-
-
-    // (email, password)
-    //     .then((userCredential) => {
-    //         // Signed in
-    //         var user = userCredential.user;
-    //         // ...
-    //     })
-    //     .catch((error) => {
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //     });
 }
+module.exports.getUserDetailsById = (req, res) => {
+    firebase.auth().getUser(uid)
+        .then(user => {
+            console.log(`Successfully fetched user data: ${user.toJSON()}`);
+                        res.send({
+                status: 'true', user: user
+            })
+        })
+        .catch(err => {
+            console.log('Error fetching user data:', errs);
+            res.send({
+                status: 'false', errorMessage: err.message
+            })
+        })
+}
+
