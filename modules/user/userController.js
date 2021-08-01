@@ -5,13 +5,13 @@ module.exports.signupWithDetails = (req, res) => {
         .then(user => {
             console.log('User created successfully' + user)
             res.send({
-                status: 'true', user: user
+                status: true, user: user
             })
         })
         .catch(err => {
             console.log('User cannot be created' + err)
             res.send({
-                status: 'false', error :err
+                status: false, error :err
             })
         })
 }
@@ -21,13 +21,13 @@ module.exports.signinWithDetails = (req, res) => {
         .then(user => {
             console.log('User found successfully')
             res.send({
-                status: 'true', user: user
+                status: true, user: user
             })
         })
         .catch(err => {
             console.log('User cannot be found')
             res.send({
-                status: 'false', error: err
+                status: false, error: err
             })
         })
 }

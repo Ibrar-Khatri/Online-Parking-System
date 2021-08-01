@@ -103,7 +103,7 @@ function DateAndTimeSelector(props) {
                     </TouchableOpacity>
                 </View>
                 {showModal && (
-                    <WarningModal setShowModal={setShowModal} showModal={showModal} />
+                    <WarningModal setShowModal={setShowModal} showModal={showModal} message='End time should be greater than start time'/>
                 )}
                 <Button variant="outline" style={style.buttonStyle} onPress={() => props.handleSingleIndexSelect(1)} >
                     Next

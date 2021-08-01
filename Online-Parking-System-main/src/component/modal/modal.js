@@ -11,7 +11,7 @@ function WarningModal(props) {
         <Modal isOpen={props.showModal} onClose={() => props.setShowModal(false)} >
             <Modal.Content maxWidth="400px">
                 <Modal.Header>Alert !!!</Modal.Header>
-                <Modal.Body>End time should be greater than start time
+                <Modal.Body>{props.message}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onPress={() => props.setShowModal(false)}>OK</Button>

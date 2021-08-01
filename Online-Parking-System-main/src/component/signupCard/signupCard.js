@@ -7,6 +7,7 @@ import AuthenticationButton from '../button/button';
 import {signupWithDetails} from '../../apis/user'
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WarningModal from '../modal/modal';
 
 function SignupCard(props) {
 
@@ -35,30 +36,35 @@ function SignupCard(props) {
             email: value.email,
             password: value.password,
         }
-        console.log(userDetails)
-
         signupWithDetails(userDetails)
           .then(async res => {
-            console.log('Responed from signup' + res)
             if(res.data.status){
               await AsyncStorage.setItem('userID', res.data.user.user.uid)
               setIsLoading(false)
-              props.navigation.reset({
-                  index: 0,
+              return props.navigation.reset({
+                index: 0,
                   routes: [{ name: 'home-screen' }],
-              });
+                });
+              }
+              else{
+                setErrMessage(res.data.error.message)
+                setIsLoading(false)
+                setShowModal(true)
+                return
             }
-
           })
           .catch(err => {
+              setErrMessage('Please try again later ')
+              setShowModal(true)
               setIsLoading(false)
-              console.log(err, 'error in signup');
           });    
     }
 
     let [isLoading, setIsLoading] = useState(false)
     let [showInvalidInput,setShowInvalidInput] = useState(false)
-  
+    let [showModal,setShowModal] = useState(false)
+    let [errMessage,setErrMessage] = useState('')
+    
     return (
     <>
       <View style={style.card}>
@@ -120,6 +126,9 @@ function SignupCard(props) {
               </View>
             )}
           </Formik>
+          {showModal && (
+                    <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage}/>
+                )}
         </View>
         <View>
           <View style={style.messageText}>

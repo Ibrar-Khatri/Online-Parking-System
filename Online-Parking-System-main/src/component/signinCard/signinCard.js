@@ -4,9 +4,10 @@ import { Input } from 'native-base';
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import AuthenticationButton from '../button/button';
-import {signupWithDetails} from '../../apis/user'
+import {signinWithDetails} from '../../apis/user'
 import style from './signinCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WarningModal from '../modal/modal';
 
 function SigninCard(props) {
 
@@ -21,10 +22,7 @@ function SigninCard(props) {
       .required('Password is required'),
   })
 
-
-
-
-
+  
   function signinWithDet(value) {
         setIsLoading(true)
         let userDetails = {
@@ -32,27 +30,36 @@ function SigninCard(props) {
             password: value.password,
         }
 
-        signupWithDetails(userDetails)
+        signinWithDetails(userDetails)
           .then(async res => {
-            console.log('Responed from signin' + res)
             if(res.data.status){
-              await AsyncStorage.setItem('userID', res.data.user.user.uid)
-              setIsLoading(false)
-              props.navigation.reset({
+                await AsyncStorage.setItem('userID', res.data.user.user.uid)
+                setIsLoading(false)
+                return props.navigation.reset({
                   index: 0,
                   routes: [{ name: 'home-screen' }],
-              });
-            }
-
-          })
-          .catch(err => {
+                });
+              }
+              else{
+                setErrMessage(res.data.error.message)
+                setShowModal(true)
+                setIsLoading(false)
+                return
+              }
+              
+            })
+            .catch(err => {
+              setErrMessage(err,'Please try again later ')
+              setShowModal(true)
               setIsLoading(false)
-              console.log('error in signup'+err);
+              return
           });    
-    }
+        }
 
     let [isLoading, setIsLoading] = useState(false)
     let [showInvalidInput,setShowInvalidInput] = useState(false)
+    let [showModal,setShowModal] = useState(false)
+    let [errMessage,setErrMessage] = useState('')
   
     return (
     <>
@@ -104,6 +111,9 @@ function SigninCard(props) {
               </View>
             )}
           </Formik>
+          {showModal && (
+                    <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage}/>
+                )} 
         </View>
         <View>
           <View style={style.messageText}>
