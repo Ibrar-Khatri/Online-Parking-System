@@ -49,7 +49,7 @@ function SigninCard(props) {
               
             })
             .catch(err => {
-              setErrMessage(err,'Please try again later ')
+              setErrMessage('Please try again later ')
               setShowModal(true)
               setIsLoading(false)
               return
@@ -88,7 +88,7 @@ function SigninCard(props) {
                     value={values.email}
                   />
                   {
-                    showInvalidInput && errors.email && <Text>{errors.email}</Text>
+                    showInvalidInput && errors.email && <Text style={style.invalidInputStyle}>{errors.email}</Text>
                   }
                   <Input
                     variant="underlined"

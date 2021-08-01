@@ -21,7 +21,7 @@ function SignupCard(props) {
       .required('Email Address is Required'),
     password: yup
       .string()
-      .min(8, ({ min }) => `Password must be at least ${min} characters`)
+      .min(6, ({ min }) => `Password must be at least ${min} characters`)
       .required('Password is required'),
   })
 
@@ -92,7 +92,7 @@ function SignupCard(props) {
                     style={style.emailInput}
                   />
                   {
-                    showInvalidInput && errors.name && <Text>{errors.name}</Text>
+                    showInvalidInput && errors.name && <Text style={style.invalidInputStyle}>{errors.name}</Text>
                   }
 
                   <Input
@@ -103,7 +103,7 @@ function SignupCard(props) {
                     value={values.email}
                   />
                   {
-                    showInvalidInput && errors.email && <Text>{errors.email}</Text>
+                    showInvalidInput && errors.email && <Text style={style.invalidInputStyle}>{errors.email}</Text>
                   }
                   <Input
                     variant="underlined"
@@ -114,7 +114,7 @@ function SignupCard(props) {
                     value={values.password}
                   />
                   {
-                   showInvalidInput && errors.password && <Text>{errors.password}</Text>
+                   showInvalidInput && errors.password && <Text style={style.invalidInputStyle}>{errors.password}</Text>
                   }
                 </View>
                 <AuthenticationButton

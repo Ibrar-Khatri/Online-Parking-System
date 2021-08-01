@@ -36,5 +36,8 @@ export default StyleSheet.create({
     emailInput: {
         marginTop: vh(1),
         marginTop: vh(1),
+    },
+    invalidInputStyle:{
+        color:'red'
     }
 });
