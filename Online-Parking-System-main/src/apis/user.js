@@ -7,9 +7,7 @@ export const signupWithDetails = async (details) => {
     return resp
 }
 
-
 export const signinWithDetails = async (details) => {
-    console.log('Appsetting ' + details.email)
     let resp = await axios.post(`${appSetting.severHostedUrl}/user/signin`, details)
     return resp
 }
