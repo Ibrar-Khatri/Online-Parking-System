@@ -3,13 +3,13 @@ const firebase = require('../../firebase/firebase')
 module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
-            console.log('User created successfully' + user)
+            console.log('User created successfully' + JSON.stringify(user))
             // res.send({
             //     status: true, user: user
             // })
 
             firebase.firestore().collection("users").add({
-                userId: user.uid,
+                // userId: user.uid,
                 username: req.name,
                 email: req.email,
             })
