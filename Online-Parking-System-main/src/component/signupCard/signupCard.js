@@ -123,7 +123,6 @@ function SignupCard(props) {
                   handleSubmit={handleSubmit}
                   isLoading={isLoading}
                   setShowInvalidInput={setShowInvalidInput}
-                  isValid={isValid}
                 />
               </View>
             )}

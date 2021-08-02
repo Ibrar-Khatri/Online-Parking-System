@@ -13,7 +13,7 @@ function AuthenticationButton(props) {
                 colorScheme="blue"
                 isLoading={props.isLoading}
                 style={style.buttonStyle}
-                disabled={!props.isValid}
+                disabled={props.isLoading}
                 onPress={() => { props.setShowInvalidInput(true); props.handleSubmit() }}>
                 {props.buttonType}
 
