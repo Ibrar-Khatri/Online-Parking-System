@@ -2,13 +2,13 @@ const firebase = require('../../firebase/firebase')
 
 module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
-        .then(user => {
+        .then(async user => {
             console.log('User created successfully' + user)
             // res.send({
             //     status: true, user: user
             // })
 
-            firebase.collection("users").add({
+            await firebase.firestore().collection("users").add({
                 userId: user.uid,
                 username: req.name,
                 email: req.email,
