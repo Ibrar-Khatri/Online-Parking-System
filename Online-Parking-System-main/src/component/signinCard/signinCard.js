@@ -4,7 +4,7 @@ import { Input } from 'native-base';
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import AuthenticationButton from '../button/button';
-import {signinWithDetails} from '../../apis/user'
+import { signinWithDetails } from '../../apis/user'
 import style from './signinCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
@@ -18,56 +18,56 @@ function SigninCard(props) {
       .required('Email Address is Required'),
     password: yup
       .string()
-      .min(8, ({ min }) => `Password must be at least ${min} characters`)
+      .min(6, ({ min }) => `Password must be at least ${min} characters`)
       .required('Password is required'),
   })
 
-  
+
   function signinWithDet(value) {
-        setIsLoading(true)
-        let userDetails = {
-            email: value.email,
-            password: value.password,
+    setIsLoading(true)
+    let userDetails = {
+      email: value.email,
+      password: value.password,
+    }
+
+    signinWithDetails(userDetails)
+      .then(async res => {
+        if (res.data.status) {
+          await AsyncStorage.setItem('userID', res.data.user.user.uid)
+          setIsLoading(false)
+          return props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'home-screen' }],
+          });
+        }
+        else {
+          setErrMessage(res.data.error.message)
+          setShowModal(true)
+          setIsLoading(false)
+          return
         }
 
-        signinWithDetails(userDetails)
-          .then(async res => {
-            if(res.data.status){
-                await AsyncStorage.setItem('userID', res.data.user.user.uid)
-                setIsLoading(false)
-                return props.navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'home-screen' }],
-                });
-              }
-              else{
-                setErrMessage(res.data.error.message)
-                setShowModal(true)
-                setIsLoading(false)
-                return
-              }
-              
-            })
-            .catch(err => {
-              setErrMessage('Please try again later ')
-              setShowModal(true)
-              setIsLoading(false)
-              return
-          });    
-        }
+      })
+      .catch(err => {
+        setErrMessage('Please try again later ')
+        setShowModal(true)
+        setIsLoading(false)
+        return
+      });
+  }
 
-    let [isLoading, setIsLoading] = useState(false)
-    let [showInvalidInput,setShowInvalidInput] = useState(false)
-    let [showModal,setShowModal] = useState(false)
-    let [errMessage,setErrMessage] = useState('')
-  
-    return (
+  let [isLoading, setIsLoading] = useState(false)
+  let [showInvalidInput, setShowInvalidInput] = useState(false)
+  let [showModal, setShowModal] = useState(false)
+  let [errMessage, setErrMessage] = useState('')
+
+  return (
     <>
       <View style={style.card}>
         <View>
           <Text style={style.signInText}>Login</Text>
           <Formik
-            initialValues={{email: '', password: '' }}
+            initialValues={{ email: '', password: '' }}
             validationSchema={loginValidationSchema}
             onSubmit={(value) => signinWithDet(value)}>
             {(
@@ -99,21 +99,21 @@ function SigninCard(props) {
                     value={values.password}
                   />
                   {
-                   showInvalidInput && errors.password && <Text>{errors.password}</Text>
+                    showInvalidInput && errors.password && <Text>{errors.password}</Text>
                   }
                 </View>
                 <AuthenticationButton
                   buttonType="Signin"
                   handleSubmit={handleSubmit}
                   isLoading={isLoading}
-                  setShowInvalidInput = {setShowInvalidInput}
+                  setShowInvalidInput={setShowInvalidInput}
                 />
               </View>
             )}
           </Formik>
           {showModal && (
-                    <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage}/>
-                )} 
+            <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage} />
+          )}
         </View>
         <View>
           <View style={style.messageText}>

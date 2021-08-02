@@ -4,14 +4,33 @@ module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
             console.log('User created successfully' + user)
-            res.send({
-                status: true, user: user
+            // res.send({
+            //     status: true, user: user
+            // })
+
+            firebase.collection("users").add({
+                userId: user.uid,
+                username: req.name,
+                email: req.email,
             })
+                .then((docRef) => {
+                    console.log("Document written with ID: ", docRef.id);
+                    res.send({
+                        status: true, user: user
+                    })
+                })
+                .catch((error) => {
+                    res.send({
+                        status: false, error: error
+                    })
+                    console.error("Error adding document: ", error);
+                });
+
         })
         .catch(err => {
             console.log('User cannot be created' + err)
             res.send({
-                status: false, error :err
+                status: false, error: err
             })
         })
 }

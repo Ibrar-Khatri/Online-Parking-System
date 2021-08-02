@@ -4,7 +4,7 @@ import { Input } from 'native-base';
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import AuthenticationButton from '../button/button';
-import {signupWithDetails} from '../../apis/user'
+import { signupWithDetails } from '../../apis/user'
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
@@ -30,42 +30,43 @@ function SignupCard(props) {
 
 
   function signupWithDet(value) {
-        setIsLoading(true)
-        let userDetails = {
-            name: value.name,
-            email: value.email,
-            password: value.password,
-        }
-        signupWithDetails(userDetails)
-          .then(async res => {
-            if(res.data.status){
-              await AsyncStorage.setItem('userID', res.data.user.user.uid)
-              setIsLoading(false)
-              return props.navigation.reset({
-                index: 0,
-                  routes: [{ name: 'home-screen' }],
-                });
-              }
-              else{
-                setErrMessage(res.data.error.message)
-                setIsLoading(false)
-                setShowModal(true)
-                return
-            }
-          })
-          .catch(err => {
-              setErrMessage('Please try again later ')
-              setShowModal(true)
-              setIsLoading(false)
-          });    
+    setIsLoading(true)
+    let userDetails = {
+      name: value.name,
+      email: value.email,
+      password: value.password,
     }
+    signupWithDetails(userDetails)
+      .then(async res => {
+        if (res.data.status) {
+          await AsyncStorage.setItem('userID', res.data.user.user.uid)
+          setIsLoading(false)
+          return props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'home-screen' }],
+          });
+        }
+        else {
+          setErrMessage(res.data.error.message)
+          setIsLoading(false)
+          setShowModal(true)
+          return
+        }
+      })
+      .catch(err => {
+        setErrMessage('Please try again later ')
+        setShowModal(true)
+        setIsLoading(false)
+      });
+  }
 
-    let [isLoading, setIsLoading] = useState(false)
-    let [showInvalidInput,setShowInvalidInput] = useState(false)
-    let [showModal,setShowModal] = useState(false)
-    let [errMessage,setErrMessage] = useState('')
-    
-    return (
+  let [isLoading, setIsLoading] = useState(false)
+  let [showInvalidInput, setShowInvalidInput] = useState(false)
+  let [showModal, setShowModal] = useState(false)
+  let [errMessage, setErrMessage] = useState('')
+
+
+  return (
     <>
       <View style={style.card}>
         <View>
@@ -114,21 +115,22 @@ function SignupCard(props) {
                     value={values.password}
                   />
                   {
-                   showInvalidInput && errors.password && <Text style={style.invalidInputStyle}>{errors.password}</Text>
+                    showInvalidInput && errors.password && <Text style={style.invalidInputStyle}>{errors.password}</Text>
                   }
                 </View>
                 <AuthenticationButton
                   buttonType="Signup"
                   handleSubmit={handleSubmit}
                   isLoading={isLoading}
-                  setShowInvalidInput = {setShowInvalidInput}
+                  setShowInvalidInput={setShowInvalidInput}
+                  isValid={isValid}
                 />
               </View>
             )}
           </Formik>
           {showModal && (
-                    <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage}/>
-                )}
+            <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage} />
+          )}
         </View>
         <View>
           <View style={style.messageText}>

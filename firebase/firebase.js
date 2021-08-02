@@ -1,4 +1,3 @@
-// import firebase from "firebase";
 const firebase = require('firebase')
 
 // var firebaseConfig = {
@@ -10,6 +9,7 @@ const firebase = require('firebase')
 //     appId: "1:510657373183:web:18730d7720723473257dca",
 //     measurementId: "G-M3G34TGQD9"
 // };
+
 
 var firebaseConfig = firebase.initializeApp(
     {
@@ -28,6 +28,5 @@ var firebaseConfig = firebase.initializeApp(
 // firebase.initializeApp(firebaseConfig);
 
 // firebase.analytics();
-
 
 module.exports = firebaseConfig;
