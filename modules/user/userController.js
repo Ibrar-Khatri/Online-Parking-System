@@ -9,7 +9,7 @@ module.exports.signupWithDetails = (req, res) => {
             // })
 
             firebase.firestore().collection("users").doc(user.uid).set({
-                userId: user.uid,
+                // userID: user.uid,
                 username: req.name,
                 email: req.email,
             })
