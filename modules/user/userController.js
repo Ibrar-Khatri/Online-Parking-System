@@ -4,12 +4,12 @@ const db = firebase.firestore()
 module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
-            console.log('User created successfully' + JSON.stringify(user.uid))
+            console.log('User created successfully' + JSON.stringify(user.user.uid))
             // res.send({
             //     status: true, user: user
             // })
 
-            db.collection("user").doc(user.uid).set({
+            db.collection("user").doc(user.user.uid).set({
                 displayName: req.body.name,
             })
                 .then((docRef) => {
