@@ -8,8 +8,8 @@ module.exports.signupWithDetails = (req, res) => {
             //     status: true, user: user
             // })
 
-            firebase.firestore().collection("users").add({
-                // userId: user.uid,
+            firebase.firestore().collection("users").doc(user.uid).set({
+                userId: user.uid,
                 username: req.name,
                 email: req.email,
             })
