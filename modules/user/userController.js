@@ -51,7 +51,7 @@ module.exports.signinWithDetails = (req, res) => {
                 });
         })
         .catch(err => {
-            console.log('User cannot be found')
+            console.log('User cannot be found' + err)
             res.send({
                 status: false, error: err
             })
