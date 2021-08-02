@@ -40,17 +40,15 @@ module.exports.signinWithDetails = (req, res) => {
             console.log('User found successfully')
             db.collection(`user/${user.user.uid}`).get()
                 .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        console.log(`${doc.id} => ${doc.data()}`);
-                    });
+                    console.log("querySnapshot" + JSON.stringify(querySnapshot))
+                    res.send({
+                        status: true, user: {
+                            uid: user.user.uid,
+                            displayName: req.body.name,
+                            email: req.body.email,
+                        }
+                    })
                 });
-            res.send({
-                status: true, user: {
-                    uid: user.user.uid,
-                    displayName: req.body.name,
-                    email: req.body.email,
-                }
-            })
         })
         .catch(err => {
             console.log('User cannot be found')
