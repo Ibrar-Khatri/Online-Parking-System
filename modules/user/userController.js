@@ -4,18 +4,19 @@ const db = firebase.firestore()
 module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
-            console.log('User created successfully' + JSON.stringify(user.user.uid))
-            // res.send({
-            //     status: true, user: user
-            // })
 
             db.collection("user").doc(user.user.uid).set({
                 displayName: req.body.name,
+                email: req.body.email,
             })
                 .then((docRef) => {
-                    console.log("Document written with ID: ", JSON.stringify(docRef));
+                    console.log("Document written with ID: ", JSON.stringify(docRef.id));
                     res.send({
-                        status: true, user: user
+                        status: true, user: {
+                            uid: user.user.uid,
+                            displayName: req.body.name,
+                            email: req.body.email,
+                        }
                     })
                 })
                 .catch((error) => {
@@ -24,17 +25,6 @@ module.exports.signupWithDetails = (req, res) => {
                     })
                     console.error("Error adding document: ", error);
                 });
-            // db.collection("users").doc(user.uid).set({
-            //     name: req.body.name,
-            //     email:req.eemail,
-            // })
-            //     .then(() => {
-            //         console.log("Document successfully written!");
-            //     })
-            //     .catch((error) => {
-            //         console.error("Error writing document: ", error);
-            //     });
-
         })
         .catch(err => {
             console.log('User cannot be created' + err)
@@ -48,8 +38,18 @@ module.exports.signinWithDetails = (req, res) => {
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
             console.log('User found successfully')
+            db.collection(`user/${user.user.uid}`).get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        console.log(`${doc.id} => ${doc.data()}`);
+                    });
+                });
             res.send({
-                status: true, user: user
+                status: true, user: {
+                    uid: user.user.uid,
+                    displayName: req.body.name,
+                    email: req.body.email,
+                }
             })
         })
         .catch(err => {
