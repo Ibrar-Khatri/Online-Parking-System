@@ -1,20 +1,20 @@
 const firebase = require('../../firebase/firebase')
+const db = firebase.firestore()
 
 module.exports.signupWithDetails = (req, res) => {
     firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
-            console.log('User created successfully' + JSON.stringify(user))
+            console.log('User created successfully' + JSON.stringify(user.uid))
             // res.send({
             //     status: true, user: user
             // })
 
-            firebase.firestore().collection("users").doc(user.uid).set({
-                // userID: user.uid,
-                username: req.name,
-                email: req.email,
+            db.collection("cities").doc(user.uid).set({
+                username: req.body.name,
+                email: req.body.email,
             })
                 .then((docRef) => {
-                    console.log("Document written with ID: ", docRef.id);
+                    console.log("Document written with ID: ", docRef);
                     res.send({
                         status: true, user: user
                     })
@@ -25,6 +25,16 @@ module.exports.signupWithDetails = (req, res) => {
                     })
                     console.error("Error adding document: ", error);
                 });
+            // db.collection("users").doc(user.uid).set({
+            //     name: req.body.name,
+            //     email:req.eemail,
+            // })
+            //     .then(() => {
+            //         console.log("Document successfully written!");
+            //     })
+            //     .catch((error) => {
+            //         console.error("Error writing document: ", error);
+            //     });
 
         })
         .catch(err => {
