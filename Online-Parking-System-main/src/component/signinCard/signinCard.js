@@ -32,6 +32,7 @@ function SigninCard(props) {
 
     signinWithDetails(userDetails)
       .then(async res => {
+        console.log('>>>>> ' + JSON.stringify(res.data.user.user))
         if (res.data.status) {
           await AsyncStorage.setItem('userID', res.data.user.user.uid)
           setIsLoading(false)

@@ -39,6 +39,7 @@ function SignupCard(props) {
     signupWithDetails(userDetails)
       .then(async res => {
         if (res.data.status) {
+          console.log('>>>>> ' + JSON.stringify(res.data.user.user))
           await AsyncStorage.setItem('userID', res.data.user.user.uid)
           setIsLoading(false)
           return props.navigation.reset({

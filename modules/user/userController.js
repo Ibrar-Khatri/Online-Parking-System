@@ -9,12 +9,11 @@ module.exports.signupWithDetails = (req, res) => {
             //     status: true, user: user
             // })
 
-            db.collection("cities").doc(user.uid).set({
-                username: req.body.name,
-                email: req.body.email,
+            db.collection("user").doc(user.uid).set({
+                displayName: req.body.name,
             })
                 .then((docRef) => {
-                    console.log("Document written with ID: ", docRef);
+                    console.log("Document written with ID: ", JSON.stringify(docRef));
                     res.send({
                         status: true, user: user
                     })
