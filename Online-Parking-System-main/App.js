@@ -47,7 +47,6 @@ const App: () => Node = () => {
   return (
     <>
       <Provider store={store}>
-
         <NativeBaseProvider>
           <NavigationContainer>
             <Stack.Navigator >

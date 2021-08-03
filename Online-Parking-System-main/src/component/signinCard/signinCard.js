@@ -12,6 +12,9 @@ import WarningModal from '../modal/modal';
 
 function SigninCard(props) {
 
+  const dispatch = useDispatch()
+
+
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
@@ -30,12 +33,12 @@ function SigninCard(props) {
       email: value.email,
       password: value.password,
     }
-
     signinWithDetails(userDetails)
       .then(async res => {
         console.log('>>>>> ' + JSON.stringify(res.data.user))
         if (res.data.status) {
           await AsyncStorage.setItem('userID', res.data.user.uid)
+          dispatch({ type: 'addUserDetails', payload: res.data.user })
           setIsLoading(false)
           return props.navigation.reset({
             index: 0,

@@ -8,8 +8,11 @@ import { signupWithDetails } from '../../apis/user'
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
+import { useDispatch } from 'react-redux';
 
 function SignupCard(props) {
+
+  const dispatch = useDispatch()
 
   const loginValidationSchema = yup.object().shape({
     name: yup
@@ -25,10 +28,6 @@ function SignupCard(props) {
       .required('Password is required'),
   })
 
-
-
-
-
   function signupWithDet(value) {
     setIsLoading(true)
     let userDetails = {
@@ -39,8 +38,8 @@ function SignupCard(props) {
     signupWithDetails(userDetails)
       .then(async res => {
         if (res.data.status) {
-          console.log('>>>>> ' + JSON.stringify(res.data.user))
           await AsyncStorage.setItem('userID', res.data.user.uid)
+          dispatch({ type: 'addUserDetails', payload: res.data.user })
           setIsLoading(false)
           return props.navigation.reset({
             index: 0,

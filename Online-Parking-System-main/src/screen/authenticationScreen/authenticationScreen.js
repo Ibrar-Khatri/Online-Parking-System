@@ -17,16 +17,14 @@ function AuthenticationScreen({ navigation }) {
   let isUserLogin = async () => {
     const value = await AsyncStorage.getItem('userID')
     if (value !== null) {
-      console.log('user id >>>>' + value)
+      //we get user id  from value 
       getUserDetailsById({ uid: value })
         .then(user => {
-          console.log(user.data)
           dispatch({ type: 'addUserDetails', payload: user.data.user })
         })
         .catch(err => {
-          console.log('error in get user details from authentication => ' + err)
+          console.log('User details cannot be found')
         })
-
 
       navigation.reset({
         index: 0,
