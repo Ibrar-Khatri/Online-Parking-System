@@ -66,7 +66,7 @@ module.exports.signinWithDetails = (req, res) => {
 
 
 module.exports.getUserDetails = (req, res) => {
-    console.log('user details' + req.body)
+    console.log('user details' + req.body.uid)
     db.collection('user').doc(req.body).get()
         .then((doc) => {
             // console.log("Document data:", doc.data());
