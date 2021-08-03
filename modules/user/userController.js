@@ -69,7 +69,7 @@ module.exports.getUserDetails = (req, res) => {
     console.log('user details' + req.body.uid)
     db.collection('user').doc(req.body.uid).get()
         .then((user) => {
-            console.log("Document data:", doc.data().displayName);
+            console.log("Document data:", doc.data());
             if (doc.exists) {
                 res.send({
                     status: true, user: {
@@ -80,6 +80,8 @@ module.exports.getUserDetails = (req, res) => {
                 })
             }
         }).catch((error) => {
+            console.log('User deatils cannot be found' + error)
+
             res.send({
                 status: false, error: error
             })
