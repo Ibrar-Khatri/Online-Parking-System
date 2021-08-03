@@ -14,11 +14,6 @@ import { useSelector } from 'react-redux';
 function Home({ navigation }) {
 
 
-  useEffect(() => {
-
-    // console.log('user detauls ' + useSelector(state => state.userDetails))
-
-  }, [])
   return (
     <>
       <ImageBackground
