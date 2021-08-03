@@ -40,14 +40,20 @@ module.exports.signinWithDetails = (req, res) => {
             console.log('User found successfully')
             db.collection('user').doc(user.user.uid).get()
                 .then((doc) => {
+                    // console.log("Document data:", doc.data());
                     if (doc.exists) {
-                        console.log("Document data:", doc.data());
-                    } else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
+                        res.send({
+                            status: true, user: {
+                                uid: user.user.uid,
+                                email: req.body.email,
+                                displayName: doc.data().displayName,
+                            }
+                        })
                     }
                 }).catch((error) => {
-                    console.log("Error getting document:", error);
+                    res.send({
+                        status: false, error: error
+                    })
                 });
         })
         .catch(err => {

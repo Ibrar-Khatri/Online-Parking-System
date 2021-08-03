@@ -32,9 +32,9 @@ function SigninCard(props) {
 
     signinWithDetails(userDetails)
       .then(async res => {
-        console.log('>>>>> ' + JSON.stringify(res.data.user.user))
+        console.log('>>>>> ' + JSON.stringify(res.data.user))
         if (res.data.status) {
-          await AsyncStorage.setItem('userID', res.data.user.user.uid)
+          await AsyncStorage.setItem('userID', res.data.user.uid)
           setIsLoading(false)
           return props.navigation.reset({
             index: 0,
