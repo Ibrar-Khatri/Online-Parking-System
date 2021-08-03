@@ -20,7 +20,7 @@ function AuthenticationScreen({ navigation }) {
       console.log('user id >>>>' + value)
       getUserDetailsById({ uid: value })
         .then(user => {
-          console.log(user.data.user)
+          console.log(user.data)
           dispatch({ type: 'addUserDetails', payload: user.data.user })
         })
         .catch(err => {
