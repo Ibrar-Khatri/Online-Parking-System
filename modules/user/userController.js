@@ -68,14 +68,14 @@ module.exports.signinWithDetails = (req, res) => {
 module.exports.getUserDetails = (req, res) => {
     console.log('user details' + req.body.uid)
     db.collection('user').doc(req.body.uid).get()
-        .then((user) => {
+        .then((doc) => {
             console.log("Document data:", doc.data());
             if (doc.exists) {
                 res.send({
                     status: true, user: {
                         uid: req.body.uid,
-                        email: user.doc.data().email,
-                        displayName: user.doc.data().displayName,
+                        email: doc.data().email,
+                        displayName: doc.data().displayName,
                     }
                 })
             }
