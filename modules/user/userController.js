@@ -10,7 +10,7 @@ module.exports.signupWithDetails = (req, res) => {
                 email: req.body.email,
             })
                 .then((docRef) => {
-                    console.log("Document written with ID: ", JSON.stringify(docRef.id));
+                    console.log('Displayname and email added successfully');
                     res.send({
                         status: true, user: {
                             uid: user.user.uid,
