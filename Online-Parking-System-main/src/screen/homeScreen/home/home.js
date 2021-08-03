@@ -16,7 +16,7 @@ function Home({ navigation }) {
 
   useEffect(() => {
 
-    console.log('user detauls ' + useSelector(state => state.userDetails))
+    // console.log('user detauls ' + useSelector(state => state.userDetails))
 
   }, [])
   return (
