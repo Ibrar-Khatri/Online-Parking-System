@@ -74,8 +74,8 @@ module.exports.getUserDetails = (req, res) => {
                 res.send({
                     status: true, user: {
                         uid: req.body.uid,
-                        email: doc.data().email,
-                        displayName: doc.data().displayName,
+                        email: user.doc.data().email,
+                        displayName: user.doc.data().displayName,
                     }
                 })
             }
