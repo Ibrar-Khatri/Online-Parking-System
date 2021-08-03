@@ -11,5 +11,9 @@ export const signinWithDetails = async (details) => {
     let resp = await axios.post(`${appSetting.severHostedUrl}/user/signin`, details)
     return resp
 }
+export const getUserDetailsById = async (details) => {
+    let resp = await axios.post(`${appSetting.severHostedUrl}/user/get-user-details`, details)
+    return resp
+}
 
 

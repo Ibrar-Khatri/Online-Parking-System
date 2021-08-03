@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,8 +9,16 @@ import {
 import SlotCard from '../../../component/slotCard/slotCard';
 import style from './homeStyle';
 import Animated from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
 
 function Home({ navigation }) {
+
+
+  useEffect(() => {
+
+    console.log('user detauls ' + useSelector(state => state.userDetails))
+
+  }, [])
   return (
     <>
       <ImageBackground

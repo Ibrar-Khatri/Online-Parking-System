@@ -9,7 +9,7 @@ module.exports.signupWithDetails = (req, res) => {
                 displayName: req.body.name,
                 email: req.body.email,
             })
-                .then((docRef) => {
+                .then(() => {
                     console.log('Displayname and email added successfully');
                     res.send({
                         status: true, user: {
@@ -63,3 +63,28 @@ module.exports.signinWithDetails = (req, res) => {
             })
         })
 }
+
+
+module.exports.getUserDetails = (req, res) => {
+
+    db.collection('user').doc(req.body).get()
+        .then((doc) => {
+            // console.log("Document data:", doc.data());
+            if (doc.exists) {
+                res.send({
+                    status: true, user: {
+                        uid: user.user.uid,
+                        email: req.body.email,
+                        displayName: doc.data().displayName,
+                    }
+                })
+            }
+        }).catch((error) => {
+            res.send({
+                status: false, error: error
+            })
+        });
+}
+
+
+
