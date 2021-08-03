@@ -38,16 +38,16 @@ module.exports.signinWithDetails = (req, res) => {
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
         .then(user => {
             console.log('User found successfully')
-            db.collection(`user/${user.user.uid}`).get()
-                .then((querySnapshot) => {
-                    console.log("querySnapshot" + JSON.stringify(querySnapshot))
-                    res.send({
-                        status: true, user: {
-                            uid: user.user.uid,
-                            displayName: req.body.name,
-                            email: req.body.email,
-                        }
-                    })
+            db.collection('user').doc(user.user.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        console.log("Document data:", doc.data());
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                }).catch((error) => {
+                    console.log("Error getting document:", error);
                 });
         })
         .catch(err => {
