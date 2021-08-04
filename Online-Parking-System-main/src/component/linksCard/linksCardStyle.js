@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { borderRadius } from "styled-system";
+import { alignItems, borderRadius, justifyContent } from "styled-system";
 import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../responsive/responsive";
 
 export default StyleSheet.create({
@@ -14,23 +14,18 @@ export default StyleSheet.create({
         paddingTop: vh(9)
     },
     imageStyle: {
-        height: vh(6),
-        width: vw(10),
+        height: vh(4.5),
+        width: vw(7),
     },
     linkViewStyle: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        height: vh(8),
-        marginTop: vh(4),
-        marginLeft: vw(6)
-
+        height: vh(11),
+        marginLeft: vw(6),
+        alignSelf: 'flex-start',
+        alignItems: 'center'
     },
     linkTextStyle: {
-        marginTop: vh(1),
-        marginLeft: vw(3),
+        fontSize: vh(3),
+        marginLeft: vw(4),
     }
-
-
-
-
 })

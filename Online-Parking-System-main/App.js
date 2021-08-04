@@ -37,6 +37,7 @@ import FeatureScreen from './src/screen/featureScreen/featureScreen';
 import { heightPercentageToDP as vh } from './src/responsive/responsive';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import SplashScreen from './src/screen/splashScreen/spashScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,13 @@ const App: () => Node = () => {
         <NativeBaseProvider>
           <NavigationContainer>
             <Stack.Navigator >
+              <Stack.Screen
+                name="splash-screen"
+                component={SplashScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
               <Stack.Screen
                 name="authentication-screen"
                 component={AuthenticationScreen}

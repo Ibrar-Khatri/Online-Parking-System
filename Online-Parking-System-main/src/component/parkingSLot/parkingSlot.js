@@ -13,7 +13,7 @@ import DateAndTimeSelector from '../dateAndTimeTab/dateAndTimeTab';
 import style from './parkingSLotStyle';
 
 function ParkingSlot() {
-    let [date, setDate] = useState(moment(new Date()).format('D MMM YYYY'));
+    let [date, setDate] = useState(moment(new Date()));
     let [startTime, setStartTime] = useState('Select Time');
     let [endTime, setEndTime] = useState('Select Time');
 

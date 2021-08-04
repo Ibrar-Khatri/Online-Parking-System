@@ -5,8 +5,8 @@ export default StyleSheet.create({
     bgView: {
         height: vh(30),
         backgroundColor: '#767886',
-        borderBottomLeftRadius: vh(5),
-        borderBottomRightRadius: vh(5),
+        borderBottomLeftRadius: vh(2),
+        borderBottomRightRadius: vh(2),
     },
     avatarStyle: {
         flexDirection: 'row',

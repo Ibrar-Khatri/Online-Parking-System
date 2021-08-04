@@ -2,10 +2,14 @@ import { Avatar, View, Text } from 'native-base'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'react-native-linear-gradient'
+import { useSelector } from 'react-redux'
 import LinksCard from '../linksCard/linksCard'
 import style from './uploadImageStyle'
 
 function UploadImage() {
+
+    let userDetails = useSelector(state => state.userReducer.userDetails)
+
     return <>
 
         <View>
@@ -17,8 +21,8 @@ function UploadImage() {
                             source={require('../../assets/profileIcon.png')} />
                     </TouchableOpacity>
                     <View style={style.textStyle}>
-                        <Text fontSize='2xl' underline style={style.nameStyle}  >Ibrar Ahmed Khatri</Text>
-                        <Text style={style.emailStyle}>abc@gmail.com</Text>
+                        <Text fontSize='2xl' underline style={style.nameStyle}  >{userDetails.displayName}</Text>
+                        <Text style={style.emailStyle}>{userDetails.email}</Text>
                     </View>
                 </View>
             </View>

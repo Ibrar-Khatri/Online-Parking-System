@@ -7,36 +7,53 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import WarningModal from '../modal/modal';
 
 function DateAndTimeSelector(props) {
-    // let [date, setDate] = useState(moment(new Date()).format('D MMM YYYY'));
-    // let [startTime, setStartTime] = useState('Select Time');
-    // let [endTime, setEndTime] = useState('Select Time');
     let [showModal, setShowModal] = useState(false);
     let [showDatePicker, setShowDatePicker] = useState(false);
     let [showStartTimePicker, setShowStartTimePicker] = useState(false);
     let [showEndTimePicker, setShowEndTimePicker] = useState(false);
+    let [modalMessage, setModalMessage] = useState('')
 
     function selectedDateAndTime(selected, condition) {
-        console.log('condition ' + condition);
+        setModalMessage('')
         if (condition === 'date') {
-            props.setDate(moment(selected).format('D MMM YYYY'));
+            props.setStartTime('Select Time')
+            props.setEndTime('Select Time')
+            props.setDate(selected);
             setShowDatePicker(false);
             return;
-        } else if (condition === 'startTime') {
+        }
+        else if (condition === 'startTime') {
+            props.setEndTime('Select Time')
+            let selectedDate = new Date(props.date)
+            selected.setFullYear(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
+            console.log('selected' + selected)
+            if (moment(selected).diff(moment(Date.now()), 'second') < 0) {
+                setModalMessage("Start Time is should not be less than current date's time");
+                setShowStartTimePicker(false);
+                setShowModal(true);
+                return;
+            }
             props.setStartTime(selected);
+            console.log(props.startTime + "start")
             return setShowStartTimePicker(false);
         } else if (condition === 'endTime') {
             if (moment(selected).diff(moment(props.startTime), 'minutes') < 0) {
-                console.log(
-                    'Time is ===> ' + moment(selected).diff(moment(props.startTime), 'minutes'),
-                );
+                setModalMessage('End time should be greater than start time')
                 setShowEndTimePicker(false);
                 setShowModal(true);
                 return;
             }
-            props.setEndTime(selected);
+            console.log('end time' + selected)
+            props.setEndTime(new Date(selected));
             return setShowEndTimePicker(false);
         }
     }
+
+
+
+
+
+
 
     return (
         <>
@@ -46,7 +63,7 @@ function DateAndTimeSelector(props) {
                     <DateTimePickerModal
                         isVisible={showDatePicker}
                         mode="date"
-                        // value={props.date}
+                        date={new Date(props.date)}
                         onConfirm={selected => selectedDateAndTime(selected, 'date')}
                         onCancel={() => setShowDatePicker(false)}
                         minimumDate={new Date()}
@@ -56,7 +73,7 @@ function DateAndTimeSelector(props) {
                         onPress={() => {
                             setShowDatePicker(true);
                         }}>
-                        <Text style={style.pickerText}>{props.date}</Text>
+                        <Text style={style.pickerText}>{moment(props.date).format('D MMM YYYY')}</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
@@ -64,7 +81,7 @@ function DateAndTimeSelector(props) {
                     <DateTimePickerModal
                         isVisible={showStartTimePicker}
                         mode="time"
-                        value={props.startTime}
+                        date={new Date(props.startTime)}
                         onConfirm={selected => selectedDateAndTime(selected, 'startTime')}
                         onCancel={() => setShowStartTimePicker(false)}
                     />
@@ -86,7 +103,7 @@ function DateAndTimeSelector(props) {
                     <DateTimePickerModal
                         isVisible={showEndTimePicker}
                         mode="time"
-                        value={props.endTime}
+                        date={new Date(props.endTime)}
                         onConfirm={selected => selectedDateAndTime(selected, 'endTime')}
                         onCancel={() => setShowEndTimePicker(false)}
                     />
@@ -103,7 +120,7 @@ function DateAndTimeSelector(props) {
                     </TouchableOpacity>
                 </View>
                 {showModal && (
-                    <WarningModal setShowModal={setShowModal} showModal={showModal} message='End time should be greater than start time'/>
+                    <WarningModal setShowModal={setShowModal} showModal={showModal} message={modalMessage} />
                 )}
                 <Button variant="outline" style={style.buttonStyle} onPress={() => props.handleSingleIndexSelect(1)} >
                     Next
