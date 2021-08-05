@@ -11,6 +11,7 @@ module.exports.signupWithDetails = (req, res) => {
         .set({
           displayName: req.body.name,
           email: req.body.email,
+          myBookings:[]
         })
         .then(() => {
           console.log("Displayname and email added successfully");
