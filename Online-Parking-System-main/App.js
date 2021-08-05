@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
-import type { Node } from 'react';
+import React, {useState} from 'react';
+import type {Node} from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -27,30 +27,27 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NativeBaseProvider } from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {NativeBaseProvider} from 'native-base';
 import AuthenticationScreen from './src/screen/authenticationScreen/authenticationScreen';
 import HomeScreen from './src/screen/homeScreen/homeScreen';
 import FeatureScreen from './src/screen/featureScreen/featureScreen';
-import { heightPercentageToDP as vh } from './src/responsive/responsive';
-import { Provider } from 'react-redux';
+import {heightPercentageToDP as vh} from './src/responsive/responsive';
+import {Provider} from 'react-redux';
 import store from './store/store';
 import SplashScreen from './src/screen/splashScreen/spashScreen';
 
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
-
-
-
   return (
     <>
       <Provider store={store}>
         <NativeBaseProvider>
           <NavigationContainer>
-            <Stack.Navigator >
+            <Stack.Navigator>
               <Stack.Screen
                 name="splash-screen"
                 component={SplashScreen}

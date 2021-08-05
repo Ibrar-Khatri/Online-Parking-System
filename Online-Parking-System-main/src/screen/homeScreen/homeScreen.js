@@ -1,6 +1,6 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React from 'react';
-import { heightPercentageToDP as vh } from '../../responsive/responsive';
+import {heightPercentageToDP as vh} from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
 import Home from './home/home';
@@ -45,7 +45,7 @@ function HomeScreen() {
         <Tab.Screen
           name="account-screen"
           component={Account}
-          options={{ title: 'Account' }}
+          options={{title: 'Account'}}
         />
         {/* <Tab.Screen
           name="admin-screen"

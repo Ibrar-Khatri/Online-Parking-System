@@ -1,12 +1,18 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import style from './slotCardStyle';
 
 function SlotCard(props) {
-  // console.log(navigation)
+  let dispatch = useDispatch();
+
   return (
     <>
-      <TouchableOpacity onPress={() => props.navigation.navigate('featureScreen')}>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch({type: 'selectArea', payload: props.location});
+          props.navigation.navigate('featureScreen');
+        }}>
         <View style={style.cardStyle}>
           <Image
             style={style.imageStyle}
