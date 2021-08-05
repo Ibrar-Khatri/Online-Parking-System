@@ -2,7 +2,7 @@ const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 
 module.exports.signupWithDetails = (req, res) => {
-  firebase
+  firebaseConfig
     .auth()
     .createUserWithEmailAndPassword(req.body.email, req.body.password)
     .then((user) => {
@@ -42,7 +42,7 @@ module.exports.signupWithDetails = (req, res) => {
 };
 
 module.exports.signinWithDetails = (req, res) => {
-  firebase
+  firebaseConfig
     .auth()
     .signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user) => {

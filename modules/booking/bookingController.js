@@ -11,14 +11,16 @@ module.exports.bookParkingArea = (req, res) => {
         "Document successfully written!",
         JSON.stringify(slotBooked.id)
       );
-      res.send({
-        status: true,
-        booking: slotBooked,
-      });
       db.collection("user")
         .doc(req.body.userId)
         .update({
           myBookings: firebase.firestore.FieldValue.arrayUnion(Date.now()),
+        })
+        .then((bookingAdd) => {
+          res.send({
+            status: true,
+            booking: slotBooked,
+          });
         });
     })
     .catch((error) => {
