@@ -7,7 +7,10 @@ module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
     .add(req.body)
     .then((slotBooked) => {
-      console.log("Document successfully written!", JSON.stringify(slotBooked));
+      console.log(
+        "Document successfully written!",
+        JSON.stringify(slotBooked.id)
+      );
       res.send({
         status: true,
         booking: slotBooked,
