@@ -1,5 +1,5 @@
-const firebase = require("../../firebase/firebase");
-const db = firebase.firestore();
+const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
+const db = firebaseConfig.firestore();
 
 module.exports.signupWithDetails = (req, res) => {
   firebase
@@ -11,7 +11,7 @@ module.exports.signupWithDetails = (req, res) => {
         .set({
           displayName: req.body.name,
           email: req.body.email,
-          myBookings:[]
+          myBookings: [],
         })
         .then(() => {
           console.log("Displayname and email added successfully");

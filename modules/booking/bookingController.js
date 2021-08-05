@@ -1,17 +1,11 @@
-const firebase = require("../../firebase/firebase");
-const db = firebase.firestore();
-const firebaseess = require("firebase");
+const firebaseConfig = require("../../firebaseConfig/firebase");
+const db = firebaseConfig.firestore();
+const firebase = require("firebase");
 
 module.exports.bookParkingArea = (req, res) => {
   console.log("Responed data " + JSON.stringify(req.body.userId));
-  // res.send({
-  //   status: true,
-  // });
-
-  // Add a new document in collection "cities"
   db.collection("bookings")
-    .doc()
-    .set(req.body)
+    .add(req.body)
     .then((slotBooked) => {
       console.log("Document successfully written!", slotBooked);
       res.send({
@@ -21,7 +15,7 @@ module.exports.bookParkingArea = (req, res) => {
       db.collection("user")
         .doc(req.body.userId)
         .update({
-          myBookings: firebaseess.firestore.FieldValue.arrayUnion(Date.now()),
+          myBookings: firebase.firestore.FieldValue.arrayUnion(Date.now()),
         });
     })
     .catch((error) => {
