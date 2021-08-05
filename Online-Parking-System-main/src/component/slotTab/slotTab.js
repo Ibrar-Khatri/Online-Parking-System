@@ -28,7 +28,7 @@ function SlotTab(props) {
     console.log(details);
     bookParkingArea(details)
       .then(res => {
-        console.log('Resolve ==> ' + res);
+        console.log('Resolve ==> ' + res.data);
       })
       .catch(err => {
         console.log('Error => ' + err);
