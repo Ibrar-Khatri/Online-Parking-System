@@ -25,7 +25,6 @@ function SlotTab(props) {
       slotName: slot,
       nameOfLocation: selectedArea,
     };
-    console.log(details);
     bookParkingArea(details)
       .then(res => {
         console.log('Resolve ==> ' + res.data);
