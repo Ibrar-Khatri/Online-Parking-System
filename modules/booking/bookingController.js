@@ -19,7 +19,10 @@ module.exports.bookParkingArea = (req, res) => {
       });
       db.collection("user")
         .doc(req.body.userId)
-        .update("myBookings", db.FieldValue.arrayUnion("01"));
+        .update({
+          myBookings:
+            firebase.firestore.FieldValue.arrayUnion("greater_virginia"),
+        });
     })
     .catch((error) => {
       console.error("Error writing document: ", error);
