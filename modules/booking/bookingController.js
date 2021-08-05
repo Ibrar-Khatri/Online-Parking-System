@@ -1,5 +1,6 @@
 const firebase = require("../../firebase/firebase");
 const db = firebase.firestore();
+const firebaseess = require("firebase");
 
 module.exports.bookParkingArea = (req, res) => {
   console.log("Responed data " + JSON.stringify(req.body.userId));
@@ -21,7 +22,7 @@ module.exports.bookParkingArea = (req, res) => {
         .doc(req.body.userId)
         .update({
           myBookings:
-            firebase.firestore.FieldValue.arrayUnion("greater_virginia"),
+            firebaseess.firestore.FieldValue.arrayUnion("greater_virginia"),
         });
     })
     .catch((error) => {
