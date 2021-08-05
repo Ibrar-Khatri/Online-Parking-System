@@ -1,4 +1,4 @@
-const firebaseConfig = require("../../firebaseConfig/firebase");
+const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 const firebase = require("firebase");
 
@@ -7,7 +7,7 @@ module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
     .add(req.body)
     .then((slotBooked) => {
-      console.log("Document successfully written!", slotBooked);
+      console.log("Document successfully written!", JSON.stringify(slotBooked));
       res.send({
         status: true,
         booking: slotBooked,
