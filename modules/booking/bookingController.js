@@ -21,8 +21,7 @@ module.exports.bookParkingArea = (req, res) => {
       db.collection("user")
         .doc(req.body.userId)
         .update({
-          myBookings:
-            firebaseess.firestore.FieldValue.arrayUnion("greater_virginia"),
+          myBookings: firebaseess.firestore.FieldValue.arrayUnion(Date.now()),
         });
     })
     .catch((error) => {
