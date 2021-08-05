@@ -2,7 +2,7 @@ const firebase = require("../../firebase/firebase");
 const db = firebase.firestore();
 
 module.exports.bookParkingArea = (req, res) => {
-  // console.log("Responed data " + JSON.stringify(req.body));
+  console.log("Responed data " + JSON.stringify(req.body.userId));
   // res.send({
   //   status: true,
   // });
