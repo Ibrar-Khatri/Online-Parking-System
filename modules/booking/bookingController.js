@@ -20,7 +20,7 @@ module.exports.bookParkingArea = (req, res) => {
       db.collection("user")
         .doc(req.body.userId)
         .update({
-          myBookings: db.FieldValue.arrayUnion("01"),
+          myBookings: ["hello"],
         });
     })
     .catch((error) => {
