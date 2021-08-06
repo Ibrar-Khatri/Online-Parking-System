@@ -135,7 +135,6 @@ function DateAndTimeSelector(props) {
           />
         )}
         <Button
-          variant="outline"
           style={style.buttonStyle}
           onPress={() => props.handleSingleIndexSelect(1)}>
           Next

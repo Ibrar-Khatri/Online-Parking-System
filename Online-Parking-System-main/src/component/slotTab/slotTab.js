@@ -1,21 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {Image, View, Text, TouchableOpacity} from 'react-native';
+import {Button} from 'native-base';
 import {useSelector} from 'react-redux';
 import {bookParkingArea} from '../../apis/user';
 
 import style from './slotTabStyle';
+import AddBookingModal from '../addBookingModal/addBookingModal';
 
 function SlotTab(props) {
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let selectedArea = useSelector(state => state.bookingReducer.selectedArea);
 
   let [dateAndTimeFilled, setDateAndTimeFilled] = useState(false);
-  useEffect(() => {
-    if ((props.date && props.startTime, props.endTime != 'Select Time')) {
-      return setDateAndTimeFilled(true);
-    }
-    return console.log('Empty ');
-  }, []);
+  let [slot, setSlot] = useState('');
+  let [onPressSlot, setOnPressSlot] = useState(false);
 
   function bookParking(slot) {
     let details = {
@@ -27,12 +25,18 @@ function SlotTab(props) {
     };
     bookParkingArea(details)
       .then(res => {
-        console.log('Resolve ==> ' + res.data);
+        console.log('Resolve ==> ' + JSON.stringify(res.data));
       })
       .catch(err => {
         console.log('Error => ' + err);
       });
   }
+
+  useEffect(() => {
+    if ((props.date && props.startTime, props.endTime != 'Select Time')) {
+      return setDateAndTimeFilled(true);
+    }
+  }, []);
 
   return (
     <>
@@ -47,15 +51,44 @@ function SlotTab(props) {
               <TouchableOpacity
                 style={style.carIconView}
                 key={index}
-                onPress={() => bookParking(`Slot ${index + 1}`)}>
-                <Image
-                  style={style.carIcon}
-                  source={require('../../assets/carIcon2.png')}
-                />
-                <Text style={style.slotTextStyle}>{`Slot ${index + 1}`}</Text>
+                onPress={() => {
+                  setOnPressSlot(true);
+                  setSlot(`Slot ${index + 1}`);
+                  bookParking();
+                }}>
+                {slot === `Slot ${index + 1}` ? (
+                  <>
+                    <Image
+                      style={style.carIcon}
+                      source={require('../../assets/carIcon2.png')}
+                    />
+                    <Text style={style.slotTextStyle}>Selected</Text>
+                  </>
+                ) : (
+                  <>
+                    <Image
+                      style={style.carIcon}
+                      source={require('../../assets/carIcon2.png')}
+                    />
+                    <Text style={style.slotTextStyle}>{`Slot ${
+                      index + 1
+                    }`}</Text>
+                  </>
+                )}
               </TouchableOpacity>
             ))}
           </View>
+          <View>
+            <Button
+              style={style.buttonStyle}
+              onPress={() => setOnPressSlot(true)}>
+              Add Booking
+            </Button>
+          </View>
+          <AddBookingModal
+            onPressSlot={onPressSlot}
+            setOnPressSlot={setOnPressSlot}
+          />
         </>
       ) : (
         <View style={style.messageView}>
