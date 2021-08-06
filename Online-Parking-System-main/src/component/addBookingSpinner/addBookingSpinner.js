@@ -11,7 +11,7 @@ import {
   Actionsheet,
 } from 'native-base';
 
-function AddBookingModal(props) {
+function AddBookingSpinner(props) {
   let [isLoading, setIsLoading] = useState(true);
   return (
     <>
@@ -26,4 +26,4 @@ function AddBookingModal(props) {
   );
 }
 
-export default AddBookingModal;
+export default AddBookingSpinner;

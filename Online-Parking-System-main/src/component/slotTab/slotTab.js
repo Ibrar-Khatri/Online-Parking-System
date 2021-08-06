@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {bookParkingArea} from '../../apis/user';
 
 import style from './slotTabStyle';
-import AddBookingModal from '../addBookingModal/addBookingModal';
+import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
 
 function SlotTab(props) {
   let userDetails = useSelector(state => state.userReducer.userDetails);
@@ -85,7 +85,7 @@ function SlotTab(props) {
               Add Booking
             </Button>
           </View>
-          <AddBookingModal
+          <AddBookingSpinner
             onPressSlot={onPressSlot}
             setOnPressSlot={setOnPressSlot}
           />
