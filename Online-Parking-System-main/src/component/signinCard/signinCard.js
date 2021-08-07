@@ -1,70 +1,65 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Input } from 'native-base';
-import * as yup from 'yup'
-import { Formik } from 'formik';
+import React, {useState} from 'react';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {Input} from 'native-base';
+import * as yup from 'yup';
+import {Formik} from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import AuthenticationButton from '../button/button';
-import { signinWithDetails } from '../../apis/user'
+import {signinWithDetails} from '../../apis/user';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
 
 function SigninCard(props) {
-
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
-      .email("Please enter valid email")
+      .email('Please enter valid email')
       .required('Email Address is Required'),
     password: yup
       .string()
-      .min(6, ({ min }) => `Password must be at least ${min} characters`)
+      .min(6, ({min}) => `Password must be at least ${min} characters`)
       .required('Password is required'),
-  })
-
+  });
 
   function signinWithDet(value) {
-    setIsLoading(true)
+    setIsLoading(true);
     let userDetails = {
       email: value.email,
       password: value.password,
-    }
+    };
     signinWithDetails(userDetails)
       .then(async res => {
-        console.log('>>>>> ' + JSON.stringify(res.data.user))
+        console.log('>>>>> ' + JSON.stringify(res.data.user));
         if (res.data.status) {
-          await AsyncStorage.setItem('userID', res.data.user.uid)
-          dispatch({ type: 'addUserDetails', payload: res.data.user })
-          setIsLoading(false)
+          await AsyncStorage.setItem('userID', res.data.user.uid);
+          dispatch({type: 'addUserDetails', payload: res.data.user});
+          setIsLoading(false);
           return props.navigation.reset({
             index: 0,
-            routes: [{ name: 'home-screen' }],
+            routes: [{name: 'main-screen'}],
           });
+        } else {
+          setErrMessage(res.data.error.message);
+          setShowModal(true);
+          setIsLoading(false);
+          return;
         }
-        else {
-          setErrMessage(res.data.error.message)
-          setShowModal(true)
-          setIsLoading(false)
-          return
-        }
-
       })
       .catch(err => {
-        setErrMessage('Please try again later ')
-        setShowModal(true)
-        setIsLoading(false)
-        return
+        setErrMessage('Please try again later ');
+        setShowModal(true);
+        setIsLoading(false);
+        return;
       });
   }
 
-  let [isLoading, setIsLoading] = useState(false)
-  let [showInvalidInput, setShowInvalidInput] = useState(false)
-  let [showModal, setShowModal] = useState(false)
-  let [errMessage, setErrMessage] = useState('')
+  let [isLoading, setIsLoading] = useState(false);
+  let [showInvalidInput, setShowInvalidInput] = useState(false);
+  let [showModal, setShowModal] = useState(false);
+  let [errMessage, setErrMessage] = useState('');
 
   return (
     <>
@@ -72,18 +67,18 @@ function SigninCard(props) {
         <View>
           <Text style={style.signInText}>Login</Text>
           <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={{email: '', password: ''}}
             validationSchema={loginValidationSchema}
-            onSubmit={(value) => signinWithDet(value)}>
-            {(
-              { handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                isValid, },
-            ) => (
-              <View >
+            onSubmit={value => signinWithDet(value)}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              isValid,
+            }) => (
+              <View>
                 <View style={style.fieldView}>
                   <Input
                     variant="underlined"
@@ -92,9 +87,9 @@ function SigninCard(props) {
                     onChangeText={handleChange('email')}
                     value={values.email}
                   />
-                  {
-                    showInvalidInput && errors.email && <Text style={style.invalidInputStyle}>{errors.email}</Text>
-                  }
+                  {showInvalidInput && errors.email && (
+                    <Text style={style.invalidInputStyle}>{errors.email}</Text>
+                  )}
                   <Input
                     variant="underlined"
                     type="password"
@@ -103,9 +98,9 @@ function SigninCard(props) {
                     onChangeText={handleChange('password')}
                     value={values.password}
                   />
-                  {
-                    showInvalidInput && errors.password && <Text>{errors.password}</Text>
-                  }
+                  {showInvalidInput && errors.password && (
+                    <Text>{errors.password}</Text>
+                  )}
                 </View>
                 <AuthenticationButton
                   buttonType="Signin"
@@ -117,13 +112,18 @@ function SigninCard(props) {
             )}
           </Formik>
           {showModal && (
-            <WarningModal setShowModal={setShowModal} showModal={showModal} message={errMessage} />
+            <WarningModal
+              setShowModal={setShowModal}
+              showModal={showModal}
+              message={errMessage}
+            />
           )}
         </View>
         <View>
           <View style={style.messageText}>
             <Text>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate('signup-screen')}>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('signup-screen')}>
               <Text style={style.loginText}> Signup</Text>
             </TouchableOpacity>
           </View>

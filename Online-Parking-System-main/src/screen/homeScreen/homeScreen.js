@@ -1,5 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getUserDetailsById} from '../../apis/user';
 import {heightPercentageToDP as vh} from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
@@ -9,6 +11,8 @@ import MyBooking from './myBooking/myBooking';
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
+  // let userDetails = useSelector(state => state.userReducer.userDetails);
+
   return (
     <>
       <Tab.Navigator
@@ -35,7 +39,7 @@ function HomeScreen() {
           }}
         />
         <Tab.Screen
-          name="booking-screen"
+          name="myBooking-screen"
           component={MyBooking}
           options={{
             title: 'Bookings',

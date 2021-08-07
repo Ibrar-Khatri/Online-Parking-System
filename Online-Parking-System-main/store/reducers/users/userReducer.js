@@ -1,19 +1,17 @@
-
-
 const initialState = {
-    userDetails: {}
+  userDetails: {},
 };
 
 const userReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'addUserDetails':
-            return {
-                ...state, userDetails: action.payload
-            };
-        default:
-            return state;
-    }
-
+  switch (action.type) {
+    case 'addUserDetails':
+      return {
+        ...state,
+        userDetails: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export default userReducer;

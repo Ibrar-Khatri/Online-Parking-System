@@ -16,6 +16,7 @@ module.exports.bookParkingArea = (req, res) => {
           res.send({
             status: true,
             slotBooked: true,
+            slotId: slotBooked.id,
           });
         });
     })

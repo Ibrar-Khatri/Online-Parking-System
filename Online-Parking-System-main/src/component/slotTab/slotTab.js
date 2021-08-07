@@ -6,16 +6,18 @@ import {bookParkingArea} from '../../apis/user';
 
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
+import {useNavigation} from '@react-navigation/native';
 
 function SlotTab(props) {
+  let navigation = useNavigation();
+
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let selectedArea = useSelector(state => state.bookingReducer.selectedArea);
-
-  let [dateAndTimeFilled, setDateAndTimeFilled] = useState(false);
   let [slot, setSlot] = useState('');
   let [onPressSlot, setOnPressSlot] = useState(false);
 
   function bookParking(slot) {
+    setOnPressSlot(true);
     let details = {
       startTime: props.startTime,
       endTime: props.endTime,
@@ -23,6 +25,11 @@ function SlotTab(props) {
       slotName: slot,
       nameOfLocation: selectedArea,
     };
+    // setOnPressSlot(false);
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{name: 'main-screen'}],
+    // });
     bookParkingArea(details)
       .then(res => {
         console.log('Resolve ==> ' + JSON.stringify(res.data));
@@ -31,36 +38,29 @@ function SlotTab(props) {
         console.log('Error => ' + err);
       });
   }
-
-  useEffect(() => {
-    if ((props.date && props.startTime, props.endTime != 'Select Time')) {
-      return setDateAndTimeFilled(true);
-    }
-  }, []);
-
+  let dateAndTimeFilled =
+    (props.date && props.startTime, props.endTime != 'Select Time');
   return (
     <>
       {dateAndTimeFilled ? (
         <>
-          <Image
+          {/* <Image
             style={style.carParkingIcon}
             source={require('../../assets/carParkingIcon.png')}
-          />
+          /> */}
           <View style={style.slotView}>
             {Array.from({length: 12}).map((item, index) => (
               <TouchableOpacity
                 style={style.carIconView}
                 key={index}
                 onPress={() => {
-                  setOnPressSlot(true);
                   setSlot(`Slot ${index + 1}`);
-                  bookParking();
                 }}>
                 {slot === `Slot ${index + 1}` ? (
                   <>
                     <Image
                       style={style.carIcon}
-                      source={require('../../assets/carIcon2.png')}
+                      source={require('../../assets/selectedSlotIcon.png')}
                     />
                     <Text style={style.slotTextStyle}>Selected</Text>
                   </>
@@ -68,7 +68,7 @@ function SlotTab(props) {
                   <>
                     <Image
                       style={style.carIcon}
-                      source={require('../../assets/carIcon2.png')}
+                      source={require('../../assets/slotIcon.png')}
                     />
                     <Text style={style.slotTextStyle}>{`Slot ${
                       index + 1
@@ -81,7 +81,10 @@ function SlotTab(props) {
           <View>
             <Button
               style={style.buttonStyle}
-              onPress={() => setOnPressSlot(true)}>
+              onPress={() => {
+                setOnPressSlot(true);
+                bookParking();
+              }}>
               Add Booking
             </Button>
           </View>

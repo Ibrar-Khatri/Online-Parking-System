@@ -1,15 +1,14 @@
-import React from 'react'
-import ParkingSlot from '../../../component/parkingSLot/parkingSlot'
-import BookingScreenBGImage from '../../../component/parkingSLotBGImage/parkingSLotBGImage'
-
-
+import React from 'react';
+import ParkingSlot from '../../../component/parkingSLot/parkingSlot';
+import BookingScreenBGImage from '../../../component/parkingSLotBGImage/parkingSLotBGImage';
 
 function AddBookingScreen() {
-    return <>
-        <BookingScreenBGImage />
-        <ParkingSlot />
+  return (
+    <>
+      <BookingScreenBGImage />
+      <ParkingSlot />
     </>
+  );
 }
-
 
 export default AddBookingScreen;

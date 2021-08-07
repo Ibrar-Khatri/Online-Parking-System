@@ -21,6 +21,7 @@ module.exports.signupWithDetails = (req, res) => {
               uid: user.user.uid,
               displayName: req.body.name,
               email: req.body.email,
+              myBookings: [],
             },
           });
         })
@@ -59,6 +60,8 @@ module.exports.signinWithDetails = (req, res) => {
                 uid: user.user.uid,
                 email: req.body.email,
                 displayName: doc.data().displayName,
+                myBookings: doc.data().myBookings,
+                myBookings: doc.data().myBookings,
               },
             });
           }
@@ -93,6 +96,7 @@ module.exports.getUserDetails = (req, res) => {
             uid: req.body.uid,
             email: doc.data().email,
             displayName: doc.data().displayName,
+            myBookings: doc.data().myBookings,
           },
         });
       }

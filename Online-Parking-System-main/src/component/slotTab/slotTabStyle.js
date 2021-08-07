@@ -12,7 +12,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   carIcon: {
-    height: vh(6.5),
+    height: vh(7),
     width: vw(15),
     marginLeft: vh(2),
     marginRight: vh(2),
@@ -20,8 +20,8 @@ export default StyleSheet.create({
   carIconView: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    borderColor: 'white',
-    borderWidth: 1,
+    marginTop: vh(1),
+    marginBottom: vh(1),
   },
   slotView: {
     flexDirection: 'row',
@@ -34,12 +34,12 @@ export default StyleSheet.create({
   slotTextStyle: {
     fontSize: vh(2),
     alignSelf: 'center',
-    marginTop: vh(-1),
+    marginTop: vh(0),
   },
   buttonStyle: {
     width: vw(50),
     alignSelf: 'center',
-    marginTop: vh(2),
+    // marginTop: vh(2),
   },
   messageView: {
     marginTop: 'auto',
