@@ -1,14 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, View} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import moment from 'moment';
-import SlotTab from '../../../component/slotTab';
+import SlotTab from '../../../component/slotTab/slotTab';
 import DateAndTimeSelector from '../../../component/dateAndTimeTab/dateAndTimeTab';
 import style from './bookingScreenStyle';
 
