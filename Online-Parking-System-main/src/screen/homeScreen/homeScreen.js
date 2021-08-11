@@ -16,7 +16,7 @@ function HomeScreen() {
 
   // console.log(userDetails.uid);
 
-  getUsersAllBookings(userDetails.uid)
+  getUsersAllBookings({userId: userDetails.uid})
     .then(res => {
       console.log(res.data);
     })

@@ -28,13 +28,13 @@ module.exports.bookParkingArea = (req, res) => {
     });
 };
 module.exports.getUsersAllBookings = (req, res) => {
-  console.log("Responed data " + JSON.stringify(req.body));
+  console.log("Responed data " + req.body.userId);
   // res.send({
   //   status: true,
   // });
 
   db.collection("bookings")
-    .where("userId", "==", req.body)
+    .where("userId", "==", req.body.userId)
     .get()
     .then((querySnapshot) => {
       console.log("Query Snapshot" + querySnapshot);
