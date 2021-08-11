@@ -28,7 +28,7 @@ module.exports.bookParkingArea = (req, res) => {
     });
 };
 module.exports.getUsersAllBookings = (req, res) => {
-  console.log("Responed data " + JSON.stringify(req.body.userId));
+  console.log("Responed data " + JSON.stringify(req.body));
   res.send({
     status: true,
   });
