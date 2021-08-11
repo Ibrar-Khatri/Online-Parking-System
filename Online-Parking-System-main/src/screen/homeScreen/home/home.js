@@ -1,11 +1,21 @@
 import React, {useEffect} from 'react';
-import {Image, ImageBackground, ScrollView, Text, View} from 'react-native';
-import SlotCard from '../../../component/slotCard/slotCard';
+import {
+  Image,
+  ImageBackground,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import style from './homeStyle';
 import Animated from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 
 function Home({navigation}) {
+  let parkingAreas = [
+    'DHA Karachi',
+    'Gulshane-e-Iqal Karachi',
+    'Clifton Karachi',
+  ];
   return (
     <>
       <ImageBackground
@@ -17,12 +27,24 @@ function Home({navigation}) {
             <Text style={style.textStyle}>Best Parking</Text>
           </View> */}
         <View style={style.viewStyle}>
-          <SlotCard location="DHA Karachi" navigation={navigation} />
-          <SlotCard
-            location="Gulshan-e-Iqbal Karachi"
-            navigation={navigation}
-          />
-          <SlotCard location="Clifton Karachi" navigation={navigation} />
+          {parkingAreas.map((area, i) => {
+            console.log(i);
+            return (
+              <TouchableOpacity
+                key={i}
+                onPress={() => {
+                  navigation.navigate('featureScreen');
+                }}>
+                <View style={style.cardStyle}>
+                  <Image
+                    style={style.imageStyle}
+                    source={require('../../../assets/location.png')}
+                  />
+                  <Text style={style.locationText}>{area}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ImageBackground>
     </>

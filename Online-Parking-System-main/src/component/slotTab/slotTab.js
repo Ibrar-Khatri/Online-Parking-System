@@ -25,6 +25,7 @@ function SlotTab(props) {
       slotName: slot,
       nameOfLocation: selectedArea,
     };
+    console.log(details);
     // setOnPressSlot(false);
     // navigation.reset({
     //   index: 0,
