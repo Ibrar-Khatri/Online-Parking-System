@@ -37,7 +37,7 @@ module.exports.getUsersAllBookings = (req, res) => {
     .where("userId", "==", req.body)
     .get()
     .then((querySnapshot) => {
-      console.log("Query Snapshot" + querySnapshot);
+      console.log("Query Snapshot" + JSON.stringify(querySnapshot));
       res.send({
         status: true,
       });
