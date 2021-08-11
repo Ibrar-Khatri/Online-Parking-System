@@ -4,7 +4,7 @@ import {Input} from 'native-base';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import AuthenticationButton from '../button/button';
-import {signupWithDetails} from '../../apis/user';
+import {signupWithDetails} from '../../apis/userApis';
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';

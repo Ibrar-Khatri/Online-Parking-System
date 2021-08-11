@@ -23,11 +23,3 @@ export const getUserDetailsById = async details => {
   );
   return resp;
 };
-
-export const bookParkingArea = async details => {
-  let resp = await axios.post(
-    `${appSetting.severHostedUrl}/booking/book-parking`,
-    details,
-  );
-  return resp;
-};

@@ -27,3 +27,22 @@ module.exports.bookParkingArea = (req, res) => {
       });
     });
 };
+module.exports.getUsersAllBookings = (req, res) => {
+  console.log("Responed data " + JSON.stringify(req.body.userId));
+  res.send({
+    status: true,
+  });
+
+  // db.collection("bookings")
+  //   .where("capital", "==", true)
+  //   .get()
+  //   .then((querySnapshot) => {
+  //     querySnapshot.forEach((doc) => {
+  //       // doc.data() is never undefined for query doc snapshots
+  //       console.log(doc.id, " => ", doc.data());
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log("Error getting documents: ", error);
+  //   });
+};

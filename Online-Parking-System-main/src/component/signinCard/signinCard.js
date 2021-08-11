@@ -6,7 +6,7 @@ import {Formik} from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import AuthenticationButton from '../button/button';
-import {signinWithDetails} from '../../apis/user';
+import {signinWithDetails} from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
 

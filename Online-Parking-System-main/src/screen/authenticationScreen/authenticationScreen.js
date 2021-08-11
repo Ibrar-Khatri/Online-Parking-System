@@ -1,52 +1,53 @@
 import React, {useEffect, useState} from 'react';
+import {ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch} from 'react-redux';
 import SigninScreen from './signin/signinScreen';
 import SignupScreen from './signup/signupScreen';
-import {getUserDetailsById} from '../../apis/user';
+import {getUserDetailsById} from '../../apis/userApis';
+import NetworkErrorScreen from './networkErrorScreen/networkErrorScreen';
 
 const Stack = createStackNavigator();
 
 function AuthenticationScreen({navigation}) {
-  let [isLogin,setIsLogin] = useState(true)
   const dispatch = useDispatch();
+
+  let [isLogin, setIsLogin] = useState(true);
+  let [initialRouteName, setInitialRouteName] = useState('');
 
   let isUserLogin = async () => {
     const value = await AsyncStorage.getItem('userID');
     if (value !== null) {
       //we get user id  from value
-      // setIsLogin(true)
       getUserDetailsById({uid: value})
         .then(user => {
-          
           dispatch({type: 'addUserDetails', payload: user.data.user});
-          setIsLogin(false)
           navigation.reset({
             index: 0,
             routes: [{name: 'main-screen'}],
           });
-          return
+          return;
         })
         .catch(err => {
           console.log('User details cannot be found');
-          setIsLogin(false)
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'main-screen'}],
-            params:{userId:}
-          });
+          setIsLogin(false);
+          setInitialRouteName('network-error-screen');
+          // navigation.reset({
+          //   index: 0,
+          //   routes: [{name: 'main-screen'}],
+          //   params:{userId:}
+          // });
         });
     } else {
-      // setIsLogin(true)
       // navigation.reset({
       //   index: 0,
       //   routes: [{name: 'authentication-screen'}],
       // });
-      setIsLogin(false)
+      setInitialRouteName('signin-screen');
+      setIsLogin(false);
       return;
     }
-
   };
 
   useEffect(() => {
@@ -54,14 +55,23 @@ function AuthenticationScreen({navigation}) {
   }, []);
   return (
     <>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-    {
-      isLogin?<Text>Loading</Text>:<>
-        <Stack.Screen name="signin-screen" component={SigninScreen} />
-        <Stack.Screen name="signup-screen" component={SignupScreen} />
-      </>
-      }
-      </Stack.Navigator>
+      {isLogin ? (
+        <ActivityIndicator size="large" color="#00ff00" />
+      ) : (
+        <>
+          <Stack.Navigator
+            screenOptions={{headerShown: false}}
+            initialRouteName={initialRouteName}>
+            <Stack.Screen name="signin-screen" component={SigninScreen} />
+            <Stack.Screen name="signup-screen" component={SignupScreen} />
+            <Stack.Screen
+              name="network-error-screen"
+              component={NetworkErrorScreen}
+              initialParams={{isUserLogin: isUserLogin}}
+            />
+          </Stack.Navigator>
+        </>
+      )}
     </>
   );
 }

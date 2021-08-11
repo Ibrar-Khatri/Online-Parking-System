@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Image, View, Text, TouchableOpacity} from 'react-native';
 import {Button} from 'native-base';
 import {useSelector} from 'react-redux';
-import {bookParkingArea} from '../../apis/user';
+import {bookParkingArea} from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';

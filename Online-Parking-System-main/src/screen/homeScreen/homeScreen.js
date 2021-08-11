@@ -1,7 +1,8 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUserDetailsById} from '../../apis/user';
+import {getUsersAllBookings} from '../../apis/bookingApis';
+import {getUserDetailsById} from '../../apis/userApis';
 import {heightPercentageToDP as vh} from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
@@ -11,7 +12,17 @@ import MyBooking from './myBooking/myBooking';
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
-  // let userDetails = useSelector(state => state.userReducer.userDetails);
+  let userDetails = useSelector(state => state.userReducer.userDetails);
+
+  // console.log(userDetails.uid);
+
+  getUsersAllBookings(userDetails.uid)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
   return (
     <>
