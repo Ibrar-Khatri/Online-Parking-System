@@ -38,8 +38,14 @@ module.exports.getUsersAllBookings = (req, res) => {
     .get()
     .then((querySnapshot) => {
       console.log("Query Snapshot" + querySnapshot);
+      res.send({
+        status: true,
+      });
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
+      res.send({
+        status: false,
+      });
     });
 };
