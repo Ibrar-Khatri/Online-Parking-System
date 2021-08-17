@@ -35,7 +35,7 @@ module.exports.getUsersAllBookings = (req, res) => {
     .then( async(userBookings) => {
       console.log("Query Snapshot" + userBookings)
       await userBookings.map(bking => {
-        let bookingDetails = bking.doc()
+        let bookingDetails = bking.data()
         return { ...bookingDetails, bookingsId: bking.id }
       })
       console.log("Bookings >>>> " + JSON.stringify(userBookings))
