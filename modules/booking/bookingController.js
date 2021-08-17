@@ -41,7 +41,8 @@ module.exports.getUsersAllBookings = (req, res) => {
       userBookings.map((bking) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
-        return {...bking, bookingId:bking.id}
+        let booking = bking.data()
+        return { ...booking, bookingId: bking.id }
       });
       res.send({
         status: true,
