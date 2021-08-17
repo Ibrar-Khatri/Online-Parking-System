@@ -37,7 +37,7 @@ module.exports.getUsersAllBookings = (req, res) => {
     .where("userId", "==", req.body.userId)
     .get()
     .then((userBookings) => {
-      console.log("User Bookings" + JSON.stringify(userBookings));
+      console.log("User Bookings" + typeof userBookings);
       userBookings.map((bking) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
