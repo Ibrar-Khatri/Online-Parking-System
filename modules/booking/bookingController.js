@@ -32,17 +32,16 @@ module.exports.getUsersAllBookings = (req, res) => {
   db.collection("bookings")
     .where("userId", "==", req.body.userId)
     .get()
-    .then((userBookings) => {
-      console.log("Query Snapshot" + userBookings);
-      let bookings = (() => userBookings.map((boks) => {
-        return { ...boks, bookingId: boks.id }
-      }))
-      console.log('bookings lenght ' + bookings.length + ' userbookings length' + userBookings.length)
-      if (bookings.length === userBookings.length) {
-        res.send({
-          status: true, bookings: bookings
-        });
-      }
+    .then( async(userBookings) => {
+      console.log("Query Snapshot" + userBookings)
+      await userBookings.map(bking => {
+        let bookingDetails = bking.doc()
+        return { ...bookingDetails, bookingsId: bking.id }
+      })
+      console.log("Bookings >>>> " + JSON.stringify(userBookings))
+      res.send({
+        status:true,bookings:userBookings
+      })
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
