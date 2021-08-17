@@ -36,11 +36,11 @@ module.exports.getUsersAllBookings = (req, res) => {
   db.collection("bookings")
     .where("userId", "==", req.body.userId)
     .get()
-    .then((querySnapshot) => {
+    .then(async (querySnapshot) => {
       console.log("Query Snapshot" + querySnapshot);
-      querySnapshot.forEach((doc) => {
+      await querySnapshot.map((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(JSON.stringify({ ...doc.data(), id: doc.id }));
+        return ({ ...doc.data(), id: doc.id })
       });
       res.send({
         status: true,
