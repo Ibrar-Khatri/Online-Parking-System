@@ -38,12 +38,12 @@ module.exports.getUsersAllBookings = (req, res) => {
     .get()
     .then(async (querySnapshot) => {
       console.log("Query Snapshot" + querySnapshot);
-      await querySnapshot.map((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        return ({ ...doc.data(), id: doc.id })
+      let bookings = []
+      await querySnapshot.forEach((doc) => {
+        return bookings.push({ ...doc.data(), id: doc.id })
       });
       res.send({
-        status: true,
+        status: true, bookings: bookings
       });
     })
     .catch((error) => {
