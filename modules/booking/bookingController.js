@@ -45,3 +45,27 @@ module.exports.getUsersAllBookings = (req, res) => {
       });
     });
 };
+
+module.exports.getAvailaleBookingsFromDB = (req, res) => {
+  console.log('user details +>' + req.body)
+  res.send({
+    status: true, boking: req.body
+  });
+  // db.collection("bookings")
+  //   .where("userId", "==", req.body.userId)
+  //   .get()
+  //   .then(async (userBookings) => {
+  //     let bookings = []
+  //     await userBookings.forEach((doc) => {
+  //       bookings.push({ ...doc.data(), id: doc.id })
+  //     });
+  //     res.send({
+  //       status: true, bookings: bookings
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     res.send({
+  //       status: false,
+  //     });
+  //   });
+};

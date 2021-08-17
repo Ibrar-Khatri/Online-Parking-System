@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
 import {useDispatch} from 'react-redux';
 
-function SignupCard(props) {
+function SignupCard({navigation}) {
   const dispatch = useDispatch();
 
   const loginValidationSchema = yup.object().shape({
@@ -38,7 +38,7 @@ function SignupCard(props) {
           await AsyncStorage.setItem('userID', res.data.user.uid);
           dispatch({type: 'addUserDetails', payload: res.data.user});
           setIsLoading(false);
-          return props.navigation.reset({
+          return navigation.reset({
             index: 0,
             routes: [{name: 'main-screen'}],
           });
@@ -136,7 +136,7 @@ function SignupCard(props) {
         <View>
           <View style={style.messageText}>
             <Text>Already have an account?</Text>
-            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={style.loginText}> Login</Text>
             </TouchableOpacity>
           </View>

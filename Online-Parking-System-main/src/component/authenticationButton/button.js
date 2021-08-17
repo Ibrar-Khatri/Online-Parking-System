@@ -5,19 +5,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {signupWithDetails} from '../../apis/userApis';
 import {signinWithDetails} from '../../apis/userApis';
 
-function AuthenticationButton(props) {
+function AuthenticationButton({isLoading,setShowInvalidInput,handleSubmit,buttonType}) {
   return (
     <>
       <Button
         colorScheme="blue"
-        isLoading={props.isLoading}
+        isLoading={isLoading}
         style={style.buttonStyle}
-        disabled={props.isLoading}
+        disabled={isLoading}
         onPress={() => {
-          props.setShowInvalidInput(true);
-          props.handleSubmit();
+          setShowInvalidInput(true);
+          handleSubmit();
         }}>
-        {props.buttonType}
+        {buttonType}
       </Button>
     </>
   );

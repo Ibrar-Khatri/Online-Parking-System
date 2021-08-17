@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {Button} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Button } from 'native-base';
 import style from './dateAndTimeTabStyle';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import WarningModal from '../modal/modal';
 
-function DateAndTimeSelector(props) {
+function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, setEndTime,handleSingleIndexSelect }) {
   let [showModal, setShowModal] = useState(false);
   let [showDatePicker, setShowDatePicker] = useState(false);
   let [showStartTimePicker, setShowStartTimePicker] = useState(false);
@@ -18,13 +18,13 @@ function DateAndTimeSelector(props) {
     if (condition === 'date') {
       setShowDatePicker(false);
 
-      props.setStartTime('Select Time');
-      props.setEndTime('Select Time');
-      return props.setDate(selected);
+      setStartTime('Select Time');
+      setEndTime('Select Time');
+      return setDate(selected);
     } else if (condition === 'startTime') {
       setShowStartTimePicker(false);
-      props.setEndTime('Select Time');
-      let selectedDate = new Date(props.date);
+      setEndTime('Select Time');
+      let selectedDate = new Date(date);
       selected.setFullYear(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
@@ -37,26 +37,26 @@ function DateAndTimeSelector(props) {
         );
         return setShowModal(true);
       }
-      return props.setStartTime(selected);
+      return setStartTime(selected);
     } else if (condition === 'endTime') {
       setShowEndTimePicker(false);
-      if (props.startTime === 'Select Time') {
+      if (startTime === 'Select Time') {
         setModalMessage('Please select start time');
         return setShowModal(true);
       }
-      let selectedDate = new Date(props.date);
+      let selectedDate = new Date(date);
       selected.setFullYear(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
         selectedDate.getDate(),
       );
-      if (moment(selected).diff(moment(props.startTime), 'minute') < 30) {
+      if (moment(selected).diff(moment(startTime), 'minute') < 30) {
         setModalMessage(
           "End time should be greater than 30 minutes from start's time",
         );
         return setShowModal(true);
       }
-      return props.setEndTime(selected);
+      return setEndTime(selected);
     }
   }
   return (
@@ -67,7 +67,7 @@ function DateAndTimeSelector(props) {
           <DateTimePickerModal
             isVisible={showDatePicker}
             mode="date"
-            date={new Date(props.date)}
+            date={new Date(date)}
             onConfirm={selected => selectedDateAndTime(selected, 'date')}
             onCancel={() => setShowDatePicker(false)}
             minimumDate={new Date()}
@@ -78,7 +78,7 @@ function DateAndTimeSelector(props) {
               setShowDatePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {moment(props.date).format('D MMM YYYY')}
+              {moment(date).format('D MMM YYYY')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -88,9 +88,9 @@ function DateAndTimeSelector(props) {
             isVisible={showStartTimePicker}
             mode="time"
             date={
-              props.startTime == 'Select Time'
+              startTime == 'Select Time'
                 ? new Date()
-                : new Date(props.startTime)
+                : new Date(startTime)
             }
             onConfirm={selected => selectedDateAndTime(selected, 'startTime')}
             onCancel={() => setShowStartTimePicker(false)}
@@ -102,9 +102,9 @@ function DateAndTimeSelector(props) {
               setShowStartTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {props.startTime === 'Select Time'
-                ? props.startTime
-                : moment(props.startTime).format('LT')}
+              {startTime === 'Select Time'
+                ? startTime
+                : moment(startTime).format('LT')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -114,9 +114,9 @@ function DateAndTimeSelector(props) {
             isVisible={showEndTimePicker}
             mode="time"
             date={
-              props.endTime == 'Select Time'
+              endTime == 'Select Time'
                 ? new Date()
-                : new Date(props.endTime)
+                : new Date(endTime)
             }
             onConfirm={selected => selectedDateAndTime(selected, 'endTime')}
             onCancel={() => setShowEndTimePicker(false)}
@@ -127,9 +127,9 @@ function DateAndTimeSelector(props) {
               setShowEndTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {props.endTime === 'Select Time'
-                ? props.endTime
-                : moment(props.endTime).format('LT')}
+              {endTime === 'Select Time'
+                ? endTime
+                : moment(endTime).format('LT')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -141,11 +141,11 @@ function DateAndTimeSelector(props) {
           />
         )}
         <View>
-        <Button
-          style={style.buttonStyle}
-          onPress={() => props.handleSingleIndexSelect(1)}>
-          Next 
-        </Button>
+          <Button
+            style={style.buttonStyle}
+            onPress={() => handleSingleIndexSelect(1)}>
+            Next
+          </Button>
         </View>
       </View>
     </>

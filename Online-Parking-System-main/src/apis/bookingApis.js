@@ -15,3 +15,11 @@ export const getUsersAllBookings = async details => {
   );
   return resp;
 };
+
+export const getAvailableSlots = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/booking/get-available-slots`,
+    details,
+  );
+  return resp;
+};

@@ -10,7 +10,7 @@ import {signinWithDetails} from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
 
-function SigninCard(props) {
+function SigninCard({navigation}) {
   const dispatch = useDispatch();
 
   const loginValidationSchema = yup.object().shape({
@@ -32,12 +32,11 @@ function SigninCard(props) {
     };
     signinWithDetails(userDetails)
       .then(async res => {
-        console.log('>>>>> ' + JSON.stringify(res.data.user));
         if (res.data.status) {
           await AsyncStorage.setItem('userID', res.data.user.uid);
           dispatch({type: 'addUserDetails', payload: res.data.user});
           setIsLoading(false);
-          return props.navigation.reset({
+          return navigation.reset({
             index: 0,
             routes: [{name: 'main-screen'}],
           });
@@ -124,7 +123,7 @@ function SigninCard(props) {
           <View style={style.messageText}>
             <Text>Don't have an account?</Text>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('signup-screen')}>
+              onPress={() => navigation.navigate('signup-screen')}>
               <Text style={style.loginText}> Signup</Text>
             </TouchableOpacity>
           </View>

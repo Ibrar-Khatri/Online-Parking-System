@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
-import { bookParkingArea } from '../../apis/bookingApis';
+import { bookParkingArea, getAvailableSlots } from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
 import { useNavigation } from '@react-navigation/native';
 
-function SlotTab(props) {
+function SlotTab({ location, date, startTime, endTime }) {
 
   let navigation = useNavigation();
   let dispatch = useDispatch()
@@ -16,17 +16,26 @@ function SlotTab(props) {
   let [slot, setSlot] = useState('');
   let [isLoading, setIsLoading] = useState(false);
 
+  getAvailableSlots({ startTime, endTime, location })
+    .then((res) =>{
+      console.log(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    
+
   function bookParking() {
     setIsLoading(true);
     let details = {
-      startTime: props.startTime,
-      endTime: props.endTime,
+      startTime: startTime,
+      endTime: endTime,
       userId: userDetails.uid,
       slotName: slot,
-      nameOfLocation: props.location,
+      nameOfLocation: location,
     };
     console.log(details)
-    
+
     bookParkingArea(details)
       .then(res => {
         dispatch({ type: 'addNewBooking', payload: details })
@@ -36,10 +45,9 @@ function SlotTab(props) {
       .catch(err => {
         setIsLoading(false);
       });
-      setIsLoading(false);
   }
   let dateAndTimeFilled =
-    (props.date && props.startTime, props.endTime != 'Select Time');
+    (date && startTime, endTime != 'Select Time');
   return (
     <>
       {dateAndTimeFilled ? (
@@ -77,10 +85,7 @@ function SlotTab(props) {
             <Button
               disabled={!slot}
               style={style.buttonStyle}
-              onPress={() => {
-                setIsLoading(true);
-                bookParking();
-              }}>
+              onPress={() => bookParking()}>
               Add Booking
             </Button>
           </View>

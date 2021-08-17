@@ -5,7 +5,6 @@ const initialState = {
 const bookingReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'userBookings':
-      console.log(action)
       return { ...state, userBookings: action.payload};
     case 'addNewBooking':
       let newBooking = action.payload;
