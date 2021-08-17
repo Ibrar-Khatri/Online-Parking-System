@@ -1,9 +1,9 @@
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {getUsersAllBookings} from '../../apis/bookingApis';
-import {getUserDetailsById} from '../../apis/userApis';
-import {heightPercentageToDP as vh} from '../../responsive/responsive';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersAllBookings } from '../../apis/bookingApis';
+import { getUserDetailsById } from '../../apis/userApis';
+import { heightPercentageToDP as vh } from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
 import Home from './home/home';
@@ -12,17 +12,20 @@ import MyBooking from './myBooking/myBooking';
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
+  let dispatch = useDispatch()
   let userDetails = useSelector(state => state.userReducer.userDetails);
-
-  // console.log(userDetails.uid);
-
-  getUsersAllBookings({userId: userDetails.uid})
+  let bookings = useSelector(state => state.bookingReducer.userBookings)
+  if(!bookings){
+    getUsersAllBookings({ userId: userDetails.uid })
     .then(res => {
-      console.log(res.data);
+      if (res.data.status) {
+        return dispatch({ type: 'userBookings', payload: res.data.bookings })
+      }
     })
     .catch(err => {
       console.log(err);
     });
+  } 
 
   return (
     <>
@@ -60,7 +63,7 @@ function HomeScreen() {
         <Tab.Screen
           name="account-screen"
           component={Account}
-          options={{title: 'Account'}}
+          options={{ title: 'Account' }}
         />
         {/* <Tab.Screen
           name="admin-screen"

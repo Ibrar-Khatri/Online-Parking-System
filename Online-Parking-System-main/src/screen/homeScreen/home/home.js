@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import style from './homeStyle';
-import Animated from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
 
 function Home({ navigation }) {
   let parkingAreas = [
@@ -17,17 +15,15 @@ function Home({ navigation }) {
     'Clifton Karachi',
   ];
   return (
-    <>
       <ImageBackground
         resizeMode="cover"
         source={{ uri: 'https://i.gifer.com/RNQQ.gif' }}
         style={style.backgroundImage}>
         <View style={style.viewStyle}>
-          {parkingAreas.map((area, i) => {
-            console.log(i);
+          {parkingAreas.map((area, ind) => {
             return (
               <TouchableOpacity
-                key={i}
+                key={ind}
                 onPress={() => {
                   navigation.navigate('featureScreen', { location: area });
                 }}>
@@ -43,7 +39,6 @@ function Home({ navigation }) {
           })}
         </View>
       </ImageBackground>
-    </>
   );
 }
 

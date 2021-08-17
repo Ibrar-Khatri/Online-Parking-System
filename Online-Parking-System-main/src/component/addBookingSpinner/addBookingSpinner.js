@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import {
   Modal,
   Button,
@@ -15,8 +15,7 @@ function AddBookingSpinner(props) {
   return (
     <>
       <Modal
-        isOpen={props.onPressSlot}
-        onClose={() => props.setOnPressSlot(false)}>
+        isOpen={props.isLoading}>
         <HStack space={2}>
           <Spinner accessibilityLabel="Loading posts" />
         </HStack>

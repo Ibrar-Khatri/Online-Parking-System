@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
 
-// const headerHeight = heightPercentageToDP(45);
-
 export default StyleSheet.create({
   backgroundHeader: {
     backgroundColor: '#00bfff',

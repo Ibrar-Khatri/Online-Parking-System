@@ -2,62 +2,26 @@ import React from 'react'
 import { Box } from 'native-base'
 import { Text, View } from 'react-native'
 import style from './myBookingCardStyle'
+import { useSelector } from 'react-redux'
+import moment from 'moment'
 
 function MyBookingCard() {
-
-
+    let bookings = useSelector(state => state.bookingReducer.userBookings)
 
     return <>
-
         <View style={style.outSideCard} >
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
-            <View style={style.bookingCard}>
-                <Text style={style.textStyle}>Location : DHA Karachi</Text>
-                <Text style={style.textStyle}>Slot : 20</Text>
-                <Text style={style.textStyle}>Time :12:30-1:30</Text>
-                <Text style={style.textStyle}>Date: 10/7/2021</Text>
-            </View>
+            {
+                bookings.map((bking,ind) => {
+                    return (
+                        <View style={style.bookingCard} key={ind}>
+                            <Text style={style.textStyle}>Location : {bking.nameOfLocation}</Text>
+                            <Text style={style.textStyle}>{bking.slotName}</Text>
+                            <Text style={style.textStyle}>Time :{moment(bking.startTime).format('LT') + " - " + moment(bking.endTime).format('LT')}</Text>
+                            <Text style={style.textStyle}>Date: {moment(bking.data).format("MMM Do YY")}</Text>
+                        </View>
+                    )
+                })
+            }
         </View>
     </>
 }

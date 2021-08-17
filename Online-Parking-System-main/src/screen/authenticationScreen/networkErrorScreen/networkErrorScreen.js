@@ -4,7 +4,6 @@ import {Button} from 'native-base';
 import style from './networkErrorScreenStyle';
 
 function NetworkErrorScreen({route, navigation}) {
-  //   console.log('navigation ' + );
 
   return (
     <>

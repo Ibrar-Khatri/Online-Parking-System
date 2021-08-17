@@ -7,8 +7,8 @@ import style from './myBookingStyle'
 
 function MyBookingScreen() {
     return <>
-        <ScrollView>
 
+        <ScrollView>
             <View><Text style={style.myBookingText}>My Bookings</Text></View>
             <View>
                 <MyBookingCard />

@@ -3,7 +3,6 @@ const db = firebaseConfig.firestore();
 const firebase = require("firebase");
 
 module.exports.bookParkingArea = (req, res) => {
-  // console.log("Responed data " + JSON.stringify(req.body.userId));
   db.collection("bookings")
     .add(req.body)
     .then((slotBooked) => {
@@ -28,26 +27,19 @@ module.exports.bookParkingArea = (req, res) => {
     });
 };
 module.exports.getUsersAllBookings = (req, res) => {
-  console.log("Responed data " + req.body.userId);
-  // res.send({
-  //   status: true,
-  // });
-
   db.collection("bookings")
     .where("userId", "==", req.body.userId)
     .get()
-    .then(async (querySnapshot) => {
-      console.log("Query Snapshot" + querySnapshot);
+    .then(async (userBookings) => {
       let bookings = []
-      await querySnapshot.forEach((doc) => {
-        return bookings.push({ ...doc.data(), id: doc.id })
+      await userBookings.forEach((doc) => {
+        bookings.push({ ...doc.data(), id: doc.id })
       });
       res.send({
         status: true, bookings: bookings
       });
     })
     .catch((error) => {
-      console.log("Error getting documents: ", error);
       res.send({
         status: false,
       });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bookParkingArea } from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
@@ -11,13 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 function SlotTab(props) {
 
   let navigation = useNavigation();
-
+  let dispatch = useDispatch()
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let [slot, setSlot] = useState('');
-  let [onPressSlot, setOnPressSlot] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
 
   function bookParking() {
-    setOnPressSlot(true);
+    setIsLoading(true);
     let details = {
       startTime: props.startTime,
       endTime: props.endTime,
@@ -25,15 +25,18 @@ function SlotTab(props) {
       slotName: slot,
       nameOfLocation: props.location,
     };
-    setOnPressSlot(false);
+    console.log(details)
+    
     bookParkingArea(details)
-    .then(res => {
-        console.log('Resolve ==> ' + JSON.stringify(res.data));
-        navigation.navigate('main-screen',{screen:'myBooking-screen'})
+      .then(res => {
+        dispatch({ type: 'addNewBooking', payload: details })
+        setIsLoading(false);
+        navigation.navigate('main-screen', { screen: 'myBooking-screen' })
       })
       .catch(err => {
-        console.log('Error => ' + err);
+        setIsLoading(false);
       });
+      setIsLoading(false);
   }
   let dateAndTimeFilled =
     (props.date && props.startTime, props.endTime != 'Select Time');
@@ -72,18 +75,18 @@ function SlotTab(props) {
           </View>
           <View>
             <Button
-              disabled={slot === ''}
+              disabled={!slot}
               style={style.buttonStyle}
               onPress={() => {
-                setOnPressSlot(true);
+                setIsLoading(true);
                 bookParking();
               }}>
               Add Booking
             </Button>
           </View>
           <AddBookingSpinner
-            onPressSlot={onPressSlot}
-            setOnPressSlot={setOnPressSlot}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </>
       ) : (
