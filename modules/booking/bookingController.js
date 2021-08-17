@@ -29,24 +29,28 @@ module.exports.bookParkingArea = (req, res) => {
 };
 module.exports.getUsersAllBookings = (req, res) => {
   console.log("Responed data " + req.body.userId);
+  // res.send({
+  //   status: true,
+  // });
+
   db.collection("bookings")
     .where("userId", "==", req.body.userId)
     .get()
-    .then( async(userBookings) => {
-      console.log("Query Snapshot" + userBookings)
-      await userBookings.map(bking => {
-        let bookingDetails = bking.data()
-        return { ...bookingDetails, bookingsId: bking.id }
-      })
-      console.log("Bookings >>>> " + JSON.stringify(userBookings))
+    .then((userBookings) => {
+      console.log("User Bookings" + JSON.stringify(userBookings));
+      userBookings.map((bking) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        return {...bking, bookingId:bking.id}
+      });
       res.send({
-        status:true,bookings:userBookings
-      })
+        status: true,
+      });
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
       res.send({
-        status: false, error: error
+        status: false,
       });
     });
 };
