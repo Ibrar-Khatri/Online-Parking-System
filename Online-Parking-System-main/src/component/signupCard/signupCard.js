@@ -3,7 +3,7 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Input} from 'native-base';
 import * as yup from 'yup';
 import {Formik} from 'formik';
-import AuthenticationButton from '../button/button';
+import AuthenticationButton from '../authenticationButton/button';
 import {signupWithDetails} from '../../apis/userApis';
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -97,6 +97,7 @@ function SignupCard(props) {
                     style={style.emailInput}
                     onChangeText={handleChange('email')}
                     value={values.email}
+                    textContentType="emailAddress"
                   />
                   {showInvalidInput && errors.email && (
                     <Text style={style.invalidInputStyle}>{errors.email}</Text>

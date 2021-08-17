@@ -33,17 +33,8 @@ function AuthenticationScreen({navigation}) {
           console.log('User details cannot be found');
           setIsLogin(false);
           setInitialRouteName('network-error-screen');
-          // navigation.reset({
-          //   index: 0,
-          //   routes: [{name: 'main-screen'}],
-          //   params:{userId:}
-          // });
         });
     } else {
-      // navigation.reset({
-      //   index: 0,
-      //   routes: [{name: 'authentication-screen'}],
-      // });
       setInitialRouteName('signin-screen');
       setIsLogin(false);
       return;

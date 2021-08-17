@@ -39,7 +39,6 @@ export default StyleSheet.create({
   buttonStyle: {
     width: vw(50),
     alignSelf: 'center',
-    // marginTop: vh(2),
   },
   messageView: {
     marginTop: 'auto',

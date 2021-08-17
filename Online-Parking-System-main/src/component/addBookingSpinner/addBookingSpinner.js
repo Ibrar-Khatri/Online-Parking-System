@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 
 function AddBookingSpinner(props) {
-  let [isLoading, setIsLoading] = useState(true);
   return (
     <>
       <Modal

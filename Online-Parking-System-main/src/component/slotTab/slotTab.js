@@ -1,38 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import {Image, View, Text, TouchableOpacity} from 'react-native';
-import {Button} from 'native-base';
-import {useSelector} from 'react-redux';
-import {bookParkingArea} from '../../apis/bookingApis';
+import React, { useEffect, useState } from 'react';
+import { Image, View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'native-base';
+import { useSelector } from 'react-redux';
+import { bookParkingArea } from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 function SlotTab(props) {
+
   let navigation = useNavigation();
 
   let userDetails = useSelector(state => state.userReducer.userDetails);
-  let selectedArea = useSelector(state => state.bookingReducer.selectedArea);
   let [slot, setSlot] = useState('');
   let [onPressSlot, setOnPressSlot] = useState(false);
 
-  function bookParking(slot) {
+  function bookParking() {
     setOnPressSlot(true);
     let details = {
       startTime: props.startTime,
       endTime: props.endTime,
       userId: userDetails.uid,
       slotName: slot,
-      nameOfLocation: selectedArea,
+      nameOfLocation: props.location,
     };
-    // setOnPressSlot(false);
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{name: 'main-screen'}],
-    // });
+    setOnPressSlot(false);
     bookParkingArea(details)
-      .then(res => {
+    .then(res => {
         console.log('Resolve ==> ' + JSON.stringify(res.data));
+        navigation.navigate('main-screen',{screen:'myBooking-screen'})
       })
       .catch(err => {
         console.log('Error => ' + err);
@@ -44,12 +41,8 @@ function SlotTab(props) {
     <>
       {dateAndTimeFilled ? (
         <>
-          {/* <Image
-            style={style.carParkingIcon}
-            source={require('../../assets/carParkingIcon.png')}
-          /> */}
           <View style={style.slotView}>
-            {Array.from({length: 12}).map((item, index) => (
+            {Array.from({ length: 12 }).map((item, index) => (
               <TouchableOpacity
                 style={style.carIconView}
                 key={index}
@@ -70,9 +63,8 @@ function SlotTab(props) {
                       style={style.carIcon}
                       source={require('../../assets/slotIcon.png')}
                     />
-                    <Text style={style.slotTextStyle}>{`Slot ${
-                      index + 1
-                    }`}</Text>
+                    <Text style={style.slotTextStyle}>{`Slot ${index + 1
+                      }`}</Text>
                   </>
                 )}
               </TouchableOpacity>
@@ -80,6 +72,7 @@ function SlotTab(props) {
           </View>
           <View>
             <Button
+              disabled={slot === ''}
               style={style.buttonStyle}
               onPress={() => {
                 setOnPressSlot(true);

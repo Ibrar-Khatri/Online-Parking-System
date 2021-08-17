@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import AuthenticationButton from '../button/button';
+import AuthenticationButton from '../authenticationButton/button';
 import {signinWithDetails} from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
@@ -86,6 +86,7 @@ function SigninCard(props) {
                     style={style.fieldStyle}
                     onChangeText={handleChange('email')}
                     value={values.email}
+                    textContentType="emailAddress"
                   />
                   {showInvalidInput && errors.email && (
                     <Text style={style.invalidInputStyle}>{errors.email}</Text>
