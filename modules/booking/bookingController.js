@@ -34,20 +34,20 @@ module.exports.getUsersAllBookings = (req, res) => {
     .get()
     .then((userBookings) => {
       console.log("Query Snapshot" + userBookings);
-      let bookings = userBookings.map((boks) => {
-        return {...boks, bookingId:boks.id}
-      });
-      console.log('bookings lenght ' +bookings.length  + ' userbookings length' + userBookings.length)
-      if(bookings.length === userBookings.length) {
+      let bookings = (() => userBookings.map((boks) => {
+        return { ...boks, bookingId: boks.id }
+      }))
+      console.log('bookings lenght ' + bookings.length + ' userbookings length' + userBookings.length)
+      if (bookings.length === userBookings.length) {
         res.send({
-          status: true,bookings:bookings
+          status: true, bookings: bookings
         });
       }
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
       res.send({
-        status: false, error:error
+        status: false, error: error
       });
     });
 };
