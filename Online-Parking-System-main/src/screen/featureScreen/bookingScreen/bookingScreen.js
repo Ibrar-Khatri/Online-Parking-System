@@ -6,10 +6,11 @@ import SlotTab from '../../../component/slotTab/slotTab';
 import DateAndTimeSelector from '../../../component/dateAndTimeTab/dateAndTimeTab';
 import style from './bookingScreenStyle';
 
-function AddBookingScreen() {
+function AddBookingScreen({route}) {
   let [date, setDate] = useState(moment(new Date()));
   let [startTime, setStartTime] = useState('Select Time');
   let [endTime, setEndTime] = useState('Select Time');
+  let [location] = useState(route.params.location);
 
   let [selectedIndex, setSelectedIndex] = useState(0);
   let [showDateAndTimeTab, setShowDateAndTimeTab] = useState(true);
@@ -51,7 +52,7 @@ function AddBookingScreen() {
             setEndTime={setEndTime}
           />
         ) : (
-          <SlotTab date={date} startTime={startTime} endTime={endTime} />
+          <SlotTab date={date} startTime={startTime} endTime={endTime} location={location}/>
         )}
       </View>
     </>

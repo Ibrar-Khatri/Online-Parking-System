@@ -31,7 +31,7 @@ function DateAndTimeSelector(props) {
         selectedDate.getDate(),
       );
 
-      if (moment(selected).diff(moment(Date.now()), 'second') < -1) {
+      if (moment(selected).diff(moment(Date.now()), 'minute') < 0) {
         setModalMessage(
           "Start Time is should not be less than current date's time",
         );
@@ -44,7 +44,13 @@ function DateAndTimeSelector(props) {
         setModalMessage('Please select start time');
         return setShowModal(true);
       }
-      if (moment(selected).diff(moment(props.startTime), 'minutes') < 29) {
+      let selectedDate = new Date(props.date);
+      selected.setFullYear(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+      );
+      if (moment(selected).diff(moment(props.startTime), 'minute') < 30) {
         setModalMessage(
           "End time should be greater than 30 minutes from start's time",
         );
@@ -55,7 +61,7 @@ function DateAndTimeSelector(props) {
   }
   return (
     <>
-      <View>
+      <View style={style.slectDateAndTimeView}>
         <View>
           <Text style={style.selectPickerHeading}>Select Date</Text>
           <DateTimePickerModal
@@ -134,11 +140,13 @@ function DateAndTimeSelector(props) {
             message={modalMessage}
           />
         )}
+        <View>
         <Button
           style={style.buttonStyle}
           onPress={() => props.handleSingleIndexSelect(1)}>
-          Next
+          Next 
         </Button>
+        </View>
       </View>
     </>
   );

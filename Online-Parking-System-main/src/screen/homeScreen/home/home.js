@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   ImageBackground,
@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import style from './homeStyle';
 import Animated from 'react-native-reanimated';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function Home({navigation}) {
+function Home({ navigation }) {
   let parkingAreas = [
     'DHA Karachi',
     'Gulshane-e-Iqal Karachi',
@@ -20,12 +20,8 @@ function Home({navigation}) {
     <>
       <ImageBackground
         resizeMode="cover"
-        source={{uri: 'https://i.gifer.com/RNQQ.gif'}}
+        source={{ uri: 'https://i.gifer.com/RNQQ.gif' }}
         style={style.backgroundImage}>
-        {/* <View style={style.headingDtyle}>
-            <Text style={style.textStyle}>Best Spaces</Text>
-            <Text style={style.textStyle}>Best Parking</Text>
-          </View> */}
         <View style={style.viewStyle}>
           {parkingAreas.map((area, i) => {
             console.log(i);
@@ -33,7 +29,7 @@ function Home({navigation}) {
               <TouchableOpacity
                 key={i}
                 onPress={() => {
-                  navigation.navigate('featureScreen');
+                  navigation.navigate('featureScreen', { location: area });
                 }}>
                 <View style={style.cardStyle}>
                   <Image

@@ -6,7 +6,7 @@ import AddBookingScreen from './bookingScreen/bookingScreen';
 
 let Stack = createStackNavigator();
 
-function FeatureScreen({navigation}) {
+function FeatureScreen({route}) {
   return (
     <>
       <Stack.Navigator
@@ -22,7 +22,7 @@ function FeatureScreen({navigation}) {
             fontSize: vh(3),
           },
         }}>
-        <Stack.Screen name="add-booking" component={AddBookingScreen} />
+        <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }}/>
       </Stack.Navigator>
     </>
   );

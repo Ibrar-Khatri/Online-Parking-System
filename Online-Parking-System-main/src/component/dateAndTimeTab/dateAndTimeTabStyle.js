@@ -5,28 +5,28 @@ import {
 } from '../../responsive/responsive';
 
 export default StyleSheet.create({
+    slectDateAndTimeView: {
+        flex:1,
+        display: 'flex',
+        flexDirection:'column',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+    },
     selectPickerHeading: {
-        alignSelf: 'center',
         fontSize: vh(4),
         fontWeight: 'bold',
-        marginTop: vh(2),
     },
     pickerStyle: {
-        alignSelf: 'center',
         height: vh(5),
         width: vw(50),
         borderWidth: vh(0.2),
         borderRadius: vh(3),
-        marginTop: vh(2),
     },
     pickerText: {
         fontSize: vh(3),
         alignSelf: 'center',
     },
     buttonStyle: {
-        width: vw(30),
-        alignSelf: 'center',
-        margin: vh(4),
-        height: vh(6),
+        width: vw(50),
     },
 });
