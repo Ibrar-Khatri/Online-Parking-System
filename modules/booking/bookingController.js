@@ -1,6 +1,7 @@
 const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 const firebase = require("firebase");
+const { json } = require("body-parser");
 
 module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
@@ -47,8 +48,9 @@ module.exports.getUsersAllBookings = (req, res) => {
 };
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
-  console.log('user details +>' + req.body)
   let userBookingDet = req.body
+  console.log('user details +>' +  JSON.stringify(userBookingDet.nameOfLocation))
+  console.log('Requested Data +>' +  JSON.stringify(req.body.nameOfLocation))
   db.collection("bookings")
     .where("nameOfLocation", "==", userBookingDet.nameOfLocation)
     .where()
