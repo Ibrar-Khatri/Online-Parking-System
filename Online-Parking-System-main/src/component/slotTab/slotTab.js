@@ -32,7 +32,7 @@ function SlotTab({ location, date, startTime, endTime }) {
       endTime: endTime,
       userId: userDetails.uid,
       slotName: slot,
-      nameOfLocation: location,
+      location,
     };
     console.log(details)
 

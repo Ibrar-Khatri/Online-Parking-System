@@ -49,15 +49,13 @@ module.exports.getUsersAllBookings = (req, res) => {
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   let userBookingDet = req.body
-  console.log('user details +>' +  JSON.stringify(userBookingDet.nameOfLocation))
-  console.log('Requested Data +>' +  JSON.stringify(req.body))
   db.collection("bookings")
-    .where("nameOfLocation", "==", userBookingDet.nameOfLocation)
+    .where("nameOfLocation", "==", userBookingDet.location)
     .where()
     .get()
     .then(async (userSelectedAreaBokings) => {
       await userSelectedAreaBokings.forEach((doc) => {
-        console.log('Namae of location ' + doc.data().nameOfLocation)
+        console.log('location ' + doc.data().location)
       });
       res.send({
         status: true
