@@ -54,7 +54,7 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
     .get()
     .then(async (userSelectedAreaBokings) => {
       await userSelectedAreaBokings.forEach((doc) => {
-        console.log('location ' + doc.data().location)
+        console.log('location ' + doc.data().startTime)
       });
       res.send({
         status: true
@@ -66,3 +66,15 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
       });
     });
 };
+
+
+// let userStart = 2
+// let userEnd = 5
+// let myStart = 6
+// let myEnd = 8
+// Date.parse(new Date(2020, 5, 20))
+// if((myStart > userStart && myEnd   > userEnd) || (myStart < userStart && myEnd < userEnd )){
+// console.log(true)
+// }else{
+// console.log(false)
+// }
