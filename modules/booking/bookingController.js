@@ -49,8 +49,9 @@ module.exports.getUsersAllBookings = (req, res) => {
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   let userBookingDet = req.body
+  console.log('location ' + JSON.stringify(userBookingDet))
   db.collection("bookings")
-    .where("nameOfLocation", "==", userBookingDet.location)
+    .where("location", "==", userBookingDet.location)
     .where()
     .get()
     .then(async (userSelectedAreaBokings) => {
