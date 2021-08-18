@@ -32,8 +32,8 @@ module.exports.getUsersAllBookings = (req, res) => {
     .get()
     .then(async (userBookings) => {
       let bookings = []
-      await userBookings.forEach((doc) => {
-        bookings.push({ ...doc.data(), id: doc.id })
+      await userBookings.forEach((bking) => {
+        bookings.push({ ...bking.data(), id: bking.id })
       });
       res.send({
         status: true, bookings: bookings
@@ -48,24 +48,22 @@ module.exports.getUsersAllBookings = (req, res) => {
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   console.log('user details +>' + req.body)
-  res.send({
-    status: true, boking: req.body
-  });
-  // db.collection("bookings")
-  //   .where("userId", "==", req.body.userId)
-  //   .get()
-  //   .then(async (userBookings) => {
-  //     let bookings = []
-  //     await userBookings.forEach((doc) => {
-  //       bookings.push({ ...doc.data(), id: doc.id })
-  //     });
-  //     res.send({
-  //       status: true, bookings: bookings
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     res.send({
-  //       status: false,
-  //     });
-  //   });
+  let userBookingDet = req.body
+  db.collection("bookings")
+    .where("nameOfLocation", "==", userBookingDet.nameOfLocation)
+    .where()
+    .get()
+    .then(async (userSelectedAreaBokings) => {
+      await userSelectedAreaBokings.forEach((doc) => {
+        console.log('Namae of location ' + doc.data().nameOfLocation)
+      });
+      res.send({
+        status: true
+      });
+    })
+    .catch((error) => {
+      res.send({
+        status: false,
+      });
+    });
 };
