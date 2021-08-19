@@ -1,9 +1,12 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsersAllBookings } from '../../apis/bookingApis';
-import { getUserDetailsById } from '../../apis/userApis';
-import { heightPercentageToDP as vh } from '../../responsive/responsive';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getUsersAllBookings} from '../../apis/bookingApis';
+import {getUserDetailsById} from '../../apis/userApis';
+import {
+  heightPercentageToDP as vh,
+  widthPercentageToDP as vw,
+} from '../../responsive/responsive';
 import Account from './account/account';
 import Admin from './admin/admin';
 import Home from './home/home';
@@ -12,20 +15,20 @@ import MyBooking from './myBooking/myBooking';
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
-  let bookings = useSelector(state => state.bookingReducer.userBookings)
-  if(!bookings){
-    getUsersAllBookings({ userId: userDetails.uid })
-    .then(res => {
-      if (res.data.status) {
-        return dispatch({ type: 'userBookings', payload: res.data.bookings })
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  } 
+  let bookings = useSelector(state => state.bookingReducer.userBookings);
+  if (!bookings) {
+    getUsersAllBookings({userId: userDetails.uid})
+      .then(res => {
+        if (res.data.status) {
+          return dispatch({type: 'userBookings', payload: res.data.bookings});
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <>
@@ -37,11 +40,11 @@ function HomeScreen() {
             backgroundColor: '#00bfff',
           },
           indicatorStyle: {
-            backgroundColor: 'darkblue',
+            backgroundColor: 'white',
             height: 2.5,
           },
           labelStyle: {
-            fontSize: vh(1.5),
+            fontSize: vw(3.5),
           },
           tabBarVisible: 'false',
         }}>
@@ -63,13 +66,13 @@ function HomeScreen() {
         <Tab.Screen
           name="account-screen"
           component={Account}
-          options={{ title: 'Account' }}
+          options={{title: 'Account'}}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name="admin-screen"
           component={Admin}
-          options={{ title: 'Admin' }}
-        /> */}
+          options={{title: 'Admin'}}
+        />
       </Tab.Navigator>
     </>
   );

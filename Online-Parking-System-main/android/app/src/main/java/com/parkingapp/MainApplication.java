@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.facebook.react.bridge.JSIModulePackage; // <- add
+import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -32,6 +34,10 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected String getJSMainModuleName() {
       return "index";
+    }
+    @Override
+    protected JSIModulePackage getJSIModulePackage() {
+      return new ReanimatedJSIModulePackage(); // <- add
     }
   };
 
