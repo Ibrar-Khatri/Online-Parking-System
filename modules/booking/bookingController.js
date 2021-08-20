@@ -1,6 +1,7 @@
 const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 const firebase = require("firebase");
+const date = require('datejs')
 
 module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
@@ -44,7 +45,7 @@ module.exports.getUsersAllBookings = (req, res) => {
         status: false,
       });
     });
-};
+}
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   let userBookingDet = req.body
@@ -53,12 +54,21 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
     .where("location", "==", userBookingDet.location)
     .get()
     .then(async (userSelectedAreaBokings) => {
+
+      let availableBookings = []
+
       await userSelectedAreaBokings.forEach((doc) => {
-        console.log('location ' + doc.data().startTime)
-      });
+        // console.log('location ' + doc.data().startTime)
+        if (date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime)) {
+          console.log('start Time Aavailble ')
+          if (date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime)) {
+            console.log('End time also available')
+          }
+        }
+      })
       res.send({
         status: true
-      });
+      })
     })
     .catch((error) => {
       res.send({
@@ -68,13 +78,25 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
 };
 
 
-// let userStart = 2
-// let userEnd = 5
-// let myStart = 6
-// let myEnd = 8
-// Date.parse(new Date(2020, 5, 20))
-// if((myStart > userStart && myEnd   > userEnd) || (myStart < userStart && myEnd < userEnd )){
-// console.log(true)
-// }else{
-// console.log(false)
+
+
+
+
+
+
+
+// let userStart = 120
+// let userEnd = 160
+// let myStart = 110
+// let myEnd = 140
+
+// console.log('User Start', userStart)
+// console.log('User End', userEnd)
+// console.log('My Start', myStart)
+// console.log('My End', myEnd)
+
+// if ((myStart > userStart && userEnd < myStart) || (myStart < userStart && myEnd < userStart)) {
+//   console.log('Available')
+// } else {
+//   console.log('Not available')
 // }
