@@ -15,16 +15,21 @@ function SlotTab({ location, date, startTime, endTime }) {
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let [slot, setSlot] = useState('');
   let [isLoading, setIsLoading] = useState(false);
+  let [bookedSlot, setBookedSlot] = useState([])
 
-  getAvailableSlots({ startTime, endTime, location })
-    .then((res) =>{
-      console.log(res.data)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-    
 
+
+  useEffect(() => {
+    getAvailableSlots({ startTime, endTime, location })
+      .then((res) => {
+        if (res.data.status) {
+          setBookedSlot(res.data.bookedSlot)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
   function bookParking() {
     setIsLoading(true);
     let details = {
@@ -53,33 +58,38 @@ function SlotTab({ location, date, startTime, endTime }) {
       {dateAndTimeFilled ? (
         <>
           <View style={style.slotView}>
-            {Array.from({ length: 12 }).map((item, index) => (
-              <TouchableOpacity
-                style={style.carIconView}
-                key={index}
-                onPress={() => {
-                  setSlot(`Slot ${index + 1}`);
-                }}>
-                {slot === `Slot ${index + 1}` ? (
-                  <>
-                    <Image
-                      style={style.carIcon}
-                      source={require('../../assets/selectedSlotIcon.png')}
-                    />
-                    <Text style={style.slotTextStyle}>Selected</Text>
-                  </>
-                ) : (
-                  <>
-                    <Image
-                      style={style.carIcon}
-                      source={require('../../assets/slotIcon.png')}
-                    />
-                    <Text style={style.slotTextStyle}>{`Slot ${index + 1
-                      }`}</Text>
-                  </>
-                )}
-              </TouchableOpacity>
-            ))}
+            {Array.from({ length: 12 }).map((item, index) => {
+              let booked = bookedSlot.some((it) => it === `Slot ${index + 1}`)
+              console.log(booked)
+              return (
+                <TouchableOpacity
+                  disabled={booked}
+                  style={style.carIconView}
+                  key={index}
+                  onPress={() => {
+                    setSlot(`Slot ${index + 1}`);
+                  }}>
+                  {slot === `Slot ${index + 1}` ? (
+                    <>
+                      <Image
+                        style={style.carIcon}
+                        source={require('../../assets/selectedSlotIcon.png')}
+                      />
+                      <Text style={style.slotTextStyle}>Selected</Text>
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        style={style.carIcon}
+                        source={require('../../assets/slotIcon.png')}
+                      />
+                      <Text style={style.slotTextStyle}>{`Slot ${index + 1
+                        }`}</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
+              )
+            })}
           </View>
           <View>
             <Button

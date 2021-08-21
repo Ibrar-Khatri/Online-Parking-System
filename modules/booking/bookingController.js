@@ -49,28 +49,40 @@ module.exports.getUsersAllBookings = (req, res) => {
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   let userBookingDet = req.body
-  console.log('location ' + JSON.stringify(userBookingDet))
+  // console.log('location ' + JSON.stringify(userBookingDet))
   db.collection("bookings")
     .where("location", "==", userBookingDet.location)
     .get()
     .then(async (userSelectedAreaBokings) => {
+      let bookedSlot = []
+      await userSelectedAreaBokings.forEach((doc,) => {
+        let start = Date.parse(userBookingDet.startTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime))
+        let end = Date.parse(userBookingDet.endTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime))
+        if (start || end) {
+          bookedSlot.push(doc.data().slotName)
+          console.log("hello" + doc.data().slotName)
+        }
 
-      let availableBookings = []
 
-      await userSelectedAreaBokings.forEach((doc) => {
-        // console.log('location ' + doc.data().startTime)
-        // console.log('start Time Aavailble ', date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
-        // console.log('End time also available', date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime))
-        console.log('start Time Aavailble '+ Date.parse(userBookingDet.startTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime)))
-        // console.log('End time also available' )
+        //cutome work
+        // let myStart = Date.parse(new Date(userBookingDet.startTime))
+        // let myEnd = Date.parse(new Date(userBookingDet.endTime))
+        // let userStart = Date.parse(new Date(doc.data().startTime))
+        // let userEnd = Date.parse(new Date(doc.data().endTime))
+        // if ((myStart > userStart && userEnd < myStart) || (myStart < userStart && myEnd < userStart)) {
+        //   bookedSlot.push(doc.data().slotName)
+        // }
       })
+      console.log(bookedSlot)
       res.send({
-        status: true
+        status: true,
+          bookedSlot: bookedSlot
       })
     })
     .catch((error) => {
       res.send({
         status: false,
+        error: error
       });
     });
 };

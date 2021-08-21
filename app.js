@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const userRoute = require("./modules/user/userRoute");
 const bookingRoute = require("./modules/booking/bookingRoute");
-const port = process.env.PORT;
+const port = process.env.PORT || 6000;
 
 app.use(cors());
 
