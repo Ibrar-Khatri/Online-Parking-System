@@ -1,7 +1,7 @@
 const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 const firebase = require("firebase");
-const date = require('datejs')
+require('datejs')
 
 module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
@@ -61,8 +61,8 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
         // console.log('location ' + doc.data().startTime)
         // console.log('start Time Aavailble ', date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
         // console.log('End time also available', date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime))
-        console.log('start Time Aavailble ' )
-        console.log('End time also available' )
+        console.log('start Time Aavailble '+ Date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
+        // console.log('End time also available' )
       })
       res.send({
         status: true
