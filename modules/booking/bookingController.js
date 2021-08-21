@@ -61,7 +61,7 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
         // console.log('location ' + doc.data().startTime)
         // console.log('start Time Aavailble ', date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
         // console.log('End time also available', date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime))
-        console.log('start Time Aavailble '+ Date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
+        console.log('start Time Aavailble '+ Date.parse(userBookingDet.startTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime)))
         // console.log('End time also available' )
       })
       res.send({
