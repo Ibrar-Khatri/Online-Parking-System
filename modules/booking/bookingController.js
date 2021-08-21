@@ -59,8 +59,10 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
 
       await userSelectedAreaBokings.forEach((doc) => {
         // console.log('location ' + doc.data().startTime)
-        console.log('start Time Aavailble ', date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
-        console.log('End time also available', date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime))
+        // console.log('start Time Aavailble ', date.parse(userBookingDet.startTime).between(doc.data().startTime, doc.data().endTime))
+        // console.log('End time also available', date.parse(userBookingDet.endTime).between(doc.data().startTime, doc.data().endTime))
+        console.log('start Time Aavailble ' )
+        console.log('End time also available' )
       })
       res.send({
         status: true
