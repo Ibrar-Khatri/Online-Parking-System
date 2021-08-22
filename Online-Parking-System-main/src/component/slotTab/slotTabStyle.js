@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { marginBottom } from 'styled-system';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
@@ -17,13 +18,21 @@ export default StyleSheet.create({
     marginLeft: vh(2),
     marginRight: vh(2),
   },
+  bookedSlotCarIcon: {
+    opacity: 0.5,
+    height: vh(7),
+    width: vw(15),
+    marginLeft: vh(2),
+    marginRight: vh(2),
+  },
+  loadingSpinner: { display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' },
   carIconView: {
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: vh(1),
     marginBottom: vh(1),
   },
-  slotView: {
+  selectSlotView: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginLeft: 'auto',
@@ -31,7 +40,7 @@ export default StyleSheet.create({
     marginRight: 'auto',
     width: vw(90),
   },
-  slotTextStyle: {
+  slotNameText: {
     fontSize: vh(2),
     alignSelf: 'center',
     marginTop: vh(0),
@@ -41,11 +50,18 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   messageView: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   messageStyle: {
-    alignSelf: 'center',
     fontSize: vh(3),
   },
+  dateTimeIcon: {
+    width: vw(30),
+    height: vh(15),
+    alignSelf:'center',
+    marginBottom:vh(3)
+  }
 });

@@ -49,34 +49,27 @@ module.exports.getUsersAllBookings = (req, res) => {
 
 module.exports.getAvailaleBookingsFromDB = (req, res) => {
   let userBookingDet = req.body
-  // console.log('location ' + JSON.stringify(userBookingDet))
   db.collection("bookings")
     .where("location", "==", userBookingDet.location)
     .get()
     .then(async (userSelectedAreaBokings) => {
       let bookedSlot = []
-      await userSelectedAreaBokings.forEach((doc,) => {
-        let start = Date.parse(userBookingDet.startTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime))
-        let end = Date.parse(userBookingDet.endTime).between(new Date(doc.data().startTime), new Date(doc.data().endTime))
-        if (start || end) {
-          bookedSlot.push(doc.data().slotName)
-          console.log("hello" + doc.data().slotName)
+      await userSelectedAreaBokings.forEach((doc) => {
+        //datejs compare return 1,-1, and 0 
+        let myStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().startTime))
+        let userStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().endTime))
+        let userEnd = Date.parse(userBookingDet.endTime).compareTo(Date.parse(doc.data().startTime))
+        console.log("myStart " + myStart, 'userStart ' + userStart, 'userEnd ' + userEnd)
+        if ((myStart === 1 && userStart === 1 || userStart === 0 ) || (myStart === -1 && userEnd === -1 || userEnd === 0)) {
+          console.log('Available')
         }
-
-
-        //cutome work
-        // let myStart = Date.parse(new Date(userBookingDet.startTime))
-        // let myEnd = Date.parse(new Date(userBookingDet.endTime))
-        // let userStart = Date.parse(new Date(doc.data().startTime))
-        // let userEnd = Date.parse(new Date(doc.data().endTime))
-        // if ((myStart > userStart && userEnd < myStart) || (myStart < userStart && myEnd < userStart)) {
-        //   bookedSlot.push(doc.data().slotName)
-        // }
+        else {
+          bookedSlot.push(doc.data().slotName)
+        }
       })
-      console.log(bookedSlot)
       res.send({
         status: true,
-          bookedSlot: bookedSlot
+        bookedSlot: bookedSlot
       })
     })
     .catch((error) => {

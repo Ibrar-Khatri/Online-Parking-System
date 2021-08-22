@@ -1,4 +1,4 @@
 export default appSetting = {
-    severHostedUrl: 'https://online-parking-system-server.herokuapp.com'
-    // severHostedUrl: 'https://070e95ff3f55.ngrok.io'
+    // severHostedUrl: 'https://online-parking-system-server.herokuapp.com'
+    severHostedUrl: 'https://942e-39-48-175-150.ngrok.io'
 }
