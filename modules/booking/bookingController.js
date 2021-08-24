@@ -59,8 +59,7 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
         let myStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().startTime))
         let userStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().endTime))
         let userEnd = Date.parse(userBookingDet.endTime).compareTo(Date.parse(doc.data().startTime))
-        console.log("myStart " + myStart, 'userStart ' + userStart, 'userEnd ' + userEnd)
-        if ((myStart === 1 && userStart === 1 || userStart === 0 ) || (myStart === -1 && userEnd === -1 || userEnd === 0)) {
+        if ((myStart === 1 && userStart === 1 || userStart === 0) || (myStart === -1 && userEnd === -1 || userEnd === 0)) {
           console.log('Available')
         }
         else {
@@ -79,29 +78,3 @@ module.exports.getAvailaleBookingsFromDB = (req, res) => {
       });
     });
 };
-
-
-
-
-
-
-
-
-
-// let userStart = 2
-// let userEnd = 4
-// let myStart = 3
-// let myEnd = 140
-
-// console.log('User Start', userStart)
-// console.log('User End', userEnd)
-// console.log('My Start', myStart)
-// console.log('My End', myEnd)
-
-
-
-// if ((myStart > userStart && userEnd < myStart) || (myStart < userStart && myEnd < userStart)) {
-//   console.log('Available')
-// } else {
-//   console.log('Not available')
-// }

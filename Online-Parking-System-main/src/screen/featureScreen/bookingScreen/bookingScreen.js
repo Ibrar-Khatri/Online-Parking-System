@@ -8,8 +8,8 @@ import style from './bookingScreenStyle';
 
 function AddBookingScreen({route}) {
   let [date, setDate] = useState(moment(new Date()));
-  let [startTime, setStartTime] = useState('Select Time');
-  let [endTime, setEndTime] = useState('Select Time');
+  let [startTime, setStartTime] = useState('');
+  let [endTime, setEndTime] = useState('');
   let [location] = useState(route.params.location);
 
   let [selectedIndex, setSelectedIndex] = useState(0);

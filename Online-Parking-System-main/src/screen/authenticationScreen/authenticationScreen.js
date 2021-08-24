@@ -14,7 +14,7 @@ function AuthenticationScreen({navigation}) {
   const dispatch = useDispatch();
 
   let [isLogin, setIsLogin] = useState(true);
-  let [initialRouteName, setInitialRouteName] = useState('');
+  let [initialRouteName, setInitialRouteName] = useState('network-error-screen');
 
   let isUserLogin = async () => {
     const value = await AsyncStorage.getItem('userID');

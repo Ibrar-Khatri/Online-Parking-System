@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {Input} from 'native-base';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Input } from 'native-base';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import AuthenticationButton from '../authenticationButton/button';
-import {signupWithDetails} from '../../apis/userApis';
+import { signupWithDetails } from '../../apis/userApis';
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-function SignupCard({navigation}) {
+function SignupCard({ navigation }) {
   const dispatch = useDispatch();
 
   const loginValidationSchema = yup.object().shape({
@@ -21,7 +21,7 @@ function SignupCard({navigation}) {
       .required('Email Address is Required'),
     password: yup
       .string()
-      .min(6, ({min}) => `Password must be at least ${min} characters`)
+      .min(6, ({ min }) => `Password must be at least ${min} characters`)
       .required('Password is required'),
   });
 
@@ -36,11 +36,11 @@ function SignupCard({navigation}) {
       .then(async res => {
         if (res.data.status) {
           await AsyncStorage.setItem('userID', res.data.user.uid);
-          dispatch({type: 'addUserDetails', payload: res.data.user});
+          dispatch({ type: 'addUserDetails', payload: res.data.user });
           setIsLoading(false);
           return navigation.reset({
             index: 0,
-            routes: [{name: 'main-screen'}],
+            routes: [{ name: 'main-screen' }],
           });
         } else {
           setErrMessage(res.data.error.message);
@@ -67,7 +67,7 @@ function SignupCard({navigation}) {
         <View>
           <Text style={style.signUpText}>Signup</Text>
           <Formik
-            initialValues={{name: '', email: '', password: ''}}
+            initialValues={{ name: '', email: '', password: '' }}
             validationSchema={loginValidationSchema}
             onSubmit={value => signupWithDet(value)}>
             {({
@@ -80,41 +80,47 @@ function SignupCard({navigation}) {
             }) => (
               <View>
                 <View style={style.fieldView}>
-                  <Input
-                    value={values.name}
-                    variant="underlined"
-                    onChangeText={handleChange('name')}
-                    placeholder="Name"
-                    style={style.emailInput}
-                  />
-                  {showInvalidInput && errors.name && (
-                    <Text style={style.invalidInputStyle}>{errors.name}</Text>
-                  )}
+                  <View style={style.fieldInput}>
+                    <Input
+                      value={values.name}
+                      variant="underlined"
+                      onChangeText={handleChange('name')}
+                      placeholder="Name"
 
-                  <Input
-                    variant="underlined"
-                    placeholder="Email"
-                    style={style.emailInput}
-                    onChangeText={handleChange('email')}
-                    value={values.email}
-                    textContentType="emailAddress"
-                  />
-                  {showInvalidInput && errors.email && (
-                    <Text style={style.invalidInputStyle}>{errors.email}</Text>
-                  )}
-                  <Input
-                    variant="underlined"
-                    type="password"
-                    placeholder="Password"
-                    style={style.emailInput}
-                    onChangeText={handleChange('password')}
-                    value={values.password}
-                  />
-                  {showInvalidInput && errors.password && (
-                    <Text style={style.invalidInputStyle}>
-                      {errors.password}
-                    </Text>
-                  )}
+                    />
+                    {showInvalidInput && errors.name && (
+                      <Text style={style.invalidInputStyle}>{errors.name}</Text>
+                    )}
+                  </View>
+                  <View style={style.fieldInput}>
+                    <Input
+                      variant="underlined"
+                      placeholder="Email"
+                      style={style.emailInput}
+                      onChangeText={handleChange('email')}
+                      value={values.email}
+                      textContentType="emailAddress"
+                    />
+                    {showInvalidInput && errors.email && (
+                      <Text style={style.invalidInputStyle}>{errors.email}</Text>
+                    )}
+                  </View>
+                  <View style={style.fieldInput}>
+                    <Input
+                      variant="underlined"
+                      type="password"
+                      placeholder="Password"
+                      style={style.emailInput}
+                      onChangeText={handleChange('password')}
+                      value={values.password}
+                    />
+                    {showInvalidInput && errors.password && (
+                      <Text style={style.invalidInputStyle}>
+                        {errors.password}
+                      </Text>
+                    )}
+                  </View>
+
                 </View>
                 <AuthenticationButton
                   buttonType="Signup"

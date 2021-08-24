@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, Text, TouchableOpacity } from 'react-native';
+import { Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Button, Heading, HStack, Spinner } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookParkingArea, getAvailableSlots } from '../../apis/bookingApis';
@@ -23,12 +23,12 @@ function SlotTab({ location, date, startTime, endTime }) {
   let [bookedSlot, setBookedSlot] = useState([])
 
 
+  let slots = Array.from({ length: 40 }, () => ({ first_name: '', last_name: '' }))
 
   useEffect(() => {
     getAvailableSlots({ startTime, endTime, location })
       .then((res) => {
         if (res.data.status) {
-
           setBookedSlot(res.data.bookedSlot)
           setShowSlot(true)
         }
@@ -60,48 +60,54 @@ function SlotTab({ location, date, startTime, endTime }) {
       });
   }
   let dateAndTimeFilled =
-    (date && startTime, endTime != 'Select Time')
+    (date && startTime && endTime)
   return (
     <>
       {dateAndTimeFilled ? <>
 
         {showSlots ? <View>
           <View style={style.selectSlotView}>
-            {Array.from({ length: 12 }).map((item, index) => {
-              let booked = bookedSlot.includes(`Slot ${index + 1}`)
-              return (
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  disabled={booked}
-                  style={style.carIconView}
-                  key={index}
-                  onPress={() => setSlotName(`Slot ${index + 1}`)}>
-                  {slotName === `Slot ${index + 1}` ? (
-                    <>
-                      <Image
-                        style={style.carIcon}
-                        source={require('../../assets/selectedSlotIcon.png')}
-                      />
-                      <Text style={style.slotNameText}>Selected</Text>
-                    </>
-                  ) : (
-                    <>
-                      {
-                        booked ? (<><Image
-                          style={style.bookedSlotCarIcon}
+            <FlatList
+              data={slots}
+              numColumns={3}
+              keyExtractor={item => Math.random()}
+              renderItem={({ item, index }) => {
+                let booked = bookedSlot.includes(`Slot ${index + 1}`)
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    disabled={booked}
+                    style={style.carIconView}
+                    key={index}
+                    onPress={() => setSlotName(`Slot ${index + 1}`)}>
+                    {slotName === `Slot ${index + 1}` ? (
+                      <>
+                        <Image
+                          style={style.carIcon}
                           source={require('../../assets/selectedSlotIcon.png')}
                         />
-                          <Text style={style.slotNameText}>Booked</Text></>) : (<><Image
-                            style={style.carIcon}
-                            source={require('../../assets/slotIcon.png')}
+                        <Text style={style.slotNameText}>Selected</Text>
+                      </>
+                    ) : (
+                      <>
+                        {
+                          booked ? (<><Image
+                            style={style.bookedSlotCarIcon}
+                            source={require('../../assets/selectedSlotIcon.png')}
                           />
-                            <Text style={style.slotNameText}>{`Slot ${index + 1}`}</Text></>)
-                      }
-                    </>
-                  )}
-                </TouchableOpacity>
-              )
-            })}
+                            <Text style={style.slotNameText}>Booked</Text></>) : (<><Image
+                              style={style.carIcon}
+                              source={require('../../assets/slotIcon.png')}
+                            />
+                              <Text style={style.slotNameText}>{`Slot ${index + 1}`}</Text></>)
+                        }
+                      </>
+                    )}
+                  </TouchableOpacity>
+                )
+              }}
+
+            />
           </View>
           <Button
             disabled={!slotName}

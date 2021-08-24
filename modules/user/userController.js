@@ -74,7 +74,6 @@ module.exports.signinWithDetails = (req, res) => {
         });
     })
     .catch((err) => {
-      console.log("User cannot be found" + err);
       res.send({
         status: false,
         error: err,
@@ -83,12 +82,10 @@ module.exports.signinWithDetails = (req, res) => {
 };
 
 module.exports.getUserDetails = (req, res) => {
-  console.log("user details" + req.body.uid);
   db.collection("user")
     .doc(req.body.uid)
     .get()
     .then((doc) => {
-      console.log("Document data:", doc.data());
       if (doc.exists) {
         res.send({
           status: true,

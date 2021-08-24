@@ -6,7 +6,7 @@ import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import WarningModal from '../modal/modal';
 
-function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, setEndTime,handleSingleIndexSelect }) {
+function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, setEndTime, handleSingleIndexSelect }) {
   let [showModal, setShowModal] = useState(false);
   let [showDatePicker, setShowDatePicker] = useState(false);
   let [showStartTimePicker, setShowStartTimePicker] = useState(false);
@@ -18,12 +18,12 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
     if (condition === 'date') {
       setShowDatePicker(false);
 
-      setStartTime('Select Time');
-      setEndTime('Select Time');
+      setStartTime('');
+      setEndTime('');
       return setDate(selected);
     } else if (condition === 'startTime') {
       setShowStartTimePicker(false);
-      setEndTime('Select Time');
+      setEndTime('');
       let selectedDate = new Date(date);
       selected.setFullYear(
         selectedDate.getFullYear(),
@@ -37,7 +37,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
         );
         return setShowModal(true);
       }
-      return setStartTime(selected);
+      return setStartTime(moment(selected).format('lll'));
     } else if (condition === 'endTime') {
       setShowEndTimePicker(false);
       if (startTime === 'Select Time') {
@@ -56,7 +56,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
         );
         return setShowModal(true);
       }
-      return setEndTime(selected);
+      return setEndTime(moment(selected).format('lll'));
     }
   }
   return (
@@ -87,11 +87,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
           <DateTimePickerModal
             isVisible={showStartTimePicker}
             mode="time"
-            date={
-              startTime == 'Select Time'
-                ? new Date()
-                : new Date(startTime)
-            }
+            date={startTime ? new Date(startTime) : new Date()}
             onConfirm={selected => selectedDateAndTime(selected, 'startTime')}
             onCancel={() => setShowStartTimePicker(false)}
           />
@@ -102,9 +98,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowStartTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {startTime === 'Select Time'
-                ? startTime
-                : moment(startTime).format('LT')}
+              {startTime ? moment(startTime,'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -113,11 +107,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
           <DateTimePickerModal
             isVisible={showEndTimePicker}
             mode="time"
-            date={
-              endTime == 'Select Time'
-                ? new Date()
-                : new Date(endTime)
-            }
+            date={endTime ? new Date(endTime) : new Date()}
             onConfirm={selected => selectedDateAndTime(selected, 'endTime')}
             onCancel={() => setShowEndTimePicker(false)}
           />
@@ -127,9 +117,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowEndTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {endTime === 'Select Time'
-                ? endTime
-                : moment(endTime).format('LT')}
+              {endTime ? moment(endTime,'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>

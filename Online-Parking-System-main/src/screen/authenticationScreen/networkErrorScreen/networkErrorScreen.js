@@ -1,9 +1,10 @@
-import React from 'react';
-import {Text, View, Image} from 'react-native';
-import {Button} from 'native-base';
+import React, { useState } from 'react';
+import { Text, View, Image } from 'react-native';
+import { Button } from 'native-base';
 import style from './networkErrorScreenStyle';
 
-function NetworkErrorScreen({route, navigation}) {
+function NetworkErrorScreen({ route, navigation }) {
+  let [isLoading, setIsLoading] = useState(false)
 
   return (
     <>
@@ -17,8 +18,8 @@ function NetworkErrorScreen({route, navigation}) {
         <Text style={style.textStyle}>Check your connection</Text>
         <Button
           style={style.buttonStyle}
-          isLoading
-          onPress={() => route.params.isUserLogin()}>
+          isLoading={isLoading}
+          onPress={() => { route.params.isUserLogin(); setIsLoading(true) }}>
           Try Again
         </Button>
       </View>

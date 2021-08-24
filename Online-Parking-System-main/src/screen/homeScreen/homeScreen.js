@@ -29,7 +29,6 @@ function HomeScreen() {
         console.log(err);
       });
   }
-
   return (
     <>
       <Tab.Navigator
@@ -42,9 +41,6 @@ function HomeScreen() {
           indicatorStyle: {
             backgroundColor: 'white',
             height: 2.5,
-          },
-          labelStyle: {
-            fontSize: vw(3.5),
           },
           tabBarVisible: 'false',
         }}>

@@ -14,31 +14,26 @@ export default StyleSheet.create({
   },
   carIcon: {
     height: vh(7),
-    width: vw(15),
-    marginLeft: vh(2),
-    marginRight: vh(2),
+    width: vh(7),
+    alignSelf: 'center',
   },
   bookedSlotCarIcon: {
     opacity: 0.5,
     height: vh(7),
-    width: vw(15),
-    marginLeft: vh(2),
-    marginRight: vh(2),
+    width: vh(7),
+    alignSelf: 'center',
   },
   loadingSpinner: { display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' },
   carIconView: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
     marginTop: vh(1),
-    marginBottom: vh(1),
   },
   selectSlotView: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginLeft: 'auto',
     marginTop: vh(1),
-    marginRight: 'auto',
     width: vw(90),
+    height: vh(46)
   },
   slotNameText: {
     fontSize: vh(2),
@@ -46,7 +41,9 @@ export default StyleSheet.create({
     marginTop: vh(0),
   },
   buttonStyle: {
+    marginTop: vh(1),
     width: vw(50),
+    height: vh(6),
     alignSelf: 'center',
   },
   messageView: {
@@ -59,9 +56,9 @@ export default StyleSheet.create({
     fontSize: vh(3),
   },
   dateTimeIcon: {
-    width: vw(30),
+    width: vh(15),
     height: vh(15),
-    alignSelf:'center',
-    marginBottom:vh(3)
+    alignSelf: 'center',
+    marginBottom: vh(3)
   }
 });

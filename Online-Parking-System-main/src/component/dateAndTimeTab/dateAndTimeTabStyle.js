@@ -15,6 +15,8 @@ export default StyleSheet.create({
     selectPickerHeading: {
         fontSize: vh(4),
         fontWeight: 'bold',
+        display: 'flex',
+        alignSelf:'center'
     },
     pickerStyle: {
         height: vh(5),
@@ -28,5 +30,6 @@ export default StyleSheet.create({
     },
     buttonStyle: {
         width: vw(50),
+        height: vh(6),
     },
 });

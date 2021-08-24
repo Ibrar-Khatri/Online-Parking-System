@@ -11,9 +11,9 @@ export default StyleSheet.create({
   },
   textStyle: {
     color: 'white',
-    fontSize: vh(4.3),
+    fontSize: vh(4),
     alignSelf: 'center',
-    marginTop: '18%',
+    marginTop: vh(10),
     fontWeight: 'bold',
   },
 });

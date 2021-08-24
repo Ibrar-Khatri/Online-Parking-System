@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import { marginTop } from "styled-system";
 import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../responsive/responsive";
 
 
@@ -12,12 +13,23 @@ export default StyleSheet.create({
         marginTop: vh(-25),
         alignSelf: 'center',
     },
-    signInText: {
+    loginText: {
         fontSize: vh(5),
         fontWeight: 'bold',
-        marginTop: '17%',
         alignSelf: 'center',
-        marginBottom: 50,
+        margin: vh(5)
+    },
+    fieldInput: {
+        width: vw(70),
+        height: vh(10),
+        alignSelf: 'center',
+    },
+    fieldView: {
+        height:vh(35)
+    },
+    invalidInputStyle: {
+        color: 'red',
+        marginTop: 10
     },
     messageText: {
         alignSelf: 'center',
@@ -25,19 +37,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-    loginText: {
+    signupText: {
         fontWeight: 'bold',
     },
-    fieldView: {
-        width: vw(70),
-        height: vh(26),
-        alignSelf: 'center',
-    },
-    fieldStyle: {
-        marginTop: vh(1),
-        marginTop: vh(1),
-    },
-    invalidInputStyle:{
-        color:'red'
-    }
 });
