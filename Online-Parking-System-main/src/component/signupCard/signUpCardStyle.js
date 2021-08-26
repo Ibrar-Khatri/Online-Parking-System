@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { marginTop } from "styled-system";
 import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../responsive/responsive";
 
 
