@@ -14,30 +14,36 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     signUpText: {
-        fontSize: vh(5),
+        fontSize: vh(4.5),
         fontWeight: 'bold',
         alignSelf: 'center',
-        margin: vh(7)
+        margin: vh(5)
     },
-    messageText: {
+    messageView: {
         alignSelf: 'center',
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
+    messageText: {
+        fontSize: vh(1.7)
+    },
     loginText: {
         fontWeight: 'bold',
+        fontSize: vh(1.7)
     },
     fieldView: {
-        height: vh(35)
+        height: vh(35),
     },
     fieldInput: {
         width: vw(70),
-        height: vh(8),
+        height: vh(11),
         alignSelf: 'center',
+        
     },
     invalidInputStyle: {
         color: 'red',
-        marginTop:10
+        marginTop: vw(1),
+        fontSize: vh(1.5)
     }
 });

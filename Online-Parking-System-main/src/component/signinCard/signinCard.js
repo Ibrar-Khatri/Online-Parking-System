@@ -9,6 +9,7 @@ import AuthenticationButton from '../authenticationButton/button';
 import { signinWithDetails } from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
+import { widthPercentageToDP as vh } from '../../responsive/responsive';
 
 function SigninCard({ navigation }) {
   const dispatch = useDispatch();
@@ -80,21 +81,25 @@ function SigninCard({ navigation }) {
               <View style={style.fieldView}>
                 <View style={style.fieldInput}>
                   <Input
+                    isInvalid={showInvalidInput && errors.email && true}
                     variant="underlined"
                     placeholder="Email"
+                    fontSize={vh(4)}
                     onChangeText={handleChange('email')}
                     value={values.email}
                     textContentType='emailAddress'
-                  />
+                    />
                   {showInvalidInput && errors.email && (
                     <Text style={style.invalidInputStyle}>{errors.email}</Text>
-                  )}
+                    )}
                 </View>
                 <View style={style.fieldInput}>
                   <Input
                     variant="underlined"
                     type="password"
+                    fontSize={vh(4)}
                     placeholder="Password"
+                    isInvalid={showInvalidInput && errors.password && true}
                     onChangeText={handleChange('password')}
                     value={values.password}
                   />
@@ -119,8 +124,8 @@ function SigninCard({ navigation }) {
             message={errMessage}
           />
         )}
-        <View style={style.messageText}>
-          <Text>Don't have an account?</Text>
+        <View style={style.messageView}>
+          <Text style={style.messageText}>Don't have an account?</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('signup-screen')}>
             <Text style={style.signupText}> Signup</Text>

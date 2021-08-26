@@ -4,9 +4,13 @@ import { heightPercentageToDP as vh,widthPercentageToDP as vw } from '../../resp
 export default StyleSheet.create({
     buttonStyle: {
         borderRadius: 100,
-        width: vw(50),
-        height:vh(5),
+        width: vw(30),
+        height:vh(6),
         marginBottom: vh(2),
         alignSelf: 'center',
     },
+    buttonText:{
+        color:'white',
+        fontSize:vh(2)
+    }
 });

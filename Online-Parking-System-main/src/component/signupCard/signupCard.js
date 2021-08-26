@@ -9,6 +9,7 @@ import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../modal/modal';
 import { useDispatch } from 'react-redux';
+import { heightPercentageToDP as vh } from '../../responsive/responsive';
 
 function SignupCard({ navigation }) {
   const dispatch = useDispatch();
@@ -84,6 +85,8 @@ function SignupCard({ navigation }) {
                     <Input
                       value={values.name}
                       variant="underlined"
+                      fontSize={vh(2.5)}
+                      isInvalid={showInvalidInput && errors.name && true}
                       onChangeText={handleChange('name')}
                       placeholder="Name"
 
@@ -96,7 +99,9 @@ function SignupCard({ navigation }) {
                     <Input
                       variant="underlined"
                       placeholder="Email"
+                      fontSize={vh(2.5)}
                       style={style.emailInput}
+                      isInvalid={showInvalidInput && errors.email && true}
                       onChangeText={handleChange('email')}
                       value={values.email}
                       textContentType="emailAddress"
@@ -110,7 +115,9 @@ function SignupCard({ navigation }) {
                       variant="underlined"
                       type="password"
                       placeholder="Password"
+                      fontSize={vh(2.5)}
                       style={style.emailInput}
+                      isInvalid={showInvalidInput && errors.password && true}
                       onChangeText={handleChange('password')}
                       value={values.password}
                     />
@@ -140,8 +147,8 @@ function SignupCard({ navigation }) {
           )}
         </View>
         <View>
-          <View style={style.messageText}>
-            <Text>Already have an account?</Text>
+          <View style={style.messageView}>
+            <Text style={style.messageText}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={style.loginText}> Login</Text>
             </TouchableOpacity>

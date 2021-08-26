@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import style from './buttonStyle';
-import {Button} from 'native-base';
+import { Button,Text } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {signupWithDetails} from '../../apis/userApis';
-import {signinWithDetails} from '../../apis/userApis';
 
-function AuthenticationButton({isLoading,setShowInvalidInput,handleSubmit,buttonType}) {
+function AuthenticationButton({ isLoading, setShowInvalidInput, handleSubmit, buttonType }) {
   return (
     <>
       <Button
@@ -17,7 +15,9 @@ function AuthenticationButton({isLoading,setShowInvalidInput,handleSubmit,button
           setShowInvalidInput(true);
           handleSubmit();
         }}>
-        {buttonType}
+        <Text style={style.buttonText}>
+          {buttonType}
+        </Text>
       </Button>
     </>
   );
