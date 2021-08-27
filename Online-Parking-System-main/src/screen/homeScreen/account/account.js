@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Avatar } from 'native-base'
 import { LinearGradient } from 'react-native-linear-gradient'
-import { Header } from 'react-native/Libraries/NewAppScreen';
+import { Header } from 'react-native/Libraries/parkingAppScreen';
 import { useSelector } from 'react-redux'
 import LinksCard from '../../../component/linksCard/linksCard'
 import style from './accountStyle'
