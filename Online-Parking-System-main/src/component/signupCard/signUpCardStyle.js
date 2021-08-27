@@ -32,7 +32,7 @@ export default StyleSheet.create({
         fontSize: vh(1.7)
     },
     fieldView: {
-        height: vh(35),
+        height: vh(38),
     },
     fieldInput: {
         width: vw(70),

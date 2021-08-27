@@ -9,7 +9,7 @@ import AuthenticationButton from '../authenticationButton/button';
 import { signinWithDetails } from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../modal/modal';
-import { widthPercentageToDP as vh } from '../../responsive/responsive';
+import { heightPercentageToDP as vh } from '../../responsive/responsive';
 
 function SigninCard({ navigation }) {
   const dispatch = useDispatch();
@@ -84,7 +84,7 @@ function SigninCard({ navigation }) {
                     isInvalid={showInvalidInput && errors.email && true}
                     variant="underlined"
                     placeholder="Email"
-                    fontSize={vh(4)}
+                    fontSize={vh(2.5)}
                     onChangeText={handleChange('email')}
                     value={values.email}
                     textContentType='emailAddress'
@@ -95,9 +95,10 @@ function SigninCard({ navigation }) {
                 </View>
                 <View style={style.fieldInput}>
                   <Input
+                  style={style.input}
                     variant="underlined"
                     type="password"
-                    fontSize={vh(4)}
+                    fontSize={vh(2.5)}
                     placeholder="Password"
                     isInvalid={showInvalidInput && errors.password && true}
                     onChangeText={handleChange('password')}

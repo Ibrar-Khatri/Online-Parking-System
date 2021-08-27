@@ -1,51 +1,52 @@
 import { StyleSheet } from 'react-native';
-import { marginBottom } from 'styled-system';
+import { backgroundColor, height, margin, marginBottom } from 'styled-system';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
 } from '../../responsive/responsive';
 
 export default StyleSheet.create({
-  carParkingIcon: {
-    height: vh(8),
-    width: vw(18),
-    marginTop: vh(2),
-    alignSelf: 'center',
+  selectSlotView: {
+    marginTop: vh(1),
+    height: vh(46),
   },
-  carIcon: {
-    height: vh(7),
-    width: vh(7),
-    alignSelf: 'center',
+  contentContainerStyle:{alignItems:'center'},
+  carIconView: {
+    marginRight: vw(7),
+    marginLeft: vw(7),
+    marginTop: vw(1),
+    alignItems: 'center',
+
   },
   bookedSlotCarIcon: {
     opacity: 0.5,
     height: vh(7),
     width: vh(7),
-    alignSelf: 'center',
-  },
-  loadingSpinner: { display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' },
-  carIconView: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    marginTop: vh(1),
-  },
-  selectSlotView: {
-    marginTop: vh(1),
-    width: vw(90),
-    height: vh(46)
   },
   slotNameText: {
     fontSize: vh(2),
-    alignSelf: 'center',
-    marginTop: vh(0),
   },
+  carIcon: {
+    height: vw(13),
+    width: vw(13),
+  },
+  loadingSpinner: { display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' },
+  
   buttonStyle: {
     marginTop: vh(1),
-    width: vw(50),
+    width: vw(40),
     height: vh(6),
     alignSelf: 'center',
+    backgroundColor: '#00bfff',
+    paddingTop: vh(1)
+
   },
+  buttonText: {
+    color: 'white',
+    fontSize: vh(2.5),
+    display: 'flex',
+  },
+
   messageView: {
     display: 'flex',
     flex: 1,
