@@ -87,15 +87,15 @@ function SigninCard({ navigation }) {
                     fontSize={vh(2.5)}
                     onChangeText={handleChange('email')}
                     value={values.email}
-                    textContentType='emailAddress'
-                    />
+                    autoCapitalize = 'none'
+                  />
                   {showInvalidInput && errors.email && (
                     <Text style={style.invalidInputStyle}>{errors.email}</Text>
-                    )}
+                  )}
                 </View>
                 <View style={style.fieldInput}>
                   <Input
-                  style={style.input}
+                    style={style.input}
                     variant="underlined"
                     type="password"
                     fontSize={vh(2.5)}

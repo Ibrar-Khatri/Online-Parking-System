@@ -52,7 +52,6 @@ module.exports.signinWithDetails = (req, res) => {
         .doc(user.user.uid)
         .get()
         .then((doc) => {
-          // console.log("Document data:", doc.data());
           if (doc.exists) {
             res.send({
               status: true,

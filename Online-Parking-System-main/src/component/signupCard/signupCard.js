@@ -104,7 +104,7 @@ function SignupCard({ navigation }) {
                       isInvalid={showInvalidInput && errors.email && true}
                       onChangeText={handleChange('email')}
                       value={values.email}
-                      textContentType="emailAddress"
+                      autoCapitalize='none'
                     />
                     {showInvalidInput && errors.email && (
                       <Text style={style.invalidInputStyle}>{errors.email}</Text>
