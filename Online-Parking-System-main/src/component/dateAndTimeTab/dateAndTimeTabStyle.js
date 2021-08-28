@@ -6,17 +6,17 @@ import {
 
 export default StyleSheet.create({
     slectDateAndTimeView: {
-        flex:1,
+        flex: 1,
         display: 'flex',
-        flexDirection:'column',
-        justifyContent:'space-evenly',
-        alignItems:'center',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
     selectPickerHeading: {
         fontSize: vh(4),
         fontWeight: 'bold',
         display: 'flex',
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     pickerStyle: {
         height: vh(5),
@@ -29,7 +29,15 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     buttonStyle: {
-        width: vw(50),
+        width: vw(40),
         height: vh(6),
-    },
+        alignSelf: 'center',
+        backgroundColor: '#00bfff',
+        paddingTop: vh(1)
+    
+      },
+      buttonText: {
+        color: 'white',
+        fontSize: vh(2.5),
+      },
 });

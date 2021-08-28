@@ -21,7 +21,8 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['Warning: ...'])
+
+LogBox.ignoreLogs(['Warning: ...','Non-serializable values were found in the navigation state'])
 
 const Stack = createStackNavigator();
 

@@ -18,8 +18,8 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
     if (condition === 'date') {
       setShowDatePicker(false);
 
-      setStartTime('');
-      setEndTime('');
+      setStartTime();
+      setEndTime();
       return setDate(selected);
     } else if (condition === 'startTime') {
       setShowStartTimePicker(false);
@@ -40,7 +40,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
       return setStartTime(moment(selected).format('lll'));
     } else if (condition === 'endTime') {
       setShowEndTimePicker(false);
-      if (startTime === 'Select Time') {
+      if (!startTime) {
         setModalMessage('Please select start time');
         return setShowModal(true);
       }
@@ -50,7 +50,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
         selectedDate.getMonth(),
         selectedDate.getDate(),
       );
-      if (moment(selected).diff(moment(startTime), 'minute') < 30) {
+      if (moment(selected).diff(moment(Date.parse(startTime)), 'minute') < 30) {
         setModalMessage(
           "End time should be greater than 30 minutes from start's time",
         );
@@ -132,7 +132,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
           <Button
             style={style.buttonStyle}
             onPress={() => handleSingleIndexSelect(1)}>
-            Next
+            <Text style={style.buttonText}>Next</Text>
           </Button>
         </View>
       </View>

@@ -23,7 +23,7 @@ function SlotTab({ location, date, startTime, endTime }) {
   let [bookedSlot, setBookedSlot] = useState([])
 
 
-  let slots = Array.from({ length: 40 }, () => ({ first_name: '', last_name: '' }))
+  let slots = Array.from({ length: 20 }, () => ({ first_name: '', last_name: '' }))
 
   useEffect(() => {
     getAvailableSlots({ startTime, endTime, location })
@@ -66,8 +66,10 @@ function SlotTab({ location, date, startTime, endTime }) {
       {dateAndTimeFilled ? <>
 
         {showSlots ? <View>
-          <View style={style.selectSlotView}>
+          <View >
             <FlatList
+              style={style.selectSlotView}
+              contentContainerStyle={style.contentContainerStyle}
               data={slots}
               numColumns={3}
               keyExtractor={item => Math.random()}
@@ -77,29 +79,28 @@ function SlotTab({ location, date, startTime, endTime }) {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     disabled={booked}
-                    style={style.carIconView}
                     key={index}
                     onPress={() => setSlotName(`Slot ${index + 1}`)}>
                     {slotName === `Slot ${index + 1}` ? (
-                      <>
+                      <View style={style.carIconView}>
                         <Image
                           style={style.carIcon}
                           source={require('../../assets/selectedSlotIcon.png')}
                         />
                         <Text style={style.slotNameText}>Selected</Text>
-                      </>
+                      </View>
                     ) : (
                       <>
                         {
-                          booked ? (<><Image
+                          booked ? (<View style={style.carIconView}><Image
                             style={style.bookedSlotCarIcon}
                             source={require('../../assets/selectedSlotIcon.png')}
                           />
-                            <Text style={style.slotNameText}>Booked</Text></>) : (<><Image
+                            <Text style={style.slotNameText}>Booked</Text></View>) : (<View style={style.carIconView}><Image
                               style={style.carIcon}
                               source={require('../../assets/slotIcon.png')}
                             />
-                              <Text style={style.slotNameText}>{`Slot ${index + 1}`}</Text></>)
+                              <Text style={style.slotNameText}>{`Slot ${index + 1}`}</Text></View>)
                         }
                       </>
                     )}
@@ -113,7 +114,7 @@ function SlotTab({ location, date, startTime, endTime }) {
             disabled={!slotName}
             style={style.buttonStyle}
             onPress={() => bookParking()}>
-            Add Booking
+            <Text style={style.buttonText}>Add Booking</Text>
           </Button>
           <AddBookingSpinner
             isLoading={isLoading}

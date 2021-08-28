@@ -24,7 +24,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     fieldView: {
-        height: vh(35)
+        height: vh(38)
     },
     invalidInputStyle: {
         color: 'red',
