@@ -4,15 +4,18 @@ import { View, Text } from "native-base";
 import { Image, TouchableOpacity, } from "react-native";
 import style from './linksCardStyle'
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 
 function LinksCard() {
 
     let navigation = useNavigation()
-
+    let dispatch = useDispatch()
 
     let signOut = async () => {
         try {
+            dispatch({ type: 'removeCurrentUserBooking' })
+            dispatch({ type: 'removeUserDetails' })
             await AsyncStorage.removeItem('userID')
             navigation.reset({
                 index: 0,

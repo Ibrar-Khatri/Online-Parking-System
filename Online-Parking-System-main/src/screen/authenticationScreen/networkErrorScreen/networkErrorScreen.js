@@ -20,7 +20,7 @@ function NetworkErrorScreen({ route, navigation }) {
           style={style.buttonStyle}
           isLoading={isLoading}
           onPress={() => { route.params.isUserLogin(); setIsLoading(true) }}>
-          Try Again
+          <Text style={style.buttonText}>Try Again</Text>
         </Button>
       </View>
     </>

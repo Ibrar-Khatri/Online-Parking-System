@@ -3,7 +3,10 @@ import { alignSelf, marginTop } from "styled-system";
 import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../../responsive/responsive";
 
 export default StyleSheet.create({
-    bgColor: { backgroundColor: 'white' },
+    bgColor: {
+        backgroundColor: 'white',
+        height: '100%'
+    },
     myBookingText: {
         fontSize: vh(4),
         fontWeight: 'bold',
@@ -29,17 +32,17 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: vw(6),
     },
+    imageView: {
+        alignItems: 'center',
+        marginTop:'25%'
+    },
     noBookingYetIcon: {
         height: vh(30),
         width: vh(30),
-        alignSelf: 'center',
     },
-    imageView:{
-        alignItems:'center'
-    },
-    noBookingsYetText:{
-        fontSize:vh(4),
-        fontWeight:'bold'
+    noBookingsYetText: {
+        fontSize: vh(4),
+        fontWeight: 'bold'
     }
 
 })

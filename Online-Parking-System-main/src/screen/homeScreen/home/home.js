@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import style from './homeStyle';
 
-function Home({navigation}) {
+function Home({ navigation }) {
+  let bookings = useSelector(state => state.bookingReducer.userBookings);
   let parkingAreas = [
     'DHA Karachi',
     'Gulshane-e-Iqal Karachi',
@@ -18,16 +20,18 @@ function Home({navigation}) {
   return (
     <ImageBackground
       resizeMode="cover"
-      source={{uri: 'https://i.gifer.com/RNQQ.gif'}}
+      source={{ uri: 'https://i.gifer.com/RNQQ.gif' }}
       style={style.backgroundImage}>
-      <ScrollView>
+      {
+        bookings?<ScrollView>
         <View style={style.viewStyle}>
           {parkingAreas.map((area, ind) => {
             return (
               <TouchableOpacity
+                activeOpacity={0.7}
                 key={ind}
                 onPress={() => {
-                  navigation.navigate('featureScreen', {location: area});
+                  navigation.navigate('featureScreen', { location: area });
                 }}>
                 <View style={style.cardStyle}>
                   <Image
@@ -40,7 +44,8 @@ function Home({navigation}) {
             );
           })}
         </View>
-      </ScrollView>
+      </ScrollView>:<Text>Loading</Text>
+      }
     </ImageBackground>
   );
 }

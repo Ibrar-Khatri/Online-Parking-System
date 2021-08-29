@@ -9,6 +9,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         userDetails: action.payload,
       };
+    case 'removeUserDetails':
+      return {
+        userDetails: {},
+      };
     default:
       return state;
   }

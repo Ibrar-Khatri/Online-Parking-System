@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {
-  Platform
+  Platform, StatusBar
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -29,6 +29,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <>
+    <StatusBar backgroundColor='#00bfff' animated={true}/>
       <Provider store={store}>
         <NativeBaseProvider>
           <NavigationContainer>
@@ -48,10 +49,12 @@ const App = () => {
                   headerTitleAlign: 'center',
                   headerStyle: {
                     backgroundColor: '#00bfff',
+                    height: vh(6),
                   },
                   headerTintColor: 'white',
                   headerTitleStyle: {
                     fontWeight: 'bold',
+                    lineHeight: vh(4),
                     fontFamily:
                       Platform.OS === 'ios'
                         ? 'DM Serif Display'

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
@@ -8,19 +8,23 @@ export default StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: 'white',
+    alignItems:'center'
   },
-  imageStyle: {width: 300, height: 300, alignSelf: 'center', marginTop: vh(10)},
+  imageStyle: { width: vh(30), height: vh(30), marginTop: vh(10) },
   opsText: {
     fontSize: vh(8),
-    textAlign: 'center',
   },
   textStyle: {
     fontSize: vh(3),
-    textAlign: 'center',
   },
   buttonStyle: {
     width: vw(50),
-    marginTop: vh(10),
-    alignSelf: 'center',
+    height:vh(6),
+    marginTop: vh(20),
   },
+  buttonText:{
+    color:'white',
+    fontSize:vh(2.5),
+    lineHeight:vh(3)
+  }
 });

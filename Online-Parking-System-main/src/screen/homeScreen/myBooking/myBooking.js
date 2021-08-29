@@ -11,11 +11,11 @@ function MyBookingScreen() {
 
     return <>
 
-        <ScrollView style={style.bgColor}>
-            <View><Text style={style.myBookingText}>My Bookings</Text></View>
 
-            {
-                bookings ?
+        {
+            bookings?.length !== 0 ?
+                <ScrollView style={style.bgColor}>
+                    <View><Text style={style.myBookingText}>My Bookings</Text></View>
 
                     <View style={style.outSideCard} >
                         {
@@ -31,12 +31,15 @@ function MyBookingScreen() {
                                 )
                             })
                         }
-                    </View> : <View style={style.imageView}>
+                    </View>
+                </ScrollView>
+                : <View style={style.bgColor}>
+                    <View style={style.imageView}>
                         <Image style={style.noBookingYetIcon} source={require('../../../assets/noBookingYetIcon.jpeg')} />
                         <Text style={style.noBookingsYetText}>No Bookings Yet</Text>
                     </View>
-            }
-        </ScrollView>
+                </View>
+        }
 
     </>
 
