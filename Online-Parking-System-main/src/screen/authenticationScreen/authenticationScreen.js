@@ -14,12 +14,12 @@ const Stack = createStackNavigator();
 function AuthenticationScreen({ navigation }) {
   const dispatch = useDispatch();
 
-  let [isLogin, setIsLogin] = useState(true);
   let [isLoading, setIsLoading] = useState(false)
-  let [initialRouteName, setInitialRouteName] = useState('network-error-screen');
+  let [initialRouteName, setInitialRouteName] = useState('');
 
   let isUserLogin = async () => {
-    const value = await AsyncStorage.getItem('userID');
+    let value = await AsyncStorage.getItem('userID')
+
     if (value !== null) {
       //we get user id  from value
       getUserDetailsById({ uid: value })
@@ -27,27 +27,26 @@ function AuthenticationScreen({ navigation }) {
           console.log('positve response')
           if (user.data.status) {
             dispatch({ type: 'addUserDetails', payload: user.data.user });
-            SplashScreen.hide()
             navigation.reset({
               index: 0,
               routes: [{ name: 'main-screen' }],
             });
+            SplashScreen.hide()
             return;
           }
-          SplashScreen.hide()
-          setIsLogin(false);
           setInitialRouteName('network-error-screen');
+          SplashScreen.hide()
         })
         .catch(err => {
-          SplashScreen.hide()
-          console.log(err)
-          setIsLogin(false);
           setInitialRouteName('network-error-screen');
+          SplashScreen.hide()
+          return
         });
+      return
     } else {
-      SplashScreen.hide()
+      console.log(value)
       setInitialRouteName('signin-screen');
-      setIsLogin(false);
+      SplashScreen.hide()
       return;
     }
   };
@@ -57,10 +56,6 @@ function AuthenticationScreen({ navigation }) {
   }, []);
   return (
     <>
-      {/* {isLogin ? (
-        <ActivityIndicator size="large" color="#00ff00" />
-      ) : (
-        <> */}
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         initialRouteName={initialRouteName}>
@@ -72,8 +67,6 @@ function AuthenticationScreen({ navigation }) {
           initialParams={{ isUserLogin, isLoading, setIsLoading }}
         />
       </Stack.Navigator>
-      {/* </>
-      )} */}
     </>
   );
 }
