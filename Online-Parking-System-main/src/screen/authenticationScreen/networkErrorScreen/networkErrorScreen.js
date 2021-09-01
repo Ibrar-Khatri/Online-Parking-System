@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, StatusBar } from 'react-native';
 import { Button } from 'native-base';
 import style from './networkErrorScreenStyle';
 
 function NetworkErrorScreen({ route, navigation }) {
-  let [isLoading, setIsLoading] = useState(false)
+
 
   return (
     <>
+      <StatusBar backgroundColor='#FFFFFF' barStyle="dark-content" animated={true} />
       <View style={style.mainView}>
         <Image
           source={require('../../../assets/notInternetConnection.gif')}
@@ -18,8 +19,8 @@ function NetworkErrorScreen({ route, navigation }) {
         <Text style={style.textStyle}>Check your connection</Text>
         <Button
           style={style.buttonStyle}
-          isLoading={isLoading}
-          onPress={() => { route.params.isUserLogin(); setIsLoading(true) }}>
+          isLoading={route.params.isLoading}
+          onPress={() => { route.params.isUserLogin(); route.params.setIsLoading(true) }}>
           <Text style={style.buttonText}>Try Again</Text>
         </Button>
       </View>

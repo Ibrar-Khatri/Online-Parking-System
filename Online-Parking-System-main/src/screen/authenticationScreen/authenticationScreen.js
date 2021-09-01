@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import SigninScreen from './signin/signinScreen';
 import SignupScreen from './signup/signupScreen';
 import { getUserDetailsById } from '../../apis/userApis';
+import SplashScreen from 'react-native-splash-screen'
 import NetworkErrorScreen from './networkErrorScreen/networkErrorScreen';
 
 const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ function AuthenticationScreen({ navigation }) {
   const dispatch = useDispatch();
 
   let [isLogin, setIsLogin] = useState(true);
+  let [isLoading, setIsLoading] = useState(false)
   let [initialRouteName, setInitialRouteName] = useState('network-error-screen');
 
   let isUserLogin = async () => {
@@ -22,19 +24,28 @@ function AuthenticationScreen({ navigation }) {
       //we get user id  from value
       getUserDetailsById({ uid: value })
         .then(user => {
-          dispatch({ type: 'addUserDetails', payload: user.data.user });
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'main-screen' }],
-          });
-          return;
+          console.log('positve response')
+          if (user.data.status) {
+            dispatch({ type: 'addUserDetails', payload: user.data.user });
+            SplashScreen.hide()
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'main-screen' }],
+            });
+            return;
+          }
+          SplashScreen.hide()
+          setIsLogin(false);
+          setInitialRouteName('network-error-screen');
         })
         .catch(err => {
-          console.log('User details cannot be found');
+          SplashScreen.hide()
+          console.log(err)
           setIsLogin(false);
           setInitialRouteName('network-error-screen');
         });
     } else {
+      SplashScreen.hide()
       setInitialRouteName('signin-screen');
       setIsLogin(false);
       return;
@@ -46,23 +57,23 @@ function AuthenticationScreen({ navigation }) {
   }, []);
   return (
     <>
-      {isLogin ? (
+      {/* {isLogin ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
-        <>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false }}
-            initialRouteName={initialRouteName}>
-            <Stack.Screen name="signin-screen" component={SigninScreen} />
-            <Stack.Screen name="signup-screen" component={SignupScreen} />
-            <Stack.Screen
-              name="network-error-screen"
-              component={NetworkErrorScreen}
-              initialParams={{ isUserLogin: isUserLogin }}
-            />
-          </Stack.Navigator>
-        </>
-      )}
+        <> */}
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName={initialRouteName}>
+        <Stack.Screen name="signin-screen" component={SigninScreen} />
+        <Stack.Screen name="signup-screen" component={SignupScreen} />
+        <Stack.Screen
+          name="network-error-screen"
+          component={NetworkErrorScreen}
+          initialParams={{ isUserLogin, isLoading, setIsLoading }}
+        />
+      </Stack.Navigator>
+      {/* </>
+      )} */}
     </>
   );
 }

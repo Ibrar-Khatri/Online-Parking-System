@@ -50,6 +50,7 @@ function SigninCard({ navigation }) {
       })
       .catch(err => {
         setErrMessage('Please try again later ');
+        console.log(err)
         setShowModal(true);
         setIsLoading(false);
         return;
