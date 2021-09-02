@@ -1,9 +1,8 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React, { useEffect } from 'react';
+import { View } from 'native-base';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { lineHeight } from 'styled-system';
 import { getUsersAllBookings } from '../../apis/bookingApis';
-import { getUserDetailsById } from '../../apis/userApis';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
@@ -28,7 +27,7 @@ function HomeScreen() {
         }
       })
       .catch(err => {
-        console.log(err);
+        console.log('Error in get all bookings');
       });
   }
   return (

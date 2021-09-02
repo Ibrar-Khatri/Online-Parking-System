@@ -1,21 +1,22 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {Button} from 'react-native';
-import {heightPercentageToDP as vh} from '../../responsive/responsive';
+import { Button } from 'react-native';
+import { heightPercentageToDP as vh } from '../../responsive/responsive';
 import AddBookingScreen from './bookingScreen/bookingScreen';
+import UserProfileScreen from './profileScreen/profileScreen';
 
 let Stack = createStackNavigator();
 
-function FeatureScreen({route}) {
+function FeatureScreen({ route }) {
   return (
     <>
       <Stack.Navigator
         screenOptions={{
-          title: 'Add Booking',
+          title: route.params.title,
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#00bfff',
-            height:vh(7)
+            height: vh(7)
           },
           headerTintColor: 'white',
           headerTitleStyle: {
@@ -23,7 +24,8 @@ function FeatureScreen({route}) {
             fontSize: vh(3),
           },
         }}>
-        <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }}/>
+        <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }} />
+        <Stack.Screen name="user-profile" component={UserProfileScreen} />
       </Stack.Navigator>
     </>
   );

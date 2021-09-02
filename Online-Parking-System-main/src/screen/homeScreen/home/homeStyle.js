@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { alignItems, height } from 'styled-system';
 import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
@@ -32,8 +33,13 @@ export default StyleSheet.create({
     fontSize: vh(3),
     color: 'white',
     paddingLeft: vw(2),
-    display:'flex',
-    flex:1,
-    alignSelf:'center'
+    display: 'flex',
+    flex: 1,
+    alignSelf: 'center'
   },
+  spinnerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
