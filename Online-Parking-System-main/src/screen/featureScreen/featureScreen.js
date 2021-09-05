@@ -23,7 +23,10 @@ function FeatureScreen({ route }) {
             fontWeight: 'bold',
             fontSize: vh(3),
           },
-        }}>
+          headerBackTitleVisible: false
+        }}
+        initialRouteName={route.params.initialRouteName}
+        >
         <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }} />
         <Stack.Screen name="user-profile" component={UserProfileScreen} />
       </Stack.Navigator>

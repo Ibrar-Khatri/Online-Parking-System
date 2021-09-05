@@ -6,17 +6,18 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
-  Platform, StatusBar
+  Platform, StatusBar,
+  Text
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
 import { heightPercentageToDP as vh } from './src/responsive/responsive';
 import AuthenticationScreen from './src/screen/authenticationScreen/authenticationScreen';
-import HomeScreen from './src/screen/homeScreen/homeScreen';
+import MyDrawer from './src/screen/myDrawer/myDrawer';
 import FeatureScreen from './src/screen/featureScreen/featureScreen';
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -35,7 +36,7 @@ const App = () => {
       <Provider store={store}>
         <NativeBaseProvider>
           <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName='authentication'>
               <Stack.Screen
                 name="authentication-screen"
                 component={AuthenticationScreen}
@@ -44,27 +45,28 @@ const App = () => {
                 }}
               />
               <Stack.Screen
-                name="main-screen"
-                component={HomeScreen}
+                name="drawer"
+                component={MyDrawer}
                 options={{
-                  title: 'Online Parking System',
-                  headerTitleAlign: 'left',
-
-                  headerStyle: {
-                    backgroundColor: '#00bfff',
-                    height: vh(6),
-                  },
-                  headerRight: () => <MenuIconList />,
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                    lineHeight: vh(4),
-                    color: 'white',
-                    fontFamily:
-                      Platform.OS === 'ios'
-                        ? 'DM Serif Display'
-                        : 'sans-serif-condensed',
-                    fontSize: vh(3.5),
-                  }
+                  headerShown: false,
+                  // title: 'Online Parking System',
+                  // headerTitleAlign: 'center',
+                  // headerStyle: {
+                  //   backgroundColor: '#00bfff',
+                  //   height: vh(7),
+                  // },
+                  // // headerRight: () => <MenuIconList />,
+                  // headerTitleStyle: {
+                  //   fontWeight: 'bold',
+                  //   lineHeight: vh(4),
+                  //   marginBottom: 0,
+                  //   color: 'white',
+                  //   fontFamily:
+                  //     Platform.OS === 'ios'
+                  //       ? 'DM Serif Display'
+                  //       : 'sans-serif-condensed',
+                  //   fontSize: vh(3.5),
+                  // }
                 }}
               />
               <Stack.Screen

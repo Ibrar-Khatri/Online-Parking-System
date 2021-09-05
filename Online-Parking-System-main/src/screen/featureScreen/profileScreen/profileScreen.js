@@ -15,11 +15,9 @@ function UserProfileScreen({ route, navigation }) {
         <View>
             <View style={style.bgView}>
                 <View style={style.avatarAndTextStyle}>
-                    <TouchableOpacity >
-                        <Avatar
-                            style={style.avatar}
-                            source={require('../../../assets/profileIcon2.png')} />
-                    </TouchableOpacity>
+                    <Avatar
+                        style={style.avatar}
+                        source={require('../../../assets/profileIcon2.png')} />
                     <View style={style.textStyle}>
                         <Text underline style={style.nameStyle}  >{userDetails.displayName}</Text>
                         <Text style={style.emailStyle}>{userDetails.email}</Text>

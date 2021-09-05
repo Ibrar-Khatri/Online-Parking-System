@@ -53,7 +53,7 @@ function SlotTab({ location, date, startTime, endTime }) {
       .then(res => {
         dispatch({ type: 'addNewBooking', payload: details })
         setIsLoading(false);
-        navigation.navigate('main-screen', { screen: 'myBooking-screen' })
+        navigation.navigate('drawer', { screen: 'myBooking-screen' })
       })
       .catch(err => {
         setIsLoading(false);

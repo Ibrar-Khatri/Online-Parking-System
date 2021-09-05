@@ -9,27 +9,6 @@ import { useDispatch } from "react-redux";
 
 function LinksCard() {
 
-    let navigation = useNavigation()
-    let dispatch = useDispatch()
-
-    let signOut = async () => {
-        try {
-            dispatch({ type: 'removeCurrentUserBooking' })
-            dispatch({ type: 'removeUserDetails' })
-            await AsyncStorage.removeItem('userID')
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'authentication-screen' }],
-            });
-        } catch (e) {
-            console.log('Error in sign out', e)
-            return
-        }
-
-        console.log('signout successfully.')
-    }
-
-
     return <>
         <View style={style.cardStyle}>
             <TouchableOpacity>
@@ -38,13 +17,12 @@ function LinksCard() {
                     <Text fontSize='xl' style={style.linkTextStyle}>Profile</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={signOut}>
+            <TouchableOpacity>
                 <View style={style.linkViewStyle}>
                     <Image source={require('../../assets/logoutIcon.png')} style={style.imageStyle} />
                     <Text fontSize='xl' style={style.linkTextStyle}>Logout</Text>
                 </View>
             </TouchableOpacity>
-
         </View>
     </>
 }

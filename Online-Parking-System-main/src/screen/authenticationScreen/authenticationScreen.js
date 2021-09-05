@@ -29,7 +29,7 @@ function AuthenticationScreen({ navigation }) {
             dispatch({ type: 'addUserDetails', payload: user.data.user });
             navigation.reset({
               index: 0,
-              routes: [{ name: 'main-screen' }],
+              routes: [{ name: 'drawer' }],
             });
             SplashScreen.hide()
             return;

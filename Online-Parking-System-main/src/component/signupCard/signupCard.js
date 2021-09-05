@@ -41,7 +41,7 @@ function SignupCard({ navigation }) {
           setIsLoading(false);
           return navigation.reset({
             index: 0,
-            routes: [{ name: 'main-screen' }],
+            routes: [{ name: 'drawer' }],
           });
         } else {
           setErrMessage(res.data.error.message);
