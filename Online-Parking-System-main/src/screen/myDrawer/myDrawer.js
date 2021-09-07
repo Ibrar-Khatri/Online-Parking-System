@@ -114,13 +114,17 @@ function MyDrawer() {
       headerTitleStyle: style.headerTitleStyle,
       drawerStyle: style.drawerStyle,
       headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} style={style.hamburgerIconView}>
-        <HamburgerIcon color='white' size={vh(4)} />
+        <HamburgerIcon color='white' size={vw(7)} />
       </TouchableOpacity>),
-      drawerType: 'front'
+      drawerType: 'front',
+      drawerActiveTintColor: '#00bfff',
+      drawerInactiveTintColor: 'black',
+      drawerLabelStyle: style.drawerLabelStyle,
+
     }} drawerContent={(props) => <MyDrawerContent {...props} />} >
       <Drawer.Screen name="home" component={Home} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Home' }} />
-      <Drawer.Screen name="past-booking" component={PastBooking} />
-      <Drawer.Screen name="upcoming-booking" component={UpComingBookings} />
+      <Drawer.Screen name="past-booking" component={PastBooking} options={{ drawerLabel: 'Past Bookings' }} />
+      <Drawer.Screen name="upcoming-booking" component={UpComingBookings} options={{ drawerLabel: 'Upcoming Bookings' }} re />
     </Drawer.Navigator>
   )
 

@@ -17,8 +17,8 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     avatar: {
-        height: vh(15),
-        width: vh(15)
+        height: vh(13),
+        width: vh(13)
     },
     textStyle: { marginLeft: vw(3) },
     nameStyle: {

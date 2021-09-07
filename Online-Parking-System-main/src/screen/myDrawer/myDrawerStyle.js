@@ -17,7 +17,11 @@ export default StyleSheet.create({
     drawerStyle: {
         backgroundColor: 'white',
         maxWidth: 500,
-        width: vw(77)
+        width: vw(77),
     },
-    hamburgerIconView: { marginLeft: vh(2) }
+    hamburgerIconView: { marginLeft: vh(2) },
+    drawerLabelStyle: {
+        fontSize: vh(2),
+        fontWeight:'bold'
+    }
 })
