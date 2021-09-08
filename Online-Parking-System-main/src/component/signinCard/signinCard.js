@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import AuthenticationButton from '../authenticationButton/button';
 import { signinWithDetails } from '../../apis/userApis';
 import style from './signinCardStyle';
-import WarningModal from '../modal/modal';
+import WarningModal from '../warningModal/warningModal.js';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
 
 function SigninCard({ navigation }) {

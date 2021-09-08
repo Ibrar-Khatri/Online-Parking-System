@@ -4,7 +4,7 @@ import { Button } from 'native-base';
 import style from './dateAndTimeTabStyle';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import WarningModal from '../modal/modal';
+import WarningModal from '../warningModal/warningModal';
 
 function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, setEndTime, handleSingleIndexSelect }) {
   let [showModal, setShowModal] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Avatar } from 'native-base'
+import { Avatar, ScrollView } from 'native-base'
 import { LinearGradient } from 'react-native-linear-gradient'
 import { Header } from 'react-native/Libraries/parkingAppScreen';
 import { useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ function UserProfileScreen({ route, navigation }) {
         navigation.setOptions({ title: 'User Profile' })
     })
     return <>
-        <View>
+        <ScrollView>
             <View style={style.bgView}>
                 <View style={style.avatarAndTextStyle}>
                     <Avatar
@@ -27,7 +27,8 @@ function UserProfileScreen({ route, navigation }) {
                 </View>
             </View>
             <ProfileScreenCard />
-        </View>
+        </ScrollView>
+
     </>;
 }
 

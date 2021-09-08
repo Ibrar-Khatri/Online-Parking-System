@@ -1,38 +1,33 @@
 import React, { useState } from "react";
 import { Input, Icon, Box, View, Text, Button } from "native-base"
 import style from './profileScreenCardStyle'
-import { Image } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { Formik } from "formik";
 import * as yup from 'yup';
+import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
 
 
 
 function ProfileScreenCard() {
     let userDetails = useSelector(state => state.userReducer.userDetails);
-    // let [userName, setUserName] = useState(userDetails.displayName)
-    // let [email, setEmail] = useState(userDetails.email)
-    // let [password, setPassword] = useState('')
-    let [newPassword, setNewPassword] = useState('')
-    let [invalidName, setInvalidName] = useState(false)
-    let [inValidPassword, setInvalidPassowrd] = useState(false)
-    let [inValidNewPassword, setInvalidNewPassword] = useState(false)
+    let [inValidInput, setInvalidInput] = useState(false)
+    let [showModal, setShowModal] = useState(false)
+
 
 
     const updateUserDetailsValidationSchema = yup.object().shape({
-        name: yup.string().required('Name is required'),
+        name: yup.string().required('Required'),
         password: yup
             .string()
-            .min(6, ({ min }) => `Password must be at least ${min} characters`),
-        newPassword: yup
-            .string()
+            .required('Required')
             .min(6, ({ min }) => `Password must be at least ${min} characters`),
     });
 
 
 
     function updateUserDetails() {
-
+        console.log('valid input')
     }
 
 
@@ -54,24 +49,11 @@ function ProfileScreenCard() {
                     <View style={style.inputFieldsStyleView}>
                         <Input
                             style={style.inputFieldStyle}
-                            value={values.name}
-                            onChangeText={handleChange('name')}
-                            isInvalid={errors.name}
-                            placeholder="Name"
-                            variant="filled"
-                            InputRightElement={
-                                <Image source={require('../../assets/userNameIcon.png')} style={style.inputFieldIconStyle} />
-                            }
-                        />
-                    </View>
-                    <View style={style.inputFieldsStyleView}>
-                        <Input
-                            style={style.inputFieldStyle}
                             value={values.email}
                             placeholder="Email"
                             variant="filled"
                             InputRightElement={
-                                <Image source={require('../../assets/emailIcon.png')} style={style.inputFieldIconStyle} />
+                                <Image resizeMode='contain' source={require('../../assets/emailIcon.png')} style={style.inputFieldIconStyle} />
                             }
                             isReadOnly={true}
                         />
@@ -79,32 +61,42 @@ function ProfileScreenCard() {
                     <View style={style.inputFieldsStyleView}>
                         <Input
                             style={style.inputFieldStyle}
-                            value={values.password}
-                            isInvalid={errors.password}
-                            onChangeText={handleChange('password')}
-                            placeholder="Password"
+                            value={values.name}
+                            onChangeText={handleChange('name')}
+                            isInvalid={inValidInput && errors.name}
+                            placeholder="Name"
                             variant="filled"
                             InputRightElement={
-                                <Image source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
+                                <Image resizeMode='contain' source={require('../../assets/userNameIcon.png')} style={style.inputFieldIconStyle} />
                             }
                         />
+                        {
+                            inValidInput && errors.name && <Text style={style.inValidInputTextStyle}>{errors.name}</Text>
+                        }
                     </View>
                     <View style={style.inputFieldsStyleView}>
                         <Input
                             style={style.inputFieldStyle}
-                            value={values.newPassword}
-                            onChangeText={handleChange('newPassword')}
-                            isInvalid={errors.newPassword}
-                            placeholder="New Password"
+                            value={values.password}
+                            isInvalid={inValidInput && errors.password}
+                            onChangeText={handleChange('password')}
+                            placeholder="Password"
                             variant="filled"
                             InputRightElement={
-                                <Image source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
+                                <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                             }
                         />
+                        {
+                            inValidInput && errors.password && <Text style={style.inValidInputTextStyle}>{errors.password}</Text>
+                        }
                     </View>
-                    <Button style={style.buttonStyle} onPress={() =>handleSubmit()}><Text style={style.buttonText}>Update</Text></Button>
+                    <TouchableOpacity style={style.changePasswordTexView} onPress={() => setShowModal(true)}><Text style={style.changePasswordText}>Change Password</Text></TouchableOpacity>
+                    <Button style={style.buttonStyle} onPress={() => {handleSubmit() ;setInvalidInput(true)}}><Text style={style.buttonText}>Update</Text></Button>
                 </>)}
             </Formik>
+            {
+                showModal ? <ChangePasswordModal showModal={showModal} setShowModal={setShowModal} /> : null
+            }
         </View>
     </>
 }

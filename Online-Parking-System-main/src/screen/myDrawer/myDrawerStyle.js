@@ -10,16 +10,19 @@ export default StyleSheet.create({
     },
     headerTitleStyle: {
         fontWeight: 'bold',
-        lineHeight: vh(4),
         color: 'white',
-        fontSize: vh(3.5),
+        fontSize: vh(3),
     },
     drawerStyle: {
         backgroundColor: 'white',
         maxWidth: 500,
         width: vw(77),
     },
-    hamburgerIconView: { marginLeft: vh(2) },
+    hamburgerIconView: {
+        height:vh(5),
+        width:vh(5),
+        marginLeft: vh(2) 
+    },
     drawerLabelStyle: {
         fontSize: vh(2),
         fontWeight:'bold'

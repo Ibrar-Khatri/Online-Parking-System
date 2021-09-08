@@ -15,6 +15,7 @@ import {
   heightPercentageToDP as vh,
   widthPercentageToDP as vw,
 } from '../../responsive/responsive';
+import { Image } from 'react-native';
 
 
 
@@ -113,8 +114,9 @@ function MyDrawer() {
       headerStyle: style.headerStyle,
       headerTitleStyle: style.headerTitleStyle,
       drawerStyle: style.drawerStyle,
-      headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} style={style.hamburgerIconView}>
-        <HamburgerIcon color='white' size={vw(7)} />
+      headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} >
+        {/* <HamburgerIcon color='white' size={vw(7)} /> */}
+        <Image source={require('../../assets/hamburgerIcon.png')} style={style.hamburgerIconView} />
       </TouchableOpacity>),
       drawerType: 'front',
       drawerActiveTintColor: '#00bfff',

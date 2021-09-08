@@ -7,7 +7,7 @@ import AuthenticationButton from '../authenticationButton/button';
 import { signupWithDetails } from '../../apis/userApis';
 import style from './signUpCardStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import WarningModal from '../modal/modal';
+import WarningModal from '../warningModal/warningModal.js';
 import { useDispatch } from 'react-redux';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
 

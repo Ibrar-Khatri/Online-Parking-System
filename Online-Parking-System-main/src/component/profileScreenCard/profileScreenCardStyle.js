@@ -4,37 +4,52 @@ import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../res
 
 export default StyleSheet.create({
     cardStyle: {
-        height: vh(60),
+        height: vh(63),
         backgroundColor: 'white',
         width: vw(90),
         marginTop: vh(-10),
         borderRadius: 40,
-        alignSelf:'center',
-        alignItems:'center'
+        alignSelf: 'center',
+        paddingTop:vh(10)
     },
     inputFieldIconStyle: {
-        height: vh(4),
-        width: vh(4),
-        
-        marginRight:vw(2),
+        height: vh(3),
+        maxWidth: vh(3.3),
+        marginRight: vw(2),
     },
     inputFieldsStyleView: {
-        width: vw(70),
-        marginTop:vh(3)
+        height: vh(10),
+        width: vw(80),
+        alignSelf: 'center',
     },
     inputFieldStyle: {
-        height: vh(7.5),
-        fontSize:vh(2.5),
+        height: vh(6),
+        fontSize: vh(2),
+    },
+    inValidInputTextStyle: {
+        fontSize: vh(1.8),
+        color: 'red',
+        marginTop: 3,
+        marginLeft: 10
+    },
+    changePasswordTexView:{
+        alignItems:'flex-end',
+        marginRight:20,
+        marginTop:3,
+    },
+    changePasswordText:{
+        fontSize:vh(2),
+        color:'#00bfff'
     },
     buttonStyle: {
         width: vw(40),
-        height: vh(6),
         backgroundColor: '#00bfff',
-        paddingTop: vh(1),
-        marginTop:vh(6)
-      },
-      buttonText: {
+        marginTop: vh(7),
+        alignSelf:'center'
+    },
+    buttonText: {
         color: 'white',
-        fontSize: vh(2.5),
-      },
+        fontSize: vh(2),
+    },
+
 })
