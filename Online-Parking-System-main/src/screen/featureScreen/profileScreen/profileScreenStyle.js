@@ -16,17 +16,25 @@ export default StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
     },
-    avatar: {
-        height: vh(13),
-        width: vh(13)
+    uploadImageIcon: {
+        backgroundColor: 'white'
     },
-    textStyle: { marginLeft: vw(3) },
+    editIconView: {
+        marginTop: vh(-4),
+        marginLeft: vh(10.3),
+    },
+    editIcon: {
+        backgroundColor: 'white'
+    },
+    textStyle: {
+        marginLeft: vw(1),
+    },
     nameStyle: {
         color: 'white',
-        fontSize: vh(3)
+        fontSize: vh(3),
     },
     emailStyle: {
         color: 'white',
-        fontSize: vh(2)
+        fontSize: vh(2),
     }
 })

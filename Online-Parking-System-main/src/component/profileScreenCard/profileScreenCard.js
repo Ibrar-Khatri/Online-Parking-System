@@ -82,6 +82,7 @@ function ProfileScreenCard() {
                             onChangeText={handleChange('password')}
                             placeholder="Password"
                             variant="filled"
+                            type='password'
                             InputRightElement={
                                 <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                             }

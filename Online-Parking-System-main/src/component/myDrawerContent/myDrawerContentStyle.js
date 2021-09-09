@@ -21,13 +21,13 @@ export default StyleSheet.create({
         marginLeft: vw(5),
     },
     textEmail: {
-        fontSize: vh(4),
+        fontSize: vh(3.3),
         fontWeight: 'bold',
         color: 'white',
         lineHeight: vh(4),
     },
     textName: {
-        fontSize: vh(3),
+        fontSize: vh(2.5),
         fontWeight: '600',
         color: 'white',
         lineHeight: vh(3),
@@ -51,10 +51,10 @@ export default StyleSheet.create({
         fontWeight:'bold',
         color:'grey'
     },
-    logoutIconStyle: {
-        height: vh(3.5),
-        width: vh(3.5),
-        marginRight:vw(-2.5)
+    iconStyle: {
+        height: vh(3),
+        width: vh(3),
+        marginRight:vw(-2.5),
     },
     drawerItemLabelStyle: {
         fontSize: vh(2),

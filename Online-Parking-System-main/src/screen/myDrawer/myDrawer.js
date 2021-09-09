@@ -116,7 +116,7 @@ function MyDrawer() {
       drawerStyle: style.drawerStyle,
       headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} >
         {/* <HamburgerIcon color='white' size={vw(7)} /> */}
-        <Image source={require('../../assets/hamburgerIcon.png')} style={style.hamburgerIconView} />
+        <Image resizeMode='contain' source={require('../../assets/hamburgerIcon.png')} style={style.hamburgerIconView} />
       </TouchableOpacity>),
       drawerType: 'front',
       drawerActiveTintColor: '#00bfff',

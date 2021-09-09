@@ -20,7 +20,7 @@ export default StyleSheet.create({
     },
     hamburgerIconView: {
         height:vh(5),
-        width:vh(5),
+        width:vh(4),
         marginLeft: vh(2) 
     },
     drawerLabelStyle: {

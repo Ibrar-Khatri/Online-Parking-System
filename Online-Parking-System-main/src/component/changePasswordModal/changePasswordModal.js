@@ -12,33 +12,32 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
     const passwordValidationSchema = yup.object().shape({
         oldPassword: yup
             .string()
-            .required('Please enter the old password')
-            .min(6, ({ min }) => `Password must be at least ${min} characters`),
+            .min(6, ({ min }) => `Password must be at least ${min} characters`)
+            .required('Required'),
         newPassword: yup
             .string()
-            .required('Please enter the new password')
+            .required('Required')
             .min(6, ({ min }) => `Password must be at least ${min} characters`),
         confirmPassword: yup
             .string()
-            .required('Please enter the password again')
+            .required('Required')
             .min(6, ({ min }) => `Password must be at least ${min} characters`)
             .oneOf([yup.ref('newPassword'), null], 'Passwords must match'),
     });
 
-    function updatePassword() {
-
-        console.log('valid input')
+    function updatePassword(value) {
         setInvalidInput(false)
+        console.log('Values ==>', value)
+
     }
 
     return <>
         <ScrollView >
-
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                 <Modal.Content >
                     <Formik initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
                         validationSchema={passwordValidationSchema}
-                        onSubmit={value => updatePassword(value)}>
+                        onSubmit={updatePassword}>
 
                         {({
                             handleChange,
@@ -55,15 +54,16 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
                                         style={style.inputFieldStyle}
                                         value={values.oldPassword}
                                         onChangeText={handleChange('oldPassword')}
-                                        isInvalid={inValidInput && errors.newPassword}
+                                        isInvalid={inValidInput && errors.oldPassword}
                                         placeholder="Old Password"
                                         variant="filled"
+                                        type='password'
                                         InputRightElement={
                                             <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                                         }
                                     />
                                     {
-                                        inValidInput && errors.newPassword && <Text style={style.inValidInputTextStyle}>{errors.newPassword}</Text>
+                                        inValidInput && errors.oldPassword && <Text style={style.inValidInputTextStyle}>{errors.oldPassword}</Text>
                                     }
                                 </View>
                                 <View style={style.inputFieldsStyleView}>
@@ -74,6 +74,7 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
                                         isInvalid={inValidInput && errors.newPassword}
                                         placeholder="New Password"
                                         variant="filled"
+                                        type='password'
                                         InputRightElement={
                                             <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                                         }
@@ -90,6 +91,7 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
                                         isInvalid={inValidInput && errors.confirmPassword}
                                         placeholder="Confirm Password"
                                         variant="filled"
+                                        type='password'
                                         InputRightElement={
                                             <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                                         }

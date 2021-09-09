@@ -59,7 +59,7 @@ function MyDrawerContent(props) {
                 <DrawerItem
                     label="Update Profile"
                     onPress={() => onPressDrawerItem('profile')}
-                    icon={() => <Image source={require('../../assets/editIcon.png')} style={style.logoutIconStyle} />}
+                    icon={() => <Image resizeMode='contain' source={require('../../assets/editIcon.png')} style={style.iconStyle} />}
                     activeTintColor='#00bfff'
                     inactiveTintColor='black'
                     labelStyle={style.drawerItemLabelStyle}
@@ -67,7 +67,7 @@ function MyDrawerContent(props) {
                 <DrawerItem
                     label="Log Out"
                     onPress={() => onPressDrawerItem('logout')}
-                    icon={() => <Image source={require('../../assets/logoutIcon.png')} style={style.logoutIconStyle} />}
+                    icon={() => <Image resizeMode='contain' source={require('../../assets/logoutIcon.png')} style={style.iconStyle} />}
                     activeTintColor='#00bfff'
                     inactiveTintColor='black'
                     labelStyle={style.drawerItemLabelStyle}
