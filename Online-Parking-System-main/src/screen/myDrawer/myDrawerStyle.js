@@ -6,12 +6,11 @@ console.log(vw(100))
 export default StyleSheet.create({
     headerStyle: {
         backgroundColor: '#00bfff',
-        height: vh(8),
     },
     headerTitleStyle: {
         fontWeight: 'bold',
         color: 'white',
-        fontSize: vh(3),
+        fontSize: vh(2.7),
     },
     drawerStyle: {
         backgroundColor: 'white',

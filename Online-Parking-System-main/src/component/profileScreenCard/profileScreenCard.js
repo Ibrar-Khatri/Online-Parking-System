@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
+import { updateUserProfile } from "../../apis/userApis";
 
 
 
-function ProfileScreenCard() {
+function ProfileScreenCard({ profileImage }) {
     let userDetails = useSelector(state => state.userReducer.userDetails);
     let [inValidInput, setInvalidInput] = useState(false)
     let [showModal, setShowModal] = useState(false)
@@ -25,9 +26,27 @@ function ProfileScreenCard() {
     });
 
 
+    function updateUserDetails({ name, password }) {
+        // console.log('valid input', password)
 
-    function updateUserDetails() {
-        console.log('valid input')
+        let update = {
+            condition: 'updateDetails',
+            name: name,
+            password: password,
+        }
+        let formData = new FormData();
+        formData.append('userDetails', JSON.stringify(update))
+        formData.append('profileImage', profileImage)
+        if (profileImage || (name != userDetails.displayName)) {
+            updateUserProfile(formData)
+                .then(res => {
+                    console.log('Responed data => ' + res.data)
+                })
+                .catch(error => {
+                    console.log('Error in request ' + error.message)
+                })
+        }
+
     }
 
 
@@ -36,7 +55,7 @@ function ProfileScreenCard() {
         <View style={style.cardStyle}>
             <Formik initialValues={{ name: userDetails.displayName, email: userDetails.email, password: '', newPassword: '' }}
                 validationSchema={updateUserDetailsValidationSchema}
-                onSubmit={value => updateUserDetails(value)}>
+                onSubmit={updateUserDetails}>
 
                 {({
                     handleChange,
@@ -92,7 +111,7 @@ function ProfileScreenCard() {
                         }
                     </View>
                     <TouchableOpacity style={style.changePasswordTexView} onPress={() => setShowModal(true)}><Text style={style.changePasswordText}>Change Password</Text></TouchableOpacity>
-                    <Button style={style.buttonStyle} onPress={() => {handleSubmit() ;setInvalidInput(true)}}><Text style={style.buttonText}>Update</Text></Button>
+                    <Button style={style.buttonStyle} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update</Text></Button>
                 </>)}
             </Formik>
             {

@@ -23,3 +23,14 @@ export const getUserDetailsById = async details => {
   );
   return resp;
 };
+
+export const updateUserProfile = async details => {
+  console.log(details)
+  let resp = await axios({
+    method: 'post',
+    url: `${appSetting.severHostedUrl}/user/update-user-details`,
+    data: details,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+  return resp;
+};

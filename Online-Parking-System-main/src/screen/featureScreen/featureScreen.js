@@ -16,7 +16,6 @@ function FeatureScreen({ route }) {
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#00bfff',
-            height: vh(7)
           },
           headerTintColor: 'white',
           headerTitleStyle: {

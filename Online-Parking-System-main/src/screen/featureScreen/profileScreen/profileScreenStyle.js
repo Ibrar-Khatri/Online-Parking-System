@@ -36,5 +36,10 @@ export default StyleSheet.create({
     emailStyle: {
         color: 'white',
         fontSize: vh(2),
+    },
+    cancelTextStyle:{
+        alignSelf:'center',
+        justifyContent:'center'  
     }
+
 })
