@@ -25,18 +25,21 @@ function ProfileScreenCard({ profileImage }) {
             .min(6, ({ min }) => `Password must be at least ${min} characters`),
     });
 
-
     function updateUserDetails({ name, password }) {
-        // console.log('valid input', password)
-
+        let formData = new FormData();
         let update = {
             condition: 'updateDetails',
+            uid: userDetails.uid,
             name: name,
+            email: userDetails.email,
             password: password,
         }
-        let formData = new FormData();
+        let image = {
+            base64: profileImage.base64,
+            name: profileImage.fileName
+        }
         formData.append('userDetails', JSON.stringify(update))
-        formData.append('profileImage', profileImage)
+        formData.append('profileImage', JSON.stringify(image))
         if (profileImage || (name != userDetails.displayName)) {
             updateUserProfile(formData)
                 .then(res => {

@@ -1,4 +1,5 @@
 const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
+const admin = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 
 module.exports.signupWithDetails = (req, res) => {
@@ -106,32 +107,21 @@ module.exports.getUserDetails = (req, res) => {
     });
 };
 module.exports.updateUserDetals = (req, res) => {
-  let userDetails = req.body;
-  console.log(userDetails)
+  let userDetails = JSON.parse(req.body.userDetails)
 
-  res.send({ status: true })
-  // db.collection("user")
-  //   .doc(req.body.uid)
-  //   .get()
-  //   .then((doc) => {
-  //     if (doc.exists) {
-  //       res.send({
-  //         status: true,
-  //         user: {
-  //           uid: req.body.uid,
-  //           email: doc.data().email,
-  //           displayName: doc.data().displayName,
-  //           myBookings: doc.data().myBookings,
-  //         },
-  //       });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log("User deatils cannot be found" + error);
-  //     res.send({
-  //       status: false,
-  //       error: error,
-  //     });
-  //   });
+  // admin
+  // .auth()
+  // .getUser(userDetails.uid)
+  // .then((userRecord) => {
+  //   // See the UserRecord reference doc for the contents of userRecord.
+  //   let user = userRecord.toJSON()
+  //   console.log(`Successfully fetched user data: ${JSON.stringify(user)}`);
+  //   res.send({ status: true })
+  // })
+  // .catch((error) => {
+  //   console.log('Error fetching user data:', error);
+  //   res.send({ status: false })
+  // });
+
 };
 

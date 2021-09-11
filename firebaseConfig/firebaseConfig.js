@@ -1,4 +1,6 @@
 const firebase = require('firebase')
+var admin = require('firebase-admin');
+var serviceAccount = require("../online-parking-system-8e146-firebase-adminsdk-q924b-ed6141a5dd.json");
 
 
 var firebaseConfig = firebase.initializeApp(
@@ -13,4 +15,11 @@ var firebaseConfig = firebase.initializeApp(
     }
 )
 
+
+var admin = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://online-parking-system-8e146-default-rtdb.firebaseio.com"
+});
+
 module.exports = firebaseConfig;
+module.exports = admin;

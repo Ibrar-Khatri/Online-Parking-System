@@ -46,6 +46,9 @@ function UserProfileScreen({ route, navigation }) {
                     setProfileImage(image.assets[0])
                 }
             })
+        } else if (conditon == 'removeImage') {
+            setProfileImageUri('')
+            setProfileImage(true)
         }
     }
 
@@ -115,7 +118,7 @@ function UserProfileScreen({ route, navigation }) {
                         Choose from Library
                     </Actionsheet.Item>
                     <Actionsheet.Item
-                        onPress={() => getImageFromLibrary('remove')}
+                        onPress={() => getImageFromLibrary('removeImage')}
                         startIcon={
                             <Image resizeMode='contain' size={vh(4)} alt='delete icon' source={require('../../../assets/deleteIcon.png')} />
                         }
