@@ -15,8 +15,6 @@ function ProfileScreenCard({ profileImage }) {
     let [inValidInput, setInvalidInput] = useState(false)
     let [showModal, setShowModal] = useState(false)
 
-
-
     const updateUserDetailsValidationSchema = yup.object().shape({
         name: yup.string().required('Required'),
         password: yup
@@ -34,19 +32,19 @@ function ProfileScreenCard({ profileImage }) {
             email: userDetails.email,
             password: password,
         }
-        let image = {
-            base64: profileImage.base64,
-            name: profileImage.fileName
-        }
+        // let image = {
+        //     base64: profileImage.base64,
+        //     name: profileImage.fileName
+        // }
         formData.append('userDetails', JSON.stringify(update))
-        formData.append('profileImage', JSON.stringify(image))
-        if (profileImage || (name != userDetails.displayName)) {
+        formData.append('profileImage', JSON.stringify(profileImage))
+        if (profileImage || (name !== userDetails.displayName)) {
             updateUserProfile(formData)
                 .then(res => {
-                    console.log('Responed data => ' + res.data)
+                    console.log('Responed data => ' + res.data.status)
                 })
                 .catch(error => {
-                    console.log('Error in request ' + error.message)
+                    console.log('Error in request ' + error)
                 })
         }
 

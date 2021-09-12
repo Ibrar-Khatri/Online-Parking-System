@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, Platform } from 'react-native';
-import { ScrollView, Image, Actionsheet } from 'native-base'
+import { ScrollView, Image, Actionsheet, useToast } from 'native-base'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useSelector } from 'react-redux'
 import ProfileScreenCard from '../../../component/profileScreenCard/profileScreenCard'
@@ -12,51 +12,90 @@ function UserProfileScreen({ route, navigation }) {
     let userDetails = useSelector(state => state.userReducer.userDetails)
 
     let [actionSheetInvoke, setActionSheetInvoke] = useState(false)
-    let [profileImage, setProfileImage] = useState('')
     let [profileImageUri, setProfileImageUri] = useState('')
+    let [profileImage, setProfileImage] = useState(null)
+
+    const toast = useToast()
 
     let getImageFromLibrary = (conditon) => {
         var options = {
             mediaType: 'photos',
             saveToPhotos: true,
-            includeBase64: true
+            includeBase64: true,
         };
-        if (conditon == 'camera') {
-            launchCamera(options, (image) => {
+        console.log(profileImage)
+        switch (conditon) {
+            case 'camera': {
+                launchCamera(options, (image) => {
+                    setActionSheetInvoke(false)
+                    if (image.didCancel) {
+                        console.log('User cannot select image ')
+                    } else if (image.errorCode) {
+                        console.log('some thing went wrong ')
+                    } else {
+                        if ((image.assets[0].fileSize / 1000000) <= 1) {
+                            setProfileImageUri(image.assets[0].uri)
+                            setProfileImage({
+                                base64: image.assets[0].base64,
+                                condition: 'addImage'
+                            })
+                        } else {
+                            setProfileImageUri(userDetails.profileImage)
+                            setProfileImage(null)
+                            console.log("image should be less than 1 mb")
+                        }
+                    }
+                })
+            }
+            case 'library': {
+                launchImageLibrary(options, (image) => {
+                    setActionSheetInvoke(false)
+                    if (image.didCancel) {
+                        console.log('User cannot select image ')
+                    } else if (image.errorCode) {
+                        console.log('some thing went wrong ')
+                    } else {
+                        if ((image.assets[0].fileSize / 1000000) <= 1) {
+                            // toast.show({
+                            //       title: "Image",
+                            //       status: "success",
+                            //       description: "Thanks for signing up with us.",
+                            //     })    
+                            console.log('image size ' + image.assets[0].fileSize / 1000000)
+                            setProfileImageUri(image.assets[0].uri)
+                            setProfileImage({
+                                base64: image.assets[0].base64,
+                                condition: 'addImage'
+                            })
+                        } else {
+                            toast.show({
+                                placement: "top",
+                                title: "Invalid Image",
+                                status: "error",
+                                description: "Image Should be less than 1 mb",
+                            })
+                            setProfileImageUri(userDetails.profileImage)
+                            setProfileImage(null)
+                            console.log("image should be less than 1 mb")
+                        }
+                    }
+                })
+            }
+            case 'removeImage': {
                 setActionSheetInvoke(false)
-                if (image.didCancel) {
-                    console.log('User cannot select image ')
-                } else if (image.errorCode) {
-                    console.log('some thing went wrong ')
-                } else {
-                    setProfileImageUri(image.assets[0].uri)
-                    setProfileImage(image.assets[0])
-                }
-            })
-
-        } else if (conditon == 'library') {
-            launchImageLibrary(options, (image) => {
-                setActionSheetInvoke(false)
-                if (image.didCancel) {
-                    console.log('User cannot select image ')
-                } else if (image.errorCode) {
-                    console.log('some thing went wrong ')
-                } else {
-                    setProfileImageUri(image.assets[0].uri)
-                    setProfileImage(image.assets[0])
-                }
-            })
-        } else if (conditon == 'removeImage') {
-            setProfileImageUri('')
-            setProfileImage(true)
+                setProfileImageUri('')
+                setProfileImage({
+                    condition: 'removeImage'
+                })
+            }
         }
-    }
 
+    }
 
     function isIconPress() {
         if (profileImage) {
             setProfileImageUri(userDetails.profileImage)
-            setProfileImage('')
+            setProfileImage(null)
         } else {
             setActionSheetInvoke(true)
         }

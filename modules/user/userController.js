@@ -1,6 +1,8 @@
 const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
-const admin = require("../../firebaseConfig/firebaseConfig");
+// const admin = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
+const storage = firebaseConfig.storage()
+
 
 module.exports.signupWithDetails = (req, res) => {
 
@@ -108,6 +110,26 @@ module.exports.getUserDetails = (req, res) => {
 };
 module.exports.updateUserDetals = (req, res) => {
   let userDetails = JSON.parse(req.body.userDetails)
+  let image = JSON.parse(req.body.profileImage)
+  let uploadImage = storage.ref('profileImages').child(userDetails.uid)
+
+  console.log("hello " + image.condition)
+  if (image.condition === 'addImage') {
+    uploadImage.putString(image.base64, 'base64', { contentType: 'image/jpg' })
+      .then(uploadImage => {
+        let url = uploadImage.getDownloadURL().then((url) => console.log(url))
+        res.send({
+          status: true
+        })
+      })
+      .catch(err => {
+        console.log(err, 'Image uploaded successfully')
+        res.send({
+          status: false
+        })
+      })
+
+  }
 
   // admin
   // .auth()
