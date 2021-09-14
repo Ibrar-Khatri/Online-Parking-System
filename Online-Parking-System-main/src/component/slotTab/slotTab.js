@@ -47,7 +47,6 @@ function SlotTab({ location, date, startTime, endTime }) {
       slotName,
       location,
     };
-    console.log(details)
 
     bookParkingArea(details)
       .then(res => {

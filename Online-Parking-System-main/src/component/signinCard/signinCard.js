@@ -50,7 +50,6 @@ function SigninCard({ navigation }) {
       })
       .catch(err => {
         setErrMessage('Please try again later ');
-        console.log(err)
         setShowModal(true);
         setIsLoading(false);
         return;
@@ -88,7 +87,7 @@ function SigninCard({ navigation }) {
                     fontSize={vh(2.5)}
                     onChangeText={handleChange('email')}
                     value={values.email}
-                    autoCapitalize = 'none'
+                    autoCapitalize='none'
                   />
                   {showInvalidInput && errors.email && (
                     <Text style={style.invalidInputStyle}>{errors.email}</Text>

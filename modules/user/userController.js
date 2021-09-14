@@ -62,7 +62,7 @@ module.exports.signinWithDetails = (req, res) => {
                 uid: user.user.uid,
                 email: req.body.email,
                 displayName: doc.data().displayName,
-                myBookings: doc.data().myBookings,
+                profileImage: doc.data().profileImage,
                 myBookings: doc.data().myBookings,
               },
             });
@@ -96,6 +96,7 @@ module.exports.getUserDetails = (req, res) => {
             email: doc.data().email,
             displayName: doc.data().displayName,
             myBookings: doc.data().myBookings,
+            profileImage: doc.data().profileImage,
           },
         });
       }
@@ -111,39 +112,72 @@ module.exports.getUserDetails = (req, res) => {
 module.exports.updateUserDetals = (req, res) => {
   let userDetails = JSON.parse(req.body.userDetails)
   let image = JSON.parse(req.body.profileImage)
-  let uploadImage = storage.ref('profileImages').child(userDetails.uid)
+  let storageRef = storage.ref('profileImages').child(userDetails.uid)
 
-  console.log("hello " + image.condition)
-  if (image.condition === 'addImage') {
-    uploadImage.putString(image.base64, 'base64', { contentType: 'image/jpg' })
-      .then(uploadImage => {
-        let url = uploadImage.getDownloadURL().then((url) => console.log(url))
-        res.send({
-          status: true
+  let uploadImageInDB = () => {
+    storageRef.putString(image.base64, 'base64', { contentType: 'image/jpg' })
+      .then(() => {
+        storageRef.getDownloadURL().then((url) => {
+          updateUserDetails({
+            displayName: userDetails.name,
+            profileImage: url
+          }, 'imageAdded')
         })
       })
       .catch(err => {
-        console.log(err, 'Image uploaded successfully')
         res.send({
-          status: false
+          status: false,
+          message: 'Sorry something went wrong, Please try again'
         })
       })
-
   }
 
-  // admin
-  // .auth()
-  // .getUser(userDetails.uid)
-  // .then((userRecord) => {
-  //   // See the UserRecord reference doc for the contents of userRecord.
-  //   let user = userRecord.toJSON()
-  //   console.log(`Successfully fetched user data: ${JSON.stringify(user)}`);
-  //   res.send({ status: true })
-  // })
-  // .catch((error) => {
-  //   console.log('Error fetching user data:', error);
-  //   res.send({ status: false })
-  // });
+  let updateUserDetails = (update, condition) => {
+    db.collection("user")
+      .doc(userDetails.uid)
+      .update(update)
+      .then(() => {
+        res.send({
+          status: true,
+          update: { displayName: userDetails.name, profileImage: update.profileImage, condition: condition },
+          message: 'Your profile has been updated successfully!'
+        });
+      })
+      .catch((error) => {
+        res.send({
+          status: false,
+          message: 'Sorry something went wrong, Please try again'
+        });
+      })
+  }
 
-};
+  firebaseConfig
+    .auth()
+    .signInWithEmailAndPassword(userDetails.email, userDetails.password)
+    .then(() => {
+      if (image) {
+        if (image.condition === 'updateProfileImage') {
+          uploadImageInDB()
+        } else if (image.condition === 'removeProfileImage') {
+          storageRef.delete()
+            .then(() => {
+              updateUserDetails({
+                displayName: userDetails.name,
+                profileImage: ''
+              }, 'imageRemoved')
+            })
+        }
+      } else {
+        updateUserDetails({
+          displayName: userDetails.name
+        }, 'updateDetails')
+      }
+    })
+    .catch(() => {
+      res.send({
+        status: false,
+        message: 'Please enter a valid password'
+      });
+    })
+}
 

@@ -24,7 +24,6 @@ function AuthenticationScreen({ navigation }) {
       //we get user id  from value
       getUserDetailsById({ uid: value })
         .then(user => {
-          console.log('positve response')
           if (user.data.status) {
             dispatch({ type: 'addUserDetails', payload: user.data.user });
             navigation.reset({
@@ -44,7 +43,6 @@ function AuthenticationScreen({ navigation }) {
         });
       return
     } else {
-      console.log(value)
       setInitialRouteName('signin-screen');
       SplashScreen.hide()
       return;

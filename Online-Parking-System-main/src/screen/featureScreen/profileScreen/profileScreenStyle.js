@@ -37,9 +37,13 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: vh(2),
     },
-    cancelTextStyle:{
-        alignSelf:'center',
-        justifyContent:'center'  
+    cancelTextStyle: {
+        alignSelf: 'center',
+        justifyContent: 'center'
+    },
+    toastStyle: {
+        width: vh(100),
     }
+
 
 })

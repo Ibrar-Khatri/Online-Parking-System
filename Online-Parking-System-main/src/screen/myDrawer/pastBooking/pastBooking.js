@@ -20,7 +20,6 @@ function MyBookingScreen() {
                     <View style={style.outSideCard} >
                         {
                             bookings?.map((bking, ind) => {
-                                console.log(bking)
                                 return (
                                     <View style={style.bookingCard} key={ind}>
                                         <Text style={style.textStyle}>Location : {bking.location}</Text>

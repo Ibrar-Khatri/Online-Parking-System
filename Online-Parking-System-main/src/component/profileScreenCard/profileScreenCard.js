@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Input, Icon, Box, View, Text, Button } from "native-base"
+import { Input, Icon, Box, View, Text, Button, useToast } from "native-base"
 import style from './profileScreenCardStyle'
 import { Image, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
@@ -10,11 +10,15 @@ import { updateUserProfile } from "../../apis/userApis";
 
 
 
-function ProfileScreenCard({ profileImage }) {
+function ProfileScreenCard({ profileImage, setProfileImage }) {
+
+    let dispatch = useDispatch()
     let userDetails = useSelector(state => state.userReducer.userDetails);
+
     let [inValidInput, setInvalidInput] = useState(false)
     let [showModal, setShowModal] = useState(false)
 
+    let toast = useToast()
     const updateUserDetailsValidationSchema = yup.object().shape({
         name: yup.string().required('Required'),
         password: yup
@@ -32,25 +36,32 @@ function ProfileScreenCard({ profileImage }) {
             email: userDetails.email,
             password: password,
         }
-        // let image = {
-        //     base64: profileImage.base64,
-        //     name: profileImage.fileName
-        // }
         formData.append('userDetails', JSON.stringify(update))
         formData.append('profileImage', JSON.stringify(profileImage))
         if (profileImage || (name !== userDetails.displayName)) {
             updateUserProfile(formData)
                 .then(res => {
-                    console.log('Responed data => ' + res.data.status)
+                    if (res.data.status) {
+                        toast.show({
+                            placement: "top",
+                            status: "success",
+                            description: res.data.message,
+                        })
+                        setProfileImage('')
+                        dispatch({ type: 'updateUserDetails', payload: res.data.update })
+                    } else {
+                        toast.show({
+                            placement: "top",
+                            status: "error",
+                            description: res.data.message,
+                        })
+                    }
                 })
                 .catch(error => {
                     console.log('Error in request ' + error)
                 })
         }
-
     }
-
-
 
     return <>
         <View style={style.cardStyle}>

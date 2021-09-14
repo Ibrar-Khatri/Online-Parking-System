@@ -13,7 +13,7 @@ function UserProfileScreen({ route, navigation }) {
 
     let [actionSheetInvoke, setActionSheetInvoke] = useState(false)
     let [profileImageUri, setProfileImageUri] = useState('')
-    let [profileImage, setProfileImage] = useState(null)
+    let [profileImage, setProfileImage] = useState('')
 
     const toast = useToast()
 
@@ -23,7 +23,6 @@ function UserProfileScreen({ route, navigation }) {
             saveToPhotos: true,
             includeBase64: true,
         };
-        console.log(profileImage)
         switch (conditon) {
             case 'camera': {
                 launchCamera(options, (image) => {
@@ -37,11 +36,11 @@ function UserProfileScreen({ route, navigation }) {
                             setProfileImageUri(image.assets[0].uri)
                             setProfileImage({
                                 base64: image.assets[0].base64,
-                                condition: 'addImage'
+                                condition: 'updateProfileImage'
                             })
                         } else {
                             setProfileImageUri(userDetails.profileImage)
-                            setProfileImage(null)
+                            setProfileImage('')
                             console.log("image should be less than 1 mb")
                         }
                     }
@@ -56,26 +55,19 @@ function UserProfileScreen({ route, navigation }) {
                         console.log('some thing went wrong ')
                     } else {
                         if ((image.assets[0].fileSize / 1000000) <= 1) {
-                            // toast.show({
-                            //       title: "Image",
-                            //       status: "success",
-                            //       description: "Thanks for signing up with us.",
-                            //     })    
-                            console.log('image size ' + image.assets[0].fileSize / 1000000)
                             setProfileImageUri(image.assets[0].uri)
                             setProfileImage({
                                 base64: image.assets[0].base64,
-                                condition: 'addImage'
+                                condition: 'updateProfileImage'
                             })
                         } else {
                             toast.show({
                                 placement: "top",
-                                title: "Invalid Image",
                                 status: "error",
                                 description: "Image Should be less than 1 mb",
                             })
                             setProfileImageUri(userDetails.profileImage)
-                            setProfileImage(null)
+                            setProfileImage('')
                             console.log("image should be less than 1 mb")
                         }
                     }
@@ -85,7 +77,7 @@ function UserProfileScreen({ route, navigation }) {
                 setActionSheetInvoke(false)
                 setProfileImageUri('')
                 setProfileImage({
-                    condition: 'removeImage'
+                    condition: 'removeProfileImage'
                 })
             }
         }
@@ -95,7 +87,7 @@ function UserProfileScreen({ route, navigation }) {
     function isIconPress() {
         if (profileImage) {
             setProfileImageUri(userDetails.profileImage)
-            setProfileImage(null)
+            setProfileImage('')
         } else {
             setActionSheetInvoke(true)
         }
@@ -137,7 +129,7 @@ function UserProfileScreen({ route, navigation }) {
                     </View>
                 </View>
             </View>
-            <ProfileScreenCard profileImage={profileImage} />
+            <ProfileScreenCard profileImage={profileImage} setProfileImage={setProfileImage} />
             <Actionsheet isOpen={actionSheetInvoke} onClose={() => setActionSheetInvoke(false)} >
                 <Actionsheet.Content>
                     <Actionsheet.Item
