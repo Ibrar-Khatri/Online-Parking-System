@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsersAllBookings } from '../../apis/bookingApis';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import style from './myDrawerStyle'
-import UpComingBookings from './upComingBookings/upComingBookings';
 import Admin from './admin/admin';
 import Home from './home/home';
-import PastBooking from './pastBooking/pastBooking';
+import BookingTab from './bookingsTab/bookingsTab';
 import MyDrawerContent from '../../component/myDrawerContent/myDrawerContent';
 import { CircleIcon, HamburgerIcon, View } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -19,11 +18,10 @@ import { Image } from 'react-native';
 
 
 
-const Tab = createMaterialTopTabNavigator();
+
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
-
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let bookings = useSelector(state => state.bookingReducer.userBookings);
@@ -86,8 +84,6 @@ function MyDrawer() {
     //       options={{title: 'Admin'}}
     //     /> */}
     // </Tab.Navigator>
-
-
     // screenOptions={{
     //   title: 'Online Parking System',
     //   headerTitleAlign: 'center',
@@ -115,7 +111,6 @@ function MyDrawer() {
       headerTitleStyle: style.headerTitleStyle,
       drawerStyle: style.drawerStyle,
       headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} >
-        {/* <HamburgerIcon color='white' size={vw(7)} /> */}
         <Image resizeMode='contain' source={require('../../assets/hamburgerIcon.png')} style={style.hamburgerIconView} />
       </TouchableOpacity>),
       drawerType: 'front',
@@ -125,8 +120,7 @@ function MyDrawer() {
 
     }} drawerContent={(props) => <MyDrawerContent {...props} />} >
       <Drawer.Screen name="home" component={Home} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Home' }} />
-      <Drawer.Screen name="past-booking" component={PastBooking} options={{ drawerLabel: 'Past Bookings' }} />
-      <Drawer.Screen name="upcoming-booking" component={UpComingBookings} options={{ drawerLabel: 'Upcoming Bookings' }} re />
+      <Drawer.Screen name="booking" component={BookingTab} options={{ drawerLabel: 'Bookings' }} />
     </Drawer.Navigator>
   )
 

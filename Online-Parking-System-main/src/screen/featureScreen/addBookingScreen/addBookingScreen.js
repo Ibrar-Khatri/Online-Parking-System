@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, View } from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import moment from 'moment';
 import SlotTab from '../../../component/slotTab/slotTab';
 import DateAndTimeSelector from '../../../component/dateAndTimeTab/dateAndTimeTab';
-import style from './bookingScreenStyle';
+import style from './addBookingScreenStyle';
 
-function AddBookingScreen({route}) {
+function AddBookingScreen({ route }) {
   let [date, setDate] = useState(moment(new Date()));
   let [startTime, setStartTime] = useState();
   let [endTime, setEndTime] = useState();
@@ -52,7 +52,7 @@ function AddBookingScreen({route}) {
             setEndTime={setEndTime}
           />
         ) : (
-          <SlotTab date={date} startTime={startTime} endTime={endTime} location={location}/>
+          <SlotTab date={date} startTime={startTime} endTime={endTime} location={location} />
         )}
       </View>
     </>

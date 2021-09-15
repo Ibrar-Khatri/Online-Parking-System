@@ -1,21 +1,16 @@
 import React from 'react'
 import moment from 'moment';
 import { Image, ScrollView, Text, View } from "react-native";
-import { useSelector } from 'react-redux';
-import style from './myBookingStyle'
+import style from './bookingWrapperStyle'
 
 
 
-function MyBookingScreen() {
-    let bookings = useSelector(state => state.bookingReducer.userBookings)
-
+function BookingWrapper({ bookings, title }) {
     return <>
-
-
         {
             bookings?.length !== 0 ?
                 <ScrollView style={style.bgColor}>
-                    <View><Text style={style.myBookingText}>My Bookings</Text></View>
+                    <View><Text style={style.myBookingText}>{title}</Text></View>
 
                     <View style={style.outSideCard} >
                         {
@@ -34,18 +29,15 @@ function MyBookingScreen() {
                 </ScrollView>
                 : <View style={style.bgColor}>
                     <View style={style.imageView}>
-                        <Image style={style.noBookingYetIcon} source={require('../../../assets/noBookingYetIcon.jpeg')} />
+                        <Image style={style.noBookingYetIcon} source={require('../../assets/noBookingYetIcon.jpeg')} />
                         <Text style={style.noBookingsYetText}>No Bookings Yet</Text>
                     </View>
                 </View>
         }
-
     </>
-
-
 }
 
-export default MyBookingScreen
+export default BookingWrapper
 
 
 

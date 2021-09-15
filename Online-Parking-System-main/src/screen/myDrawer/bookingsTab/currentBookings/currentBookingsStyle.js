@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { alignSelf, marginTop } from "styled-system";
-import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../../responsive/responsive";
+import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../../../responsive/responsive";
 
 export default StyleSheet.create({
     bgColor: {
@@ -34,15 +33,14 @@ export default StyleSheet.create({
     },
     imageView: {
         alignItems: 'center',
-        marginTop:'25%'
+        marginTop: '25%'
     },
     noBookingYetIcon: {
         height: vh(30),
         width: vh(30),
     },
     noBookingsYetText: {
-        fontSize: vh(4),
+        fontSize: vh(3),
         fontWeight: 'bold'
     }
-
 })

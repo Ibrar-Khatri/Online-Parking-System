@@ -13,14 +13,14 @@ import {
 import { useSelector } from 'react-redux';
 import style from './homeStyle';
 
-function Home({ navigation,route }) {
+function Home({ navigation, route }) {
   let bookings = useSelector(state => state.bookingReducer.userBookings);
   let parkingAreas = [
     'DHA Karachi',
     'Gulshane-e-Iqal Karachi',
     'Clifton Karachi',
   ];
-  useEffect(()=>{
+  useEffect(() => {
     route.params.setNavigationState(navigation)
   })
   return (

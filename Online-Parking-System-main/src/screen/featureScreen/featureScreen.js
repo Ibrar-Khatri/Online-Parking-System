@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { Button } from 'react-native';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
-import AddBookingScreen from './bookingScreen/bookingScreen';
+import AddBookingScreen from './addBookingScreen/addBookingScreen';
 import UserProfileScreen from './profileScreen/profileScreen';
 
 let Stack = createStackNavigator();
@@ -25,7 +25,7 @@ function FeatureScreen({ route }) {
           headerBackTitleVisible: false
         }}
         initialRouteName={route.params.initialRouteName}
-        >
+      >
         <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }} />
         <Stack.Screen name="user-profile" component={UserProfileScreen} />
       </Stack.Navigator>

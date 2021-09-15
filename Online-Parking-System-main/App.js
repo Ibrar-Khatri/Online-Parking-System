@@ -22,7 +22,6 @@ import FeatureScreen from './src/screen/featureScreen/featureScreen';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { LogBox } from 'react-native';
-import MenuIconList from './src/component/menuIconList/menuIconList';
 
 
 LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the navigation state'])
@@ -55,7 +54,6 @@ const App = () => {
                   //   backgroundColor: '#00bfff',
                   //   height: vh(7),
                   // },
-                  // // headerRight: () => <MenuIconList />,
                   // headerTitleStyle: {
                   //   fontWeight: 'bold',
                   //   lineHeight: vh(4),

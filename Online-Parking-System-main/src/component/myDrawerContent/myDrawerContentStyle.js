@@ -42,25 +42,24 @@ export default StyleSheet.create({
         borderTopWidth: 2,
         maxWidth: 480,
         width: vw(70),
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     accountSettingText: {
         marginTop: vh(1.5),
-        marginLeft:vh(1),
+        marginLeft: vh(1),
         fontSize: vh(2),
-        fontWeight:'bold',
-        color:'grey'
+        fontWeight: 'bold',
+        color: 'grey'
     },
     iconStyle: {
         height: vh(3),
         width: vh(3),
-        marginRight:vw(-2.5),
     },
     drawerItemLabelStyle: {
         fontSize: vh(2),
-        fontWeight:'bold',
+        fontWeight: 'bold',
     },
-    
+
 
 
 })
