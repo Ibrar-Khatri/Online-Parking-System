@@ -12,11 +12,11 @@ function CurrentBookings() {
     let [bookings, setBookings] = useState('')
 
     useEffect(() => {
-        let pastBookings = AllBookings.filter(bking => moment(new Date(bking.startTime)).diff(moment(Date.now()), 'second') > 0)
+        let pastBookings = AllBookings?.filter(bking => moment(new Date()).isBetween(new Date(bking.startTime), new Date(bking.endTime)))
         setBookings(pastBookings)
-    }, [])
+    }, [AllBookings])
     return <>
-        <BookingWrapper bookings={bookings} title='Current Booking' />
+        <BookingWrapper bookings={bookings} title='Current Booking' message='No Current Bookings' />
     </>
 }
 

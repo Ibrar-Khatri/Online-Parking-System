@@ -4,10 +4,15 @@ import { Modal, Button, Input, ScrollView } from 'native-base'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import style from './changePasswordModalStyle'
+import { updateUserProfile } from '../../apis/userApis';
+import { useSelector } from 'react-redux';
 
 
 function ChangePasswordModal({ showModal, setShowModal, }) {
+    let userDetails = useSelector(state => state.userReducer.userDetails);
     let [inValidInput, setInvalidInput] = useState(false)
+
+
 
     const passwordValidationSchema = yup.object().shape({
         oldPassword: yup
@@ -29,6 +34,24 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
         setInvalidInput(false)
         console.log('Values ==>', value)
 
+        // let formData = new FormData()
+        // let update = {
+        //     operation: 'updatePassword',
+        //     uid: userDetails.uid,
+        //     email: userDetails.email,
+        //     oldPassword: value.oldPassword,
+        //     newPassword: value.newPassword
+        // }
+        // formData.append('userDetails', JSON.stringify(update))
+        // formData.append('profileImage', JSON.stringify(''))
+
+        // updateUserProfile(update)
+        //     .then(res => {
+        //         console.log(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
     }
 
     return <>

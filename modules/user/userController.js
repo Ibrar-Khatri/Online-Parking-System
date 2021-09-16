@@ -17,7 +17,6 @@ module.exports.signupWithDetails = (req, res) => {
           email: req.body.email,
         })
         .then(() => {
-          console.log("Displayname and email added successfully");
           res.send({
             status: true,
             user: {
@@ -33,11 +32,9 @@ module.exports.signupWithDetails = (req, res) => {
             status: false,
             error: error,
           });
-          console.error("Error adding document: ", error);
         });
     })
     .catch((err) => {
-      console.log("User cannot be created" + err);
       res.send({
         status: false,
         error: err,
@@ -50,7 +47,6 @@ module.exports.signinWithDetails = (req, res) => {
     .auth()
     .signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((user) => {
-      console.log("User found successfully");
       db.collection("user")
         .doc(user.user.uid)
         .get()
@@ -102,7 +98,6 @@ module.exports.getUserDetails = (req, res) => {
       }
     })
     .catch((error) => {
-      console.log("User deatils cannot be found" + error);
       res.send({
         status: false,
         error: error,

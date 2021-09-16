@@ -11,16 +11,15 @@ function PastBookings() {
     let AllBookings = useSelector(state => state.bookingReducer.userBookings)
 
     let [bookings, setBookings] = useState('')
-
+    let date = new Date()
     useEffect(() => {
-        let pastBookings = AllBookings.filter(bking => moment(new Date(bking.endTime)).diff(moment(Date.now()), 'second') < 0)
+        let pastBookings = AllBookings?.filter(bking => moment(new Date(bking.endTime)).diff(moment(Date.now()), 'second') < 0)
         setBookings(pastBookings)
-    }, [])
+    }, [AllBookings])
     return <>
-        <BookingWrapper bookings={bookings} title='Past Bookings' />
+        <BookingWrapper bookings={bookings} title='Past Bookings' message='No Past Bookings' />
     </>
 }
-
 export default PastBookings
 
 

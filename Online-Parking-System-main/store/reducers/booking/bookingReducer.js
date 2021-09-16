@@ -10,7 +10,7 @@ const bookingReducer = (state = initialState, action) => {
       let newBooking = action.payload;
       return { ...state, userBookings: [...state.userBookings, newBooking] };
     case 'removeCurrentUserBooking':
-      return { userBookings: null };
+      return { ...state, userBookings: null };
     default:
       return state;
   }

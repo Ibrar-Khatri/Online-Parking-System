@@ -32,7 +32,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
     function updateUserDetails(values, action) {
         let formData = new FormData();
         let update = {
-            condition: 'updateDetails',
+            operation: 'updateDetails',
             uid: userDetails.uid,
             name: values.name,
             email: userDetails.email,

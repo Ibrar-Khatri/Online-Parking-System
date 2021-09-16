@@ -1,19 +1,20 @@
 import { StyleSheet } from "react-native";
-import { alignSelf, marginTop } from "styled-system";
 import { heightPercentageToDP as vh, widthPercentageToDP as vw } from "../../../responsive/responsive";
 
 export default StyleSheet.create({
     tabBarLabelStyle: {
-        fontSize: vh(2.5),
-        lineHeight: vh(4),
-        paddingBottom: vh(0.9)
+        fontWeight: 'bold',
+        fontSize: vh(2),
+        paddingBottom: vh(1)
     },
     tabBarStyle: {
-        borderColor: 'white',
+        height: vh(8),
     },
     tabBarItemStyle: {
-        borderTopLeftRadius: vh(1),
-        borderTopRightRadius: vh(1),
+        paddingTop: vh(1),
+        height: vh(8),
+    },
+    tabsIconStyle: {
+        height: vh(3.5),
     }
-
 })

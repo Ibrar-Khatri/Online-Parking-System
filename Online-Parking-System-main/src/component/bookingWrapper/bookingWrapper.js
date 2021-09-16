@@ -5,13 +5,12 @@ import style from './bookingWrapperStyle'
 
 
 
-function BookingWrapper({ bookings, title }) {
+function BookingWrapper({ bookings, title, message }) {
     return <>
         {
             bookings?.length !== 0 ?
                 <ScrollView style={style.bgColor}>
                     <View><Text style={style.myBookingText}>{title}</Text></View>
-
                     <View style={style.outSideCard} >
                         {
                             bookings?.map((bking, ind) => {
@@ -30,7 +29,7 @@ function BookingWrapper({ bookings, title }) {
                 : <View style={style.bgColor}>
                     <View style={style.imageView}>
                         <Image style={style.noBookingYetIcon} source={require('../../assets/noBookingYetIcon.jpeg')} />
-                        <Text style={style.noBookingsYetText}>No Bookings Yet</Text>
+                        <Text style={style.noBookingsYetText}>{message}</Text>
                     </View>
                 </View>
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersAllBookings } from '../../apis/bookingApis';
@@ -27,17 +27,19 @@ function MyDrawer() {
   let bookings = useSelector(state => state.bookingReducer.userBookings);
   let [navigationState, setNavigationState] = useState('')
 
-  if (!bookings) {
-    getUsersAllBookings({ userId: userDetails.uid })
-      .then(res => {
-        if (res.data.status) {
-          return dispatch({ type: 'userBookings', payload: res.data.bookings });
-        }
-      })
-      .catch(err => {
-        console.log('Error in get all bookings');
-      });
-  }
+  useEffect(() => {
+    if (!bookings) {
+      getUsersAllBookings({ userId: userDetails.uid })
+        .then(res => {
+          if (res.data.status) {
+            return dispatch({ type: 'userBookings', payload: res.data.bookings });
+          }
+        })
+        .catch(err => {
+          console.log('Error in get all bookings');
+        });
+    }
+  }, [])
   return (
     // <Tab.Navigator
     //   initialLayout={vh(10)}
@@ -121,6 +123,10 @@ function MyDrawer() {
     }} drawerContent={(props) => <MyDrawerContent {...props} />} >
       <Drawer.Screen name="home" component={Home} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Home' }} />
       <Drawer.Screen name="booking" component={BookingTab} options={{ drawerLabel: 'Bookings' }} />
+      {
+        userDetails.uid === 'izzQ49T0TDRypHOAFEpBXgy2oqP2' && <Drawer.Screen name="admin" component={Admin} options={{ drawerLabel: 'Admin' }} />
+      }
+      {/* <Drawer.Screen name="admin" component={Admin} options={{ drawerLabel: 'Admin' }} /> */}
     </Drawer.Navigator>
   )
 

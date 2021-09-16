@@ -25,9 +25,9 @@ function MyDrawerContent(props) {
         }
         else if (condition == 'logout') {
             try {
-                dispatch({ type: 'removeCurrentUserBooking' })
-                dispatch({ type: 'removeUserDetails' })
                 await AsyncStorage.removeItem('userID')
+                dispatch({ type: 'removeUserDetails' })
+                dispatch({ type: 'removeCurrentUserBooking' })
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'authentication-screen' }],
