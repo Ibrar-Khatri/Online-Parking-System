@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
 import { updateUserProfile } from "../../apis/userApis";
+import base64 from "react-native-base64";
 
 
 
@@ -30,13 +31,15 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
     });
 
     function updateUserDetails(values, action) {
+        setInvalidInput(false)
+        let password = base64.encode(values.password)
         let formData = new FormData();
         let update = {
             operation: 'updateDetails',
             uid: userDetails.uid,
             name: values.name,
             email: userDetails.email,
-            password: values.password,
+            password: password,
         }
         formData.append('userDetails', JSON.stringify(update))
         formData.append('profileImage', JSON.stringify(profileImage))
@@ -62,6 +65,13 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                         setProfileImage('')
                         dispatch({ type: 'updateUserDetails', payload: res.data.update })
                     } else {
+                        action.resetForm({
+                            values: {
+                                email: values.email,
+                                name: userDetails.displayName,
+                                password: ''
+                            }
+                        })
                         toast.show({
                             placement: "top",
                             duration: 1500,
@@ -76,7 +86,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                         placement: "top",
                         duration: 1500,
                         status: "error",
-                        description: 'Please try again!!!',
+                        description: res.data.message,
                     })
                 })
         }

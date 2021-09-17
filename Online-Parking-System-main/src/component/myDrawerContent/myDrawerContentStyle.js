@@ -15,7 +15,8 @@ export default StyleSheet.create({
         width: vh(13),
         height: vh(13),
         marginTop: vh(-23),
-        marginLeft: vw(5)
+        marginLeft: vw(5),
+        borderRadius: 100
     },
     nameAndEmailView: {
         marginLeft: vw(5),

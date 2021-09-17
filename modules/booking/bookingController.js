@@ -1,4 +1,4 @@
-const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
+const { firebaseConfig } = require("../../firebaseConfig/firebaseConfig");
 const db = firebaseConfig.firestore();
 const firebase = require("firebase");
 require('datejs')

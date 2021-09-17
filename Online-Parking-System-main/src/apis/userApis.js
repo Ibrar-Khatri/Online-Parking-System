@@ -33,3 +33,11 @@ export const updateUserProfile = async details => {
   })
   return resp;
 };
+
+export const updateUserPassword = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/user/update-password`,
+    details,
+  );
+  return resp;
+};

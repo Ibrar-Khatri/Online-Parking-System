@@ -5,7 +5,7 @@ import {
     DrawerItemList,
 } from '@react-navigation/drawer';
 import { Image, ImageBackground, Text, TouchableOpacity } from "react-native";
-import { Icon, View } from "native-base";
+import { Avatar, Icon, View } from "native-base";
 import style from './myDrawerContentStyle'
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -45,7 +45,12 @@ function MyDrawerContent(props) {
         <DrawerContentScrollView {...props}>
             <View style={style.headerView}>
                 <Image source={require('../../assets/profileBGImage.png')} style={style.bgImage} />
-                <Image source={require('../../assets/profileIcon.png')} style={style.profileIcon} />
+                {
+                    userDetails.profileImage ?
+                        <Image source={{ uri: userDetails.profileImage }} style={style.profileIcon} />
+                        :
+                        <Image source={require('../../assets/profileIcon.png')} style={style.profileIcon} />
+                }
                 <View style={style.nameAndEmailView}>
                     <Text style={style.textEmail}>{userDetails.displayName}</Text>
                     <Text style={style.textName}>{userDetails.email}</Text>

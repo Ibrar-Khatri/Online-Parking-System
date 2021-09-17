@@ -1,14 +1,14 @@
-const firebaseConfig = require("../../firebaseConfig/firebaseConfig");
-// const admin = require("../../firebaseConfig/firebaseConfig");
+const { firebaseConfig, adminConfig } = require("../../firebaseConfig/firebaseConfig");
+// const storage = firebaseConfig.storage()
 const db = firebaseConfig.firestore();
-const storage = firebaseConfig.storage()
 
 
 module.exports.signupWithDetails = (req, res) => {
-
+  let email = req.body.email
+  let password = Buffer.from(req.body.password, 'base64').toString('ascii')
   firebaseConfig
     .auth()
-    .createUserWithEmailAndPassword(req.body.email, req.body.password)
+    .createUserWithEmailAndPassword(email, password)
     .then((user) => {
       db.collection("user")
         .doc(user.user.uid)
@@ -43,9 +43,11 @@ module.exports.signupWithDetails = (req, res) => {
 };
 
 module.exports.signinWithDetails = (req, res) => {
+  let email = req.body.email
+  let password = Buffer.from(req.body.password, 'base64').toString('ascii')
   firebaseConfig
     .auth()
-    .signInWithEmailAndPassword(req.body.email, req.body.password)
+    .signInWithEmailAndPassword(email, password)
     .then((user) => {
       db.collection("user")
         .doc(user.user.uid)
@@ -104,11 +106,11 @@ module.exports.getUserDetails = (req, res) => {
       });
     });
 };
-module.exports.updateUserDetals = (req, res) => {
+module.exports.updateUserDetails = (req, res) => {
   let userDetails = JSON.parse(req.body.userDetails)
+  userDetails.password = Buffer.from(userDetails.password, 'base64').toString('ascii')
   let image = JSON.parse(req.body.profileImage)
   let storageRef = storage.ref('profileImages').child(userDetails.uid)
-
   let uploadImageInDB = () => {
     storageRef.putString(image.base64, 'base64', { contentType: 'image/jpg' })
       .then(() => {
@@ -176,3 +178,36 @@ module.exports.updateUserDetals = (req, res) => {
     })
 }
 
+module.exports.updateUserPassword = (req, res) => {
+  let userDetails = req.body
+  userDetails.oldPassword = Buffer.from(userDetails.oldPassword, 'base64').toString('ascii')
+  userDetails.newPassword = Buffer.from(userDetails.newPassword, 'base64').toString('ascii')
+  firebaseConfig
+    .auth()
+    .signInWithEmailAndPassword(userDetails.email, userDetails.oldPassword)
+    .then(() => {
+      adminConfig.
+        auth()
+        .updateUser(userDetails.uid, {
+          password: userDetails.newPassword,
+        })
+        .then((userRecord) => {
+          res.send({
+            status: true,
+            message: 'Password updated successfully'
+          });
+        })
+        .catch((error) => {
+          res.send({
+            status: false,
+            message: 'Something went wrong, Please try again'
+          });
+        })
+    })
+    .catch(() => {
+      res.send({
+        status: false,
+        message: 'Please enter a valid password'
+      });
+    })
+}

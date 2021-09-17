@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import WarningModal from '../warningModal/warningModal.js';
 import { useDispatch } from 'react-redux';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
+import base64 from 'react-native-base64';
 
 function SignupCard({ navigation }) {
   const dispatch = useDispatch();
@@ -28,10 +29,11 @@ function SignupCard({ navigation }) {
 
   function signupWithDet(value) {
     setIsLoading(true);
+    let password = base64.encode(value.password)
     let userDetails = {
       name: value.name,
       email: value.email,
-      password: value.password,
+      password: password,
     };
     signupWithDetails(userDetails)
       .then(async res => {

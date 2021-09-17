@@ -7,10 +7,7 @@ import { bookParkingArea, getAvailableSlots } from '../../apis/bookingApis';
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
 import { useNavigation } from '@react-navigation/native';
-import {
-  heightPercentageToDP as vh,
-  widthPercentageToDP as vw,
-} from '../../responsive/responsive';
+import io from 'socket.io-client'
 
 function SlotTab({ location, date, startTime, endTime }) {
 
@@ -23,9 +20,16 @@ function SlotTab({ location, date, startTime, endTime }) {
   let [bookedSlot, setBookedSlot] = useState([])
 
 
+  let socket = io('http://192.168.100.21:7000')
+
+  socket.on('new-booking-added', (data) => {
+    console.log(data)
+    getAvailableSlostFromDB()
+  })
+
   let slots = Array.from({ length: 20 }, () => ({ first_name: '', last_name: '' }))
 
-  useEffect(() => {
+  function getAvailableSlostFromDB() {
     getAvailableSlots({ startTime, endTime, location })
       .then((res) => {
         if (res.data.status) {
@@ -36,6 +40,14 @@ function SlotTab({ location, date, startTime, endTime }) {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  let dateAndTimeFilled =
+    (date && startTime && endTime)
+  useEffect(() => {
+    if (dateAndTimeFilled) {
+      getAvailableSlostFromDB()
+    }
   }, [])
 
   function bookParking() {
@@ -50,6 +62,7 @@ function SlotTab({ location, date, startTime, endTime }) {
 
     bookParkingArea(details)
       .then(res => {
+        socket.emit('add-new-booking', 'user add new booking')
         dispatch({ type: 'addNewBooking', payload: details })
         setIsLoading(false);
         navigation.navigate('drawer', { screen: 'myBooking-screen' })
@@ -58,8 +71,7 @@ function SlotTab({ location, date, startTime, endTime }) {
         setIsLoading(false);
       });
   }
-  let dateAndTimeFilled =
-    (date && startTime && endTime)
+
   return (
     <>
       {dateAndTimeFilled ? <>

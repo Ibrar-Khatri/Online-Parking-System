@@ -10,6 +10,7 @@ import { signinWithDetails } from '../../apis/userApis';
 import style from './signinCardStyle';
 import WarningModal from '../warningModal/warningModal.js';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
+import base64 from 'react-native-base64';
 
 function SigninCard({ navigation }) {
   const dispatch = useDispatch();
@@ -26,10 +27,11 @@ function SigninCard({ navigation }) {
   });
 
   function signinWithDet(value) {
+    let password = base64.encode(value.password)
     setIsLoading(true);
     let userDetails = {
       email: value.email,
-      password: value.password,
+      password: password,
     };
     signinWithDetails(userDetails)
       .then(async res => {

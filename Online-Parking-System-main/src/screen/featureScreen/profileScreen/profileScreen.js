@@ -68,7 +68,6 @@ function UserProfileScreen({ route, navigation }) {
                             })
                             setProfileImageUri(userDetails.profileImage)
                             setProfileImage('')
-                            console.log("image should be less than 1 mb")
                         }
                     }
                 })

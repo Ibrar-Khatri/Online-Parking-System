@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, Image } from 'react-native'
-import { Modal, Button, Input, ScrollView } from 'native-base'
+import { Modal, Button, Input, ScrollView, useToast } from 'native-base'
 import { Formik } from "formik";
 import * as yup from 'yup';
+import base64 from 'react-native-base64'
 import style from './changePasswordModalStyle'
-import { updateUserProfile } from '../../apis/userApis';
+import { updateUserPassword } from '../../apis/userApis'
 import { useSelector } from 'react-redux';
 
 
 function ChangePasswordModal({ showModal, setShowModal, }) {
     let userDetails = useSelector(state => state.userReducer.userDetails);
     let [inValidInput, setInvalidInput] = useState(false)
-
-
+    let [isLoading, setIsLoading] = useState(false)
+    let toast = useToast()
 
     const passwordValidationSchema = yup.object().shape({
         oldPassword: yup
@@ -30,33 +31,57 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
             .oneOf([yup.ref('newPassword'), null], 'Passwords must match'),
     });
 
-    function updatePassword(value) {
+    function updatePassword(value, action) {
         setInvalidInput(false)
-        console.log('Values ==>', value)
+        setIsLoading(true)
+        // let buff = base64.encode(value.oldPassword)
+        let oldPassword = base64.encode(value.oldPassword)
+        let newPassword = base64.encode(value.newPassword)
+        let update = {
+            uid: userDetails.uid,
+            email: userDetails.email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        }
 
-        // let formData = new FormData()
-        // let update = {
-        //     operation: 'updatePassword',
-        //     uid: userDetails.uid,
-        //     email: userDetails.email,
-        //     oldPassword: value.oldPassword,
-        //     newPassword: value.newPassword
-        // }
-        // formData.append('userDetails', JSON.stringify(update))
-        // formData.append('profileImage', JSON.stringify(''))
-
-        // updateUserProfile(update)
-        //     .then(res => {
-        //         console.log(res.data)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
+        updateUserPassword(update)
+            .then(res => {
+                setIsLoading(false)
+                if (res.data.status) {
+                    action.resetForm({
+                        values: {
+                            oldPassword: '', newPassword: '', confirmPassword: ''
+                        }
+                    })
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        status: "success",
+                        description: res.data.message,
+                    })
+                } else {
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        status: "error",
+                        description: res.data.message,
+                    })
+                }
+            })
+            .catch(err => {
+                setIsLoading(false)
+                toast.show({
+                    placement: "top",
+                    duration: 1500,
+                    status: "error",
+                    description: res.data.message,
+                })
+            })
     }
 
     return <>
         <ScrollView >
-            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+            <Modal isOpen={showModal} >
                 <Modal.Content >
                     <Formik initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
                         validationSchema={passwordValidationSchema}
@@ -127,7 +152,7 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button style={style.buttonStyle} onPress={() => setShowModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
-                                <Button style={style.buttonStyle} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
+                                <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
                             </Modal.Footer>
                         </>)}
                     </Formik>
