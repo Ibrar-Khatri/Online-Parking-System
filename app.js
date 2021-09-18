@@ -21,19 +21,11 @@ let server = app.listen(port, () => {
   console.log(`Server Started Successfully`);
 });
 
-
 let socket = require('socket.io')(server);
 socket.on('connection', (socket) => {
   console.log('Client Connected ...!')
-  socket.on('add-new-booking', () => {
-    console.log('new booking added')
-    socket.broadcast.emit('new-booking-added', 'notify all user')
-
+  socket.on('add-new-booking', (newBooking) => {
+    console.log('data emited')
+    socket.broadcast.emit('new-booking-added', newBooking)
   })
-
-  // socket.on('Send-New-Message', (data) => {
-
-  //   socket.broadcast.emit('On-Message-Received', data)
-
-  // })
 })

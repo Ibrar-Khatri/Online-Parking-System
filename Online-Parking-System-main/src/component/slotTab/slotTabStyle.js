@@ -10,7 +10,7 @@ export default StyleSheet.create({
     marginTop: vh(1),
     height: vh(46),
   },
-  contentContainerStyle:{alignItems:'center'},
+  contentContainerStyle: { alignItems: 'center' },
   carIconView: {
     marginRight: vw(7),
     marginLeft: vw(7),
@@ -27,11 +27,11 @@ export default StyleSheet.create({
     fontSize: vh(2),
   },
   carIcon: {
-    height: vw(13),
-    width: vw(13),
+    height: vh(7),
+    width: vh(7),
   },
   loadingSpinner: { display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' },
-  
+
   buttonStyle: {
     marginTop: vh(1),
     width: vw(40),

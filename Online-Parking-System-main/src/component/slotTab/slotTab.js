@@ -2,53 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Button, Heading, HStack, Spinner } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
-import { bookParkingArea, getAvailableSlots } from '../../apis/bookingApis';
+import { bookParkingArea } from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
 import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client'
+import appSetting from '../../../appSetting/appSetting';
+import { filterBookings } from '../../lib/helperFunction';
 
 function SlotTab({ location, date, startTime, endTime }) {
 
+  let socket = io(appSetting.severHostedUrl)
   let navigation = useNavigation();
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
+  let allBookings = useSelector(state => state.bookingReducer.selectedAreaAllBookings);
   let [showSlots, setShowSlot] = useState(false);
   let [slotName, setSlotName] = useState('');
   let [isLoading, setIsLoading] = useState(false);
   let [bookedSlot, setBookedSlot] = useState([])
-
-
-  let socket = io('http://192.168.100.21:7000')
-
-  socket.on('new-booking-added', (data) => {
-    console.log(data)
-    getAvailableSlostFromDB()
-  })
-
-  let slots = Array.from({ length: 20 }, () => ({ first_name: '', last_name: '' }))
-
-  function getAvailableSlostFromDB() {
-    getAvailableSlots({ startTime, endTime, location })
-      .then((res) => {
-        if (res.data.status) {
-          setBookedSlot(res.data.bookedSlot)
-          setShowSlot(true)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  let dateAndTimeFilled =
-    (date && startTime && endTime)
-  useEffect(() => {
-    if (dateAndTimeFilled) {
-      getAvailableSlostFromDB()
-    }
-  }, [])
+  let slots = Array.from({ length: 20 }, () => ({}))
 
   function bookParking() {
     setIsLoading(true);
@@ -62,21 +36,46 @@ function SlotTab({ location, date, startTime, endTime }) {
 
     bookParkingArea(details)
       .then(res => {
-        socket.emit('add-new-booking', 'user add new booking')
-        dispatch({ type: 'addNewBooking', payload: details })
-        setIsLoading(false);
-        navigation.navigate('drawer', { screen: 'myBooking-screen' })
+        if (res.data.status) {
+          socket.emit('add-new-booking', details)
+          dispatch({ type: 'addNewBooking', payload: details })
+          setIsLoading(false);
+          navigation.navigate('drawer', { screen: 'myBooking-screen' })
+        } else {
+          setIsLoading(false);
+        }
       })
       .catch(err => {
         setIsLoading(false);
       });
   }
+  let userBookingDetails = { date, startTime, endTime }
+  let dateAndTimeFilled =
+    (date && startTime && endTime)
 
+  let unmounted;
+  useEffect(() => {
+    unmounted = false;
+    socket.on('new-booking-added', (newBooking) => {
+      if (!unmounted) {
+        dispatch({ type: 'addNewBookingInAllBookings', payload: newBooking })
+      }
+    })
+    return () => {
+      unmounted = true;
+    }
+  }, [])
+
+  useEffect(() => {
+    if (dateAndTimeFilled) {
+      let booked = filterBookings(allBookings, userBookingDetails)
+      setBookedSlot(booked)
+    }
+  }, [allBookings])
   return (
     <>
       {dateAndTimeFilled ? <>
-
-        {showSlots ? <View>
+        <View>
           <View >
             <FlatList
               style={style.selectSlotView}
@@ -98,7 +97,7 @@ function SlotTab({ location, date, startTime, endTime }) {
                           style={style.carIcon}
                           source={require('../../assets/selectedSlotIcon.png')}
                         />
-                        <Text style={style.slotNameText}>Selected</Text>
+                        <Text style={style.slotNameText}>Select</Text>
                       </View>
                     ) : (
                       <>
@@ -107,7 +106,7 @@ function SlotTab({ location, date, startTime, endTime }) {
                             style={style.bookedSlotCarIcon}
                             source={require('../../assets/selectedSlotIcon.png')}
                           />
-                            <Text style={style.slotNameText}>Booked</Text></View>) : (<View style={style.carIconView}><Image
+                            <Text style={style.slotNameText}>{`Slot ${index + 1}`}</Text></View>) : (<View style={style.carIconView}><Image
                               style={style.carIcon}
                               source={require('../../assets/slotIcon.png')}
                             />
@@ -131,11 +130,7 @@ function SlotTab({ location, date, startTime, endTime }) {
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-        </View> : <HStack space={2} style={style.loadingSpinner}>
-          <Heading color="#00bfff">Loading</Heading>
-          <Spinner color={'#00bfff'} />
-        </HStack>}
-
+        </View>
       </> : (
         <View style={style.messageView}>
           <Image

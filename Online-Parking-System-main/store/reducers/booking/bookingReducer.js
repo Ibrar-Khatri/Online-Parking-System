@@ -1,5 +1,6 @@
 const initialState = {
   userBookings: null,
+  selectedAreaAllBookings: ''
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -10,7 +11,12 @@ const bookingReducer = (state = initialState, action) => {
       let newBooking = action.payload;
       return { ...state, userBookings: [...state.userBookings, newBooking] };
     case 'removeCurrentUserBooking':
-      return { ...state, userBookings: null };
+      return initialState;
+    case 'userSelectedAreaBooking':
+      return { ...state, selectedAreaAllBookings: action.payload };
+    case 'addNewBookingInAllBookings':
+      console.log('dispatched')
+      return { ...state, selectedAreaAllBookings: [...state.selectedAreaAllBookings, action.payload] };
     default:
       return state;
   }

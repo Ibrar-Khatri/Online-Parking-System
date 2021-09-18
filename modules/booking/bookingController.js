@@ -7,18 +7,11 @@ module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
     .add(req.body)
     .then((slotBooked) => {
-      db.collection("user")
-        .doc(req.body.userId)
-        .update({
-          myBookings: firebase.firestore.FieldValue.arrayUnion(slotBooked.id),
-        })
-        .then(() => {
-          res.send({
-            status: true,
-            slotBooked: true,
-            slotId: slotBooked.id,
-          });
-        });
+      res.send({
+        status: true,
+        slotBooked: true,
+        slotId: slotBooked.id,
+      });
     })
     .catch((error) => {
       res.send({
@@ -27,6 +20,7 @@ module.exports.bookParkingArea = (req, res) => {
       });
     });
 };
+
 module.exports.getUsersAllBookings = (req, res) => {
   db.collection("bookings")
     .where("userId", "==", req.body.userId)
@@ -47,28 +41,19 @@ module.exports.getUsersAllBookings = (req, res) => {
     });
 }
 
-module.exports.getAvailaleBookingsFromDB = (req, res) => {
-  let userBookingDet = req.body
+module.exports.getAllBookingsOfSelectedArea = (req, res) => {
+  let location = req.body.location
   db.collection("bookings")
-    .where("location", "==", userBookingDet.location)
+    .where("location", "==", location)
     .get()
-    .then(async (userSelectedAreaBokings) => {
-      let bookedSlot = []
-      await userSelectedAreaBokings.forEach((doc) => {
-        //datejs compare return 1,-1, and 0 
-        let myStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().startTime))
-        let userStart = Date.parse(userBookingDet.startTime).compareTo(Date.parse(doc.data().endTime))
-        let userEnd = Date.parse(userBookingDet.endTime).compareTo(Date.parse(doc.data().startTime))
-        if ((myStart === 1 && userStart === 1 || userStart === 0) || (myStart === -1 && userEnd === -1 || userEnd === 0)) {
-          console.log('Available')
-        }
-        else {
-          bookedSlot.push(doc.data().slotName)
-        }
-      })
+    .then(async (selectedAreaBookings) => {
+      let bookings = []
+      await selectedAreaBookings.forEach((bking) => {
+        bookings.push({ ...bking.data() })
+      });
       res.send({
         status: true,
-        bookedSlot: bookedSlot
+        bookings: bookings
       })
     })
     .catch((error) => {

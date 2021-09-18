@@ -16,7 +16,7 @@ export const getUsersAllBookings = async details => {
   return resp;
 };
 
-export const getAvailableSlots = async details => {
+export const getAllBookings = async details => {
   let resp = await axios.post(
     `${appSetting.severHostedUrl}/booking/get-available-slots`,
     details,

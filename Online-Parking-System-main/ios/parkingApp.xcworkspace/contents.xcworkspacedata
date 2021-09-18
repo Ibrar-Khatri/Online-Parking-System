@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:parkingApp.xcodeproj">
+      location = "group:/Users/computingyard/Documents/Ibrar/Online-Parking-System/Online-Parking-System-main/ios/parkingApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

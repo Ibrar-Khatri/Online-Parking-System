@@ -98,7 +98,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowStartTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {startTime ? moment(startTime,'lll').format('LT') : 'Select Time'}
+              {startTime ? moment(startTime, 'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -117,7 +117,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowEndTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {endTime ? moment(endTime,'lll').format('LT') : 'Select Time'}
+              {endTime ? moment(endTime, 'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>

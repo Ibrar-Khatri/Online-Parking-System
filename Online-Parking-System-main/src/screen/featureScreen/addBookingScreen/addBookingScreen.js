@@ -5,16 +5,19 @@ import moment from 'moment';
 import SlotTab from '../../../component/slotTab/slotTab';
 import DateAndTimeSelector from '../../../component/dateAndTimeTab/dateAndTimeTab';
 import style from './addBookingScreenStyle';
+import { getAllBookings } from '../../../apis/bookingApis';
+import { useDispatch } from 'react-redux';
 
 function AddBookingScreen({ route }) {
+
+  let dispatch = useDispatch()
+
   let [date, setDate] = useState(moment(new Date()));
   let [startTime, setStartTime] = useState();
   let [endTime, setEndTime] = useState();
   let [location] = useState(route.params.location);
-
   let [selectedIndex, setSelectedIndex] = useState(0);
   let [showDateAndTimeTab, setShowDateAndTimeTab] = useState(true);
-
   let handleSingleIndexSelect = index => {
     if (index === 0) {
       setShowDateAndTimeTab(true);
@@ -23,6 +26,21 @@ function AddBookingScreen({ route }) {
     }
     setSelectedIndex(index);
   };
+
+  useEffect(() => {
+    let selectedLocation = { location: location }
+    getAllBookings(selectedLocation)
+      .then((res) => {
+        if (res.data.status) {
+          let bookings = res.data.bookings
+          dispatch({ type: 'userSelectedAreaBooking', payload: bookings })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   return (
     <>
       <View style={style.imageView}>
@@ -50,6 +68,7 @@ function AddBookingScreen({ route }) {
             setStartTime={setStartTime}
             endTime={endTime}
             setEndTime={setEndTime}
+            location={location}
           />
         ) : (
           <SlotTab date={date} startTime={startTime} endTime={endTime} location={location} />
