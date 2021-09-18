@@ -1,5 +1,5 @@
 const { firebaseConfig, adminConfig } = require("../../firebaseConfig/firebaseConfig");
-// const storage = firebaseConfig.storage()
+const storage = firebaseConfig.storage()
 const db = firebaseConfig.firestore();
 
 

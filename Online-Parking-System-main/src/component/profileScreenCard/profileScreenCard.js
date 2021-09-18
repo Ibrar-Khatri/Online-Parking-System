@@ -35,7 +35,6 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
         let password = base64.encode(values.password)
         let formData = new FormData();
         let update = {
-            operation: 'updateDetails',
             uid: userDetails.uid,
             name: values.name,
             email: userDetails.email,
