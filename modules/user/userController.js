@@ -1,6 +1,6 @@
 const { firebaseConfig, adminConfig } = require("../../firebaseConfig/firebaseConfig");
-const storage = firebaseConfig.storage()
 const db = firebaseConfig.firestore();
+const storage = firebaseConfig.storage()
 
 
 module.exports.signupWithDetails = (req, res) => {
