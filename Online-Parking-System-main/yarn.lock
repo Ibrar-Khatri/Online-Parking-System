@@ -6889,13 +6889,12 @@
     "find-up" "^4.0.0"
 
 "plist@^3.0.1":
-  "integrity" "sha512-ghdOKN99hh1oEmAlwBmPYo4L+tSQ7O3jRpkhWqOrMz86CWotpVzMevvQ+czo7oPDpOZyA6K06Ci7QVHpoh9gaA=="
-  "resolved" "https://registry.npmjs.org/plist/-/plist-3.0.3.tgz"
-  "version" "3.0.3"
+  "integrity" "sha512-ksrr8y9+nXOxQB2osVNqrgvX/XQPOXaU4BQMKjYq8PvaY1U18mo+fKgBSwzK+luSyinOuPae956lSVcBwxlAMg=="
+  "resolved" "https://registry.npmjs.org/plist/-/plist-3.0.4.tgz"
+  "version" "3.0.4"
   dependencies:
     "base64-js" "^1.5.1"
     "xmlbuilder" "^9.0.7"
-    "xmldom" "^0.6.0"
 
 "posix-character-classes@^0.1.0":
   "integrity" "sha1-AerA/jta9xoqbAL+q7jB/vfgDqs="
@@ -8776,11 +8775,6 @@
   "version" "1.1.2"
   dependencies:
     "sax" "^1.2.1"
-
-"xmldom@^0.6.0":
-  "integrity" "sha512-iAcin401y58LckRZ0TkI4k0VSM1Qg0KGSc3i8rU+xrxe19A/BN1zHyVSJY7uoutVlaTSzYyk/v5AmkewAP7jtg=="
-  "resolved" "https://registry.npmjs.org/xmldom/-/xmldom-0.6.0.tgz"
-  "version" "0.6.0"
 
 "xmlhttprequest-ssl@~2.0.0":
   "integrity" "sha512-QKxVRxiRACQcVuQEYFsI1hhkrMlrXHPegbbd1yn9UHOmRxY+si12nQYzri3vbzt8VdTTRviqcKxcyllFas5z2A=="

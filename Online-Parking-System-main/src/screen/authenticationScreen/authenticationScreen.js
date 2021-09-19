@@ -32,9 +32,11 @@ function AuthenticationScreen({ navigation }) {
             });
             SplashScreen.hide()
             return;
+          } else {
+            setInitialRouteName('signin-screen');
+            SplashScreen.hide()
+            return;
           }
-          setInitialRouteName('network-error-screen');
-          SplashScreen.hide()
         })
         .catch(err => {
           setInitialRouteName('network-error-screen');

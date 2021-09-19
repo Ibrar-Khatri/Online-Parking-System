@@ -17,7 +17,7 @@ const userReducer = (state = initialState, action) => {
     case 'updateUserDetails':
       let updates
       if (action.payload.condition === 'imageAdded') {
-        updates = { ...state.userDetails, displayName: action.payload.displayName, profileImage: action.payload.displayName }
+        updates = { ...state.userDetails, displayName: action.payload.displayName, profileImage: action.payload.profileImage }
       } else if (action.payload.condition === 'imageRemoved') {
         updates = { ...state.userDetails, displayName: action.payload.displayName, profileImage: '' }
       } else if (action.payload.condition === 'updateDetails') {
