@@ -15,7 +15,6 @@ const bookingReducer = (state = initialState, action) => {
     case 'userSelectedAreaBooking':
       return { ...state, selectedAreaAllBookings: action.payload };
     case 'addNewBookingInAllBookings':
-      console.log('dispatched')
       return { ...state, selectedAreaAllBookings: [...state.selectedAreaAllBookings, action.payload] };
     default:
       return state;

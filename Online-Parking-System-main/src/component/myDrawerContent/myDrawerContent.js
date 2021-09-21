@@ -61,14 +61,16 @@ function MyDrawerContent(props) {
                 <View style={style.accountSettingView}>
                     <Text style={style.accountSettingText}>Account Settings</Text>
                 </View>
-                <DrawerItem
-                    label="Update Profile"
-                    onPress={() => onPressDrawerItem('profile')}
-                    icon={() => <Image resizeMode='contain' source={require('../../assets/editIcon.png')} style={style.iconStyle} />}
-                    activeTintColor='#00bfff'
-                    inactiveTintColor='black'
-                    labelStyle={style.drawerItemLabelStyle}
-                />
+                {
+                    userDetails.uid != 'izzQ49T0TDRypHOAFEpBXgy2oqP2' && <DrawerItem
+                        label="Update Profile"
+                        onPress={() => onPressDrawerItem('profile')}
+                        icon={() => <Image resizeMode='contain' source={require('../../assets/editIcon.png')} style={style.iconStyle} />}
+                        activeTintColor='#00bfff'
+                        inactiveTintColor='black'
+                        labelStyle={style.drawerItemLabelStyle}
+                    />
+                }
                 <DrawerItem
                     label="Log Out"
                     onPress={() => onPressDrawerItem('logout')}

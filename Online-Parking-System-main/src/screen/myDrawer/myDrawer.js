@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsersAllBookings } from '../../apis/bookingApis';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import style from './myDrawerStyle'
-import Admin from './admin/admin';
 import Home from './home/home';
 import BookingTab from './bookingsTab/bookingsTab';
 import MyDrawerContent from '../../component/myDrawerContent/myDrawerContent';
@@ -15,6 +14,8 @@ import {
   widthPercentageToDP as vw,
 } from '../../responsive/responsive';
 import { Image } from 'react-native';
+import AddNewParkingArea from './addNewParkingArea/addNewParkingArea';
+import AllUsersLIst from './userList/userList';
 
 
 
@@ -119,14 +120,16 @@ function MyDrawer() {
       drawerActiveTintColor: '#00bfff',
       drawerInactiveTintColor: 'black',
       drawerLabelStyle: style.drawerLabelStyle,
-
     }} drawerContent={(props) => <MyDrawerContent {...props} />} >
-      <Drawer.Screen name="home" component={Home} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Home' }} />
-      <Drawer.Screen name="booking" component={BookingTab} options={{ drawerLabel: 'Bookings' }} />
       {
-        userDetails.uid === 'izzQ49T0TDRypHOAFEpBXgy2oqP2' && <Drawer.Screen name="admin" component={Admin} options={{ drawerLabel: 'Admin' }} />
+        userDetails.uid === 'izzQ49T0TDRypHOAFEpBXgy2oqP2' ? <>
+          <Drawer.Screen name="addNewParkingArea" component={AddNewParkingArea} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Parking Areas' }} />
+          <Drawer.Screen name="userList" component={AllUsersLIst} options={{ drawerLabel: 'Users' }} />
+        </> : <>
+          <Drawer.Screen name="home" component={Home} initialParams={{ setNavigationState }} options={{ drawerLabel: 'Home' }} />
+        </>
       }
-      {/* <Drawer.Screen name="admin" component={Admin} options={{ drawerLabel: 'Admin' }} /> */}
+      <Drawer.Screen name="booking" component={BookingTab} options={{ drawerLabel: 'Bookings' }} />
     </Drawer.Navigator>
   )
 

@@ -7,6 +7,7 @@ import base64 from 'react-native-base64'
 import style from './changePasswordModalStyle'
 import { updateUserPassword } from '../../apis/userApis'
 import { useSelector } from 'react-redux';
+import InputModalWrapper from '../inputModalWrapper/inputModalWrapper';
 
 
 function ChangePasswordModal({ showModal, setShowModal, }) {
@@ -34,7 +35,6 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
     function updatePassword(value, action) {
         setInvalidInput(false)
         setIsLoading(true)
-        // let buff = base64.encode(value.oldPassword)
         let oldPassword = base64.encode(value.oldPassword)
         let newPassword = base64.encode(value.newPassword)
         let update = {
@@ -80,85 +80,81 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
     }
 
     return <>
-        <ScrollView >
-            <Modal isOpen={showModal} >
-                <Modal.Content >
-                    <Formik initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
-                        validationSchema={passwordValidationSchema}
-                        onSubmit={updatePassword}>
+        <InputModalWrapper showModal={showModal}>
+            <Formik initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
+                validationSchema={passwordValidationSchema}
+                onSubmit={updatePassword}>
 
-                        {({
-                            handleChange,
-                            handleBlur,
-                            handleSubmit,
-                            values,
-                            errors,
-                            isValid,
-                        }) => (<>
-                            <Modal.Header>Change Password</Modal.Header>
-                            <Modal.Body style={style.bodyStyle}>
-                                <View style={style.inputFieldsStyleView}>
-                                    <Input
-                                        style={style.inputFieldStyle}
-                                        value={values.oldPassword}
-                                        onChangeText={handleChange('oldPassword')}
-                                        isInvalid={inValidInput && errors.oldPassword}
-                                        placeholder="Old Password"
-                                        variant="filled"
-                                        type='password'
-                                        InputRightElement={
-                                            <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
-                                        }
-                                    />
-                                    {
-                                        inValidInput && errors.oldPassword && <Text style={style.inValidInputTextStyle}>{errors.oldPassword}</Text>
-                                    }
-                                </View>
-                                <View style={style.inputFieldsStyleView}>
-                                    <Input
-                                        style={style.inputFieldStyle}
-                                        value={values.newPassword}
-                                        onChangeText={handleChange('newPassword')}
-                                        isInvalid={inValidInput && errors.newPassword}
-                                        placeholder="New Password"
-                                        variant="filled"
-                                        type='password'
-                                        InputRightElement={
-                                            <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
-                                        }
-                                    />
-                                    {
-                                        inValidInput && errors.newPassword && <Text style={style.inValidInputTextStyle}>{errors.newPassword}</Text>
-                                    }
-                                </View>
-                                <View style={style.inputFieldsStyleView}>
-                                    <Input
-                                        style={style.inputFieldStyle}
-                                        value={values.confirmPassword}
-                                        onChangeText={handleChange('confirmPassword')}
-                                        isInvalid={inValidInput && errors.confirmPassword}
-                                        placeholder="Confirm Password"
-                                        variant="filled"
-                                        type='password'
-                                        InputRightElement={
-                                            <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
-                                        }
-                                    />
-                                    {
-                                        inValidInput && errors.confirmPassword && <Text style={style.inValidInputTextStyle}>{errors.confirmPassword}</Text>
-                                    }
+                {({
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    values,
+                    errors,
+                    isValid,
+                }) => (<>
+                    <Modal.Header>Change Password</Modal.Header>
+                    <Modal.Body style={style.bodyStyle}>
+                        <View style={style.inputFieldsStyleView}>
+                            <Input
+                                style={style.inputFieldStyle}
+                                value={values.oldPassword}
+                                onChangeText={handleChange('oldPassword')}
+                                isInvalid={inValidInput && errors.oldPassword}
+                                placeholder="Old Password"
+                                variant="filled"
+                                type='password'
+                                InputRightElement={
+                                    <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
+                                }
+                            />
+                            {
+                                inValidInput && errors.oldPassword && <Text style={style.inValidInputTextStyle}>{errors.oldPassword}</Text>
+                            }
+                        </View>
+                        <View style={style.inputFieldsStyleView}>
+                            <Input
+                                style={style.inputFieldStyle}
+                                value={values.newPassword}
+                                onChangeText={handleChange('newPassword')}
+                                isInvalid={inValidInput && errors.newPassword}
+                                placeholder="New Password"
+                                variant="filled"
+                                type='password'
+                                InputRightElement={
+                                    <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
+                                }
+                            />
+                            {
+                                inValidInput && errors.newPassword && <Text style={style.inValidInputTextStyle}>{errors.newPassword}</Text>
+                            }
+                        </View>
+                        <View style={style.inputFieldsStyleView}>
+                            <Input
+                                style={style.inputFieldStyle}
+                                value={values.confirmPassword}
+                                onChangeText={handleChange('confirmPassword')}
+                                isInvalid={inValidInput && errors.confirmPassword}
+                                placeholder="Confirm Password"
+                                variant="filled"
+                                type='password'
+                                InputRightElement={
+                                    <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
+                                }
+                            />
+                            {
+                                inValidInput && errors.confirmPassword && <Text style={style.inValidInputTextStyle}>{errors.confirmPassword}</Text>
+                            }
 
-                                </View>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button style={style.buttonStyle} onPress={() => setShowModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
-                                <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
-                            </Modal.Footer>
-                        </>)}
-                    </Formik>
-                </Modal.Content>
-            </Modal>
-        </ScrollView>
+                        </View>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button style={style.buttonStyle} onPress={() => setShowModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
+                        <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
+                    </Modal.Footer>
+                </>)}
+            </Formik>
+        </InputModalWrapper>
 
     </>
 }
