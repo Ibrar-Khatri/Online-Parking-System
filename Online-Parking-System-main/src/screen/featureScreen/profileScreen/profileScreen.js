@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import ProfileScreenCard from '../../../component/profileScreenCard/profileScreenCard'
 import style from './profileScreenStyle'
 import { heightPercentageToDP as vh } from '../../../responsive/responsive';
+import CustomToast from '../../../component/customToast/customToast'
 
 
 function UserProfileScreen({ route, navigation }) {
@@ -60,8 +61,8 @@ function UserProfileScreen({ route, navigation }) {
             if (!unmounted) {
                 toast.show({
                     placement: "top",
-                    status: "error",
-                    description: "Image Should be less than 1 mb",
+                    duration: 1500,
+                    render: () => <CustomToast type='error' description="Image Should be less than 1 mb" />
                 })
                 setProfileImageUri(userDetails.profileImage)
                 setProfileImage('')

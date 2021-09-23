@@ -9,6 +9,7 @@ import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
 import { updateUserProfile } from "../../apis/userApis";
 import base64 from "react-native-base64";
 import InputModalWrapper from "../inputModalWrapper/inputModalWrapper";
+import CustomToast from '../../component/customToast/customToast'
 
 
 
@@ -29,6 +30,8 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
     const updateUserDetailsValidationSchema = yup.object().shape({
         name: yup.string().required('Required'),
     });
+
+
 
     function updateUserDetails() {
         setInvalidInput(false)
@@ -53,8 +56,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                         toast.show({
                             placement: "top",
                             duration: 1500,
-                            status: "success",
-                            description: res.data.message,
+                            render: () => <CustomToast type='success' description={res.data.message} />
                         })
                         setProfileImage('')
                         dispatch({ type: 'updateUserDetails', payload: res.data.update })
@@ -62,8 +64,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                         toast.show({
                             placement: "top",
                             duration: 1500,
-                            status: "error",
-                            description: res.data.message,
+                            render: () => <CustomToast type='error' description={res.data.message} />
                         })
                     }
                 })
@@ -74,8 +75,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                     toast.show({
                         placement: "top",
                         duration: 1500,
-                        status: "error",
-                        description: 'Sorry something went wrong, Please try again',
+                        render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
                     })
                 })
         } else {
@@ -85,12 +85,10 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
             toast.show({
                 placement: "top",
                 duration: 1500,
-                status: "info",
-                description: 'You have not made any change',
+                render: () => <CustomToast type='info' description='You have not made any change' />
             })
         }
     }
-
     return <>
         <View style={style.cardStyle}>
             <Formik initialValues={{ name: userDetails.displayName, email: userDetails.email, password: '' }}

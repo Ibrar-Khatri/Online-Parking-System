@@ -41,9 +41,4 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center'
     },
-    toastStyle: {
-        width: vh(100),
-    }
-
-
 })

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
-import { Button, Heading, HStack, Spinner } from 'native-base';
+import { Button, Heading, HStack, Spinner, useToast } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookParkingArea } from '../../apis/bookingApis';
 
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client'
 import appSetting from '../../../appSetting/appSetting';
 import { filterBookings } from '../../lib/helperFunction';
+import CustomToast from '../customToast/customToast';
 
 function SlotTab({ location, date, startTime, endTime }) {
 
@@ -38,6 +39,8 @@ function SlotTab({ location, date, startTime, endTime }) {
   let [bookedSlot, setBookedSlot] = useState([])
   let slots = Array.from({ length: 20 }, () => ({}))
 
+  let toast = useToast()
+
   function bookParking() {
     setIsLoading(true);
     let details = {
@@ -47,20 +50,34 @@ function SlotTab({ location, date, startTime, endTime }) {
       slotName,
       location,
     };
-
     bookParkingArea(details)
       .then(res => {
         if (res.data.status) {
           socket.emit('add-new-booking', details)
           dispatch({ type: 'addNewBooking', payload: details })
           setIsLoading(false);
-          navigation.navigate('drawer', { screen: 'myBooking-screen' })
+          toast.show({
+            placement: "top",
+            duration: 1500,
+            render: () => <CustomToast type='success' description={res.data.message} />
+          })
+          navigation.navigate('booking', { screen: 'upcoming-booking' })
         } else {
           setIsLoading(false);
+          toast.show({
+            placement: "top",
+            duration: 1500,
+            render: () => <CustomToast type='error' description={res.data.message} />
+          })
         }
       })
       .catch(err => {
         setIsLoading(false);
+        toast.show({
+          placement: "top",
+          duration: 1500,
+          render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+        })
       });
   }
   let userBookingDetails = { date, startTime, endTime }

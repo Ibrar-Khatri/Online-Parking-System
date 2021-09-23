@@ -56,7 +56,8 @@ export default StyleSheet.create({
         fontSize: vh(2),
     },
     modalFooter: {
-        marginRight: vw(5)
+        marginRight: vw(5),
+        marginBottom: vh(1.5)
     },
     confrimPasswordModalButton: {
         backgroundColor: '#00bfff',

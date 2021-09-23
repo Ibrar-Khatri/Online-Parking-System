@@ -11,12 +11,14 @@ module.exports.bookParkingArea = (req, res) => {
         status: true,
         slotBooked: true,
         slotId: slotBooked.id,
+        message: 'Booking added successfully'
       });
     })
     .catch((error) => {
       res.send({
         status: false,
         slotBooked: false,
+        message: 'Sorry something went wrong, Please try again'
       });
     });
 };

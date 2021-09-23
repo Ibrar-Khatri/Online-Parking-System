@@ -8,6 +8,7 @@ import style from './changePasswordModalStyle'
 import { updateUserPassword } from '../../apis/userApis'
 import { useSelector } from 'react-redux';
 import InputModalWrapper from '../inputModalWrapper/inputModalWrapper';
+import CustomToast from '../../component/customToast/customToast'
 
 
 function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordModal, }) {
@@ -47,6 +48,7 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
         updateUserPassword(update)
             .then(res => {
                 setIsLoading(false)
+                setShowChangePasswordModal(false)
                 if (res.data.status) {
                     action.resetForm({
                         values: {
@@ -56,25 +58,23 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
                     toast.show({
                         placement: "top",
                         duration: 1500,
-                        status: "success",
-                        description: res.data.message,
+                        render: () => <CustomToast type='success' description={res.data.message} />
                     })
                 } else {
                     toast.show({
                         placement: "top",
                         duration: 1500,
-                        status: "error",
-                        description: res.data.message,
+                        render: () => <CustomToast type='error' description={res.data.message} />
                     })
                 }
             })
             .catch(err => {
                 setIsLoading(false)
+                setShowChangePasswordModal(false)
                 toast.show({
                     placement: "top",
                     duration: 1500,
-                    status: "error",
-                    description: res.data.message,
+                    render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
                 })
             })
     }
