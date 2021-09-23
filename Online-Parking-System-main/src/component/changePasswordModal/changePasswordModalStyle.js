@@ -15,7 +15,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     inputFieldStyle: {
-        height: vh(5),
+        height: vh(5.5),
         fontSize: vh(1.8),
     },
     inValidInputTextStyle: {
@@ -27,7 +27,7 @@ export default StyleSheet.create({
     buttonStyle: {
         backgroundColor: '#00bfff',
         alignSelf: 'center',
-        marginLeft: 10, 
+        marginLeft: 10,
         marginBottom: 10
     },
     buttonText: {

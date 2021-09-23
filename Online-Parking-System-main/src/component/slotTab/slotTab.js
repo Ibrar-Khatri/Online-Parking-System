@@ -14,6 +14,20 @@ import { filterBookings } from '../../lib/helperFunction';
 function SlotTab({ location, date, startTime, endTime }) {
 
   let socket = io(appSetting.severHostedUrl)
+
+  let unmounted;
+  useEffect(() => {
+    unmounted = false;
+    socket.on('new-booking-added', (newBooking) => {
+      if (!unmounted) {
+        dispatch({ type: 'addNewBookingInAllBookings', payload: newBooking })
+      }
+    })
+    return () => {
+      unmounted = true;
+    }
+  }, [])
+
   let navigation = useNavigation();
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
@@ -52,19 +66,6 @@ function SlotTab({ location, date, startTime, endTime }) {
   let userBookingDetails = { date, startTime, endTime }
   let dateAndTimeFilled =
     (date && startTime && endTime)
-
-  let unmounted;
-  useEffect(() => {
-    unmounted = false;
-    socket.on('new-booking-added', (newBooking) => {
-      if (!unmounted) {
-        dispatch({ type: 'addNewBookingInAllBookings', payload: newBooking })
-      }
-    })
-    return () => {
-      unmounted = true;
-    }
-  }, [])
 
   useEffect(() => {
     if (dateAndTimeFilled) {

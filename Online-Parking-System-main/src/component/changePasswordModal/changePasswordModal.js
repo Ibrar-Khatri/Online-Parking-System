@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import InputModalWrapper from '../inputModalWrapper/inputModalWrapper';
 
 
-function ChangePasswordModal({ showModal, setShowModal, }) {
+function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordModal, }) {
     let userDetails = useSelector(state => state.userReducer.userDetails);
     let [inValidInput, setInvalidInput] = useState(false)
     let [isLoading, setIsLoading] = useState(false)
@@ -80,11 +80,10 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
     }
 
     return <>
-        <InputModalWrapper showModal={showModal}>
+        <InputModalWrapper showModal={showChangePasswordModal}>
             <Formik initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
                 validationSchema={passwordValidationSchema}
                 onSubmit={updatePassword}>
-
                 {({
                     handleChange,
                     handleBlur,
@@ -149,7 +148,7 @@ function ChangePasswordModal({ showModal, setShowModal, }) {
                         </View>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button style={style.buttonStyle} onPress={() => setShowModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
+                        <Button style={style.buttonStyle} onPress={() => setShowChangePasswordModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
                         <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
                     </Modal.Footer>
                 </>)}

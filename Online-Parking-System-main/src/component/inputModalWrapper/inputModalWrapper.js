@@ -5,9 +5,6 @@ import { useSelector } from 'react-redux';
 
 
 function InputModalWrapper(props) {
-    let userDetails = useSelector(state => state.userReducer.userDetails);
-    let [isLoading, setIsLoading] = useState(false)
-
 
     return <>
         <Modal isOpen={props.showModal} >

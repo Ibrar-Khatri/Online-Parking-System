@@ -10,7 +10,7 @@ export default StyleSheet.create({
         marginTop: vh(-10),
         borderRadius: 40,
         alignSelf: 'center',
-        paddingTop:vh(10)
+        paddingTop: vh(10)
     },
     inputFieldIconStyle: {
         height: vh(3),
@@ -22,6 +22,11 @@ export default StyleSheet.create({
         width: vw(80),
         alignSelf: 'center',
     },
+    confrimPasswordFieldStyleView: {
+        width: vw(75),
+        alignSelf: 'center',
+        marginTop: vh(2)
+    },
     inputFieldStyle: {
         height: vh(6),
         fontSize: vh(2),
@@ -32,24 +37,34 @@ export default StyleSheet.create({
         marginTop: 3,
         marginLeft: 10
     },
-    changePasswordTexView:{
-        alignItems:'flex-end',
-        marginRight:20,
-        marginTop:3,
+    changePasswordTexView: {
+        alignItems: 'flex-end',
+        marginRight: 20,
     },
-    changePasswordText:{
-        fontSize:vh(2),
-        color:'#00bfff'
+    changePasswordText: {
+        fontSize: vh(2),
+        color: '#00bfff',
     },
     buttonStyle: {
         width: vw(40),
         backgroundColor: '#00bfff',
-        marginTop: vh(7),
-        alignSelf:'center'
+        marginTop: vh(15),
+        alignSelf: 'center'
     },
     buttonText: {
         color: 'white',
         fontSize: vh(2),
     },
-
+    modalFooter: {
+        marginRight: vw(5)
+    },
+    confrimPasswordModalButton: {
+        backgroundColor: '#00bfff',
+        alignSelf: 'center',
+        marginLeft: 10,
+    },
+    confrimPasswordModalButtonText: {
+        color: 'white',
+        fontSize: vh(1.8),
+    },
 })

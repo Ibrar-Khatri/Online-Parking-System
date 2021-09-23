@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Icon, Box, View, Text, Button, useToast } from "native-base"
+import { Input, Icon, Box, View, Text, Button, useToast, Modal } from "native-base"
 import style from './profileScreenCardStyle'
 import { Image, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import ChangePasswordModal from "../changePasswordModal/changePasswordModal";
 import { updateUserProfile } from "../../apis/userApis";
 import base64 from "react-native-base64";
+import InputModalWrapper from "../inputModalWrapper/inputModalWrapper";
 
 
 
@@ -17,44 +18,38 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
     let userDetails = useSelector(state => state.userReducer.userDetails);
 
     let [inValidInput, setInvalidInput] = useState(false)
-    let [showModal, setShowModal] = useState(false)
+    let [showChangePasswordModal, setShowChangePasswordModal] = useState(false)
+    let [showConfirmationPasswordModal, setShowConfirmationPasswordModal] = useState(false)
+    let [userName, setUserName] = useState('')
+    let [confirmPassword, setConfirmPassword] = useState('')
     let [isLoading, setIsLoading] = useState(false)
 
     let toast = useToast()
 
     const updateUserDetailsValidationSchema = yup.object().shape({
         name: yup.string().required('Required'),
-        password: yup
-            .string()
-            .required('Required')
-            .min(6, ({ min }) => `Password must be at least ${min} characters`),
     });
 
-    function updateUserDetails(values, action) {
+    function updateUserDetails() {
         setInvalidInput(false)
-        let password = base64.encode(values.password)
+        let password = base64.encode(confirmPassword)
         let formData = new FormData();
         let update = {
             uid: userDetails.uid,
-            name: values.name,
+            name: userName,
             email: userDetails.email,
             password: password,
         }
         formData.append('userDetails', JSON.stringify(update))
         formData.append('profileImage', JSON.stringify(profileImage))
-        if (profileImage || (values.name !== userDetails.displayName)) {
+        if (profileImage || (userName.trim() !== userDetails.displayName)) {
             setIsLoading(true)
             updateUserProfile(formData)
                 .then(res => {
                     setIsLoading(false)
+                    setShowConfirmationPasswordModal(false)
+                    setConfirmPassword('')
                     if (res.data.status) {
-                        action.resetForm({
-                            values: {
-                                email: values.email,
-                                name: values.name,
-                                password: ''
-                            }
-                        })
                         toast.show({
                             placement: "top",
                             duration: 1500,
@@ -64,13 +59,6 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                         setProfileImage('')
                         dispatch({ type: 'updateUserDetails', payload: res.data.update })
                     } else {
-                        action.resetForm({
-                            values: {
-                                email: values.email,
-                                name: userDetails.displayName,
-                                password: ''
-                            }
-                        })
                         toast.show({
                             placement: "top",
                             duration: 1500,
@@ -81,13 +69,25 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                 })
                 .catch(error => {
                     setIsLoading(false)
+                    setShowConfirmationPasswordModal(false)
+                    setConfirmPassword('')
                     toast.show({
                         placement: "top",
                         duration: 1500,
                         status: "error",
-                        description: res.data.message,
+                        description: 'Sorry something went wrong, Please try again',
                     })
                 })
+        } else {
+            setIsLoading(false)
+            setShowConfirmationPasswordModal(false)
+            setConfirmPassword('')
+            toast.show({
+                placement: "top",
+                duration: 1500,
+                status: "info",
+                description: 'You have not made any change',
+            })
         }
     }
 
@@ -95,8 +95,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
         <View style={style.cardStyle}>
             <Formik initialValues={{ name: userDetails.displayName, email: userDetails.email, password: '' }}
                 validationSchema={updateUserDetailsValidationSchema}
-                onSubmit={(value, action) => updateUserDetails(value, action)}>
-
+                onSubmit={(value, action) => { setUserName(value.name); setShowConfirmationPasswordModal(true) }}>
                 {({
                     handleChange,
                     handleSubmit,
@@ -132,12 +131,22 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                             inValidInput && errors.name && <Text style={style.inValidInputTextStyle}>{errors.name}</Text>
                         }
                     </View>
-                    <View style={style.inputFieldsStyleView}>
+                    <TouchableOpacity style={style.changePasswordTexView} onPress={() => setShowChangePasswordModal(true)}><Text style={style.changePasswordText}>
+                        Change Password</Text>
+                    </TouchableOpacity>
+                    <Button style={style.buttonStyle} onPress={() => { handleSubmit(); setInvalidInput(true) }} >
+                        <Text style={style.buttonText}>Update</Text>
+                    </Button>
+                </>)}
+            </Formik>
+            <InputModalWrapper showModal={showConfirmationPasswordModal}>
+                <Modal.Header>Confirmation Password</Modal.Header>
+                <Modal.Body>
+                    <View style={style.confrimPasswordFieldStyleView}>
                         <Input
                             style={style.inputFieldStyle}
-                            value={values.password}
-                            isInvalid={inValidInput && errors.password}
-                            onChangeText={handleChange('password')}
+                            value={confirmPassword}
+                            onChangeText={setConfirmPassword}
                             placeholder="Password"
                             variant="filled"
                             type='password'
@@ -145,16 +154,19 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                                 <Image resizeMode='contain' source={require('../../assets/passwordIcon.png')} style={style.inputFieldIconStyle} />
                             }
                         />
-                        {
-                            inValidInput && errors.password && <Text style={style.inValidInputTextStyle}>{errors.password}</Text>
-                        }
                     </View>
-                    <TouchableOpacity style={style.changePasswordTexView} onPress={() => setShowModal(true)}><Text style={style.changePasswordText}>Change Password</Text></TouchableOpacity>
-                    <Button isLoading={isLoading} style={style.buttonStyle} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update</Text></Button>
-                </>)}
-            </Formik>
+                </Modal.Body>
+                <Modal.Footer style={style.modalFooter}>
+                    <Button style={style.confrimPasswordModalButton} onPress={() => { setShowConfirmationPasswordModal(false); setConfirmPassword('') }}>
+                        <Text style={style.confrimPasswordModalButtonText}>Cancel</Text>
+                    </Button>
+                    <Button style={style.confrimPasswordModalButton} isLoading={isLoading} disabled={confirmPassword.length < 6 || confirmPassword.length > 16 || isLoading} onPress={updateUserDetails}>
+                        <Text style={style.confrimPasswordModalButtonText}>Update</Text>
+                    </Button>
+                </Modal.Footer>
+            </InputModalWrapper>
             {
-                showModal ? <ChangePasswordModal showModal={showModal} setShowModal={setShowModal} /> : null
+                showChangePasswordModal ? <ChangePasswordModal showChangePasswordModal={showChangePasswordModal} setShowChangePasswordModal={setShowChangePasswordModal} /> : null
             }
         </View>
     </>
