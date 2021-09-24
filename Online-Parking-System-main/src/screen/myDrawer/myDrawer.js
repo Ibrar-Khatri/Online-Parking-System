@@ -7,7 +7,7 @@ import style from './myDrawerStyle'
 import Home from './home/home';
 import BookingTab from './bookingsTab/bookingsTab';
 import MyDrawerContent from '../../component/myDrawerContent/myDrawerContent';
-import { CircleIcon, HamburgerIcon, View } from 'native-base';
+import { CircleIcon, HamburgerIcon, Text, View } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   heightPercentageToDP as vh,
@@ -110,8 +110,8 @@ function MyDrawer() {
     // <Drawer.Navigator screenOptions={{headerShown:false}}>
     <Drawer.Navigator screenOptions={{
       title: 'Online Parking System',
-      headerStyle: style.headerStyle,
       headerTitleStyle: style.headerTitleStyle,
+      headerStyle: style.headerStyle,
       drawerStyle: style.drawerStyle,
       headerLeft: (() => <TouchableOpacity onPress={() => navigationState.openDrawer()} >
         <Image resizeMode='contain' source={require('../../assets/hamburgerIcon.png')} style={style.hamburgerIconView} />

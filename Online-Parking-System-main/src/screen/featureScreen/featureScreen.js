@@ -4,6 +4,7 @@ import { Button } from 'react-native';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
 import AddBookingScreen from './addBookingScreen/addBookingScreen';
 import UserProfileScreen from './profileScreen/profileScreen';
+import style from './featureScreenStyle'
 
 let Stack = createStackNavigator();
 
@@ -13,15 +14,9 @@ function FeatureScreen({ route }) {
       <Stack.Navigator
         screenOptions={{
           title: route.params.title,
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#00bfff',
-          },
+          headerStyle: style.headerStyle,
+          headerTitleStyle: style.headerTitleStyle,
           headerTintColor: 'white',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: vh(3),
-          },
           headerBackTitleVisible: false
         }}
         initialRouteName={route.params.initialRouteName}
@@ -32,5 +27,9 @@ function FeatureScreen({ route }) {
     </>
   );
 }
+
+// headerTitleStyle: style.headerTitleStyle,
+//   headerStyle: style.headerStyle,
+
 
 export default FeatureScreen;
