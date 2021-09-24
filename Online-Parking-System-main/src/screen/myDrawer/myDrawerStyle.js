@@ -6,9 +6,9 @@ export default StyleSheet.create({
         backgroundColor: '#00bfff',
     },
     headerTitleStyle: {
-        fontWeight: 'bold',
         color: 'white',
-        fontSize: vh(2.7),
+        fontSize: vh(3),
+        fontFamily: 'BerkshireSwash-Regular',
     },
     drawerStyle: {
         backgroundColor: 'white',

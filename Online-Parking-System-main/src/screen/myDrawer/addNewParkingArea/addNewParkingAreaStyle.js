@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { alignItems, height } from 'styled-system';
+import { alignItems, fontFamily, height, justifyContent } from 'styled-system';
 import {
     heightPercentageToDP as vh,
     widthPercentageToDP as vw,
@@ -17,7 +17,9 @@ export default StyleSheet.create({
         fontSize: vh(3.5),
         fontWeight: 'bold',
         color: 'white',
-        marginLeft: vw(6)
+        marginLeft: vw(6),
+        fontFamily: 'AbrilFatface-Regular',
+        backgroundColor: 'red'
     },
     cardStyle: {
         height: vh(8),
@@ -29,15 +31,19 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingLeft: vh(2),
-        paddingRight: vh(2)
+        paddingRight: vh(2),
     },
     deleteIcon: {
         height: vh(3.5),
         width: vh(3.5),
+    },
+    deleteIconView: {
         alignSelf: 'center',
+        marginTop: 'auto',
+        marginBottom: 'auto'
     },
     locationAndSlotTextView: {
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     locationText: {
         fontSize: vh(2.5),
@@ -66,5 +72,4 @@ export default StyleSheet.create({
         marginTop: vh(-15),
         alignSelf: 'flex-end'
     }
-
 });

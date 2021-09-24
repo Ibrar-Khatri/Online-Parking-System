@@ -39,17 +39,19 @@ function AddNewParkingArea({ route, navigation }) {
           <View style={style.viewStyle}>
             {parkingAreas.map((area, ind) => {
               return (
-                <View style={style.cardStyle}>
+                <View style={style.cardStyle} key={ind}>
                   <View style={style.locationAndSlotTextView}>
                     <Text style={style.locationText}>{area}</Text>
                     <Text style={style.slotsText}>Slots 20</Text>
                   </View>
-                  <Image
-                    resizeMode='contain'
-                    alt='delete icon'
-                    style={style.deleteIcon}
-                    source={require('../../../assets/deleteIcon.png')}
-                  />
+                  <TouchableOpacity style={style.deleteIconView}>
+                    <Image
+                      resizeMode='contain'
+                      alt='delete icon'
+                      style={style.deleteIcon}
+                      source={require('../../../assets/deleteIcon.png')}
+                    />
+                  </TouchableOpacity>
                 </View>
               );
             })}

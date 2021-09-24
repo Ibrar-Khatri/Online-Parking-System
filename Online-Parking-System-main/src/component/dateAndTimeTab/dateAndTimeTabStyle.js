@@ -17,7 +17,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         display: 'flex',
         alignSelf: 'center',
-        marginBottom: vh(1)
+        marginBottom: vh(1),
+        fontFamily: 'DMSerifDisplay-Regular'
     },
     pickerStyle: {
         height: vh(4.5),
