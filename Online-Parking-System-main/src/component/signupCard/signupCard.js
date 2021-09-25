@@ -91,7 +91,7 @@ function SignupCard({ navigation }) {
                       isInvalid={showInvalidInput && errors.name && true}
                       onChangeText={handleChange('name')}
                       placeholder="Name"
-
+                      maxLength={30}
                     />
                     {showInvalidInput && errors.name && (
                       <Text style={style.invalidInputStyle}>{errors.name}</Text>
@@ -105,6 +105,7 @@ function SignupCard({ navigation }) {
                       style={style.emailInput}
                       isInvalid={showInvalidInput && errors.email && true}
                       onChangeText={handleChange('email')}
+                      maxLength={30}
                       value={values.email}
                       autoCapitalize='none'
                     />
@@ -121,6 +122,7 @@ function SignupCard({ navigation }) {
                       style={style.emailInput}
                       isInvalid={showInvalidInput && errors.password && true}
                       onChangeText={handleChange('password')}
+                      maxLength={16}
                       value={values.password}
                     />
                     {showInvalidInput && errors.password && (

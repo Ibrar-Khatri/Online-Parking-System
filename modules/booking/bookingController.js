@@ -65,3 +65,11 @@ module.exports.getAllBookingsOfSelectedArea = (req, res) => {
       });
     });
 };
+
+module.exports.deletUpcomingBookingById = (req, res) => {
+  console.log(req.body)
+
+  res.send({
+    status: true,
+  })
+};

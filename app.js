@@ -28,4 +28,7 @@ socket.on('connection', (socket) => {
     console.log('data emited')
     socket.broadcast.emit('new-booking-added', newBooking)
   })
+  socket.on('upcomingBookingDeleted', (bookingID) => {
+    socket.broadcast.emit('notifyAdminAndUserUpcomingBookingDeleted', bookingID)
+  })
 })

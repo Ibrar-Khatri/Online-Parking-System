@@ -23,7 +23,7 @@ const Drawer = createDrawerNavigator();
 function MyDrawer() {
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
-  let bookings = useSelector(state => state.bookingReducer.userBookings);
+  let bookings = useSelector(state => state.bookingReducer.allBookings);
   let [navigationState, setNavigationState] = useState('')
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function MyDrawer() {
       getUsersAllBookings({ userId: userDetails.uid })
         .then(res => {
           if (res.data.status) {
-            return dispatch({ type: 'userBookings', payload: res.data.bookings });
+            return dispatch({ type: 'allBookings', payload: res.data.bookings });
           }
         })
         .catch(err => {

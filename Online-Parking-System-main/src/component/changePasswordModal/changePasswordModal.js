@@ -21,6 +21,7 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
         oldPassword: yup
             .string()
             .min(6, ({ min }) => `Password must be at least ${min} characters`)
+            // .max(16, ({ max }) => `Password must be at least ${max} characters`)
             .required('Required'),
         newPassword: yup
             .string()
@@ -99,6 +100,7 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
                                 style={style.inputFieldStyle}
                                 value={values.oldPassword}
                                 onChangeText={handleChange('oldPassword')}
+                                maxLength={16}
                                 isInvalid={inValidInput && errors.oldPassword}
                                 placeholder="Old Password"
                                 variant="filled"
@@ -116,6 +118,7 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
                                 style={style.inputFieldStyle}
                                 value={values.newPassword}
                                 onChangeText={handleChange('newPassword')}
+                                maxLength={16}
                                 isInvalid={inValidInput && errors.newPassword}
                                 placeholder="New Password"
                                 variant="filled"
@@ -133,6 +136,7 @@ function ChangePasswordModal({ showChangePasswordModal, setShowChangePasswordMod
                                 style={style.inputFieldStyle}
                                 value={values.confirmPassword}
                                 onChangeText={handleChange('confirmPassword')}
+                                maxLength={16}
                                 isInvalid={inValidInput && errors.confirmPassword}
                                 placeholder="Confirm Password"
                                 variant="filled"

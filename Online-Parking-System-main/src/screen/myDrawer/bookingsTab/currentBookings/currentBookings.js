@@ -8,7 +8,7 @@ import BookingWrapper from '../../../../component/bookingWrapper/bookingWrapper'
 
 
 function CurrentBookings() {
-    let AllBookings = useSelector(state => state.bookingReducer.userBookings)
+    let AllBookings = useSelector(state => state.bookingReducer.allBookings)
     let [bookings, setBookings] = useState('')
 
     useEffect(() => {

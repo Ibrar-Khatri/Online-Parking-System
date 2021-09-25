@@ -6,7 +6,7 @@ import style from './upComingBookingsStyle'
 import BookingWrapper from '../../../../component/bookingWrapper/bookingWrapper';
 
 function UpcomingBookings() {
-    let AllBookings = useSelector(state => state.bookingReducer.userBookings)
+    let AllBookings = useSelector(state => state.bookingReducer.allBookings)
 
     let [bookings, setBookings] = useState('')
 
@@ -15,7 +15,7 @@ function UpcomingBookings() {
         setBookings(pastBookings)
     }, [AllBookings])
     return <>
-        <BookingWrapper bookings={bookings} title='Upcoming Booking' message='No Upcoming Bookings' />
+        <BookingWrapper bookings={bookings} title='Upcoming Booking' message='No Upcoming Bookings' upCcomingBooking={true} />
     </>
 
 

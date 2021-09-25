@@ -22,6 +22,8 @@ import FeatureScreen from './src/screen/featureScreen/featureScreen';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { LogBox } from 'react-native';
+import appSetting from './appSetting/appSetting';
+import io from 'socket.io-client'
 
 
 LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the navigation state'])
@@ -29,6 +31,21 @@ LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the na
 const Stack = createStackNavigator();
 
 const App = () => {
+
+  let socket = io(appSetting.severHostedUrl)
+
+  let unmounted;
+  useEffect(() => {
+    unmounted = false;
+    socket.on('notifyAdminAndUserUpcomingBookingDeleted', (bookingID) => {
+      console.log('Appp', bookingID)
+    })
+    return () => {
+      unmounted = true;
+    }
+  }, [])
+
+
   return (
     <>
       <StatusBar backgroundColor='#00bfff' animated={true} />

@@ -1,15 +1,15 @@
 const initialState = {
-  userBookings: null,
+  allBookings: null,
   selectedAreaAllBookings: ''
 };
 
 const bookingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'userBookings':
-      return { ...state, userBookings: action.payload };
+    case 'allBookings':
+      return { ...state, allBookings: action.payload };
     case 'addNewBooking':
       let newBooking = action.payload;
-      return { ...state, userBookings: [...state.userBookings, newBooking] };
+      return { ...state, allBookings: [...state.allBookings, newBooking] };
     case 'removeCurrentUserBooking':
       return initialState;
     case 'userSelectedAreaBooking':

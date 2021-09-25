@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import style from './homeStyle';
 
 function Home({ navigation, route }) {
-  let bookings = useSelector(state => state.bookingReducer.userBookings);
+  let bookings = useSelector(state => state.bookingReducer.allBookings);
   let parkingAreas = [
     'DHA Karachi',
     'Gulshane-e-Iqal Karachi',

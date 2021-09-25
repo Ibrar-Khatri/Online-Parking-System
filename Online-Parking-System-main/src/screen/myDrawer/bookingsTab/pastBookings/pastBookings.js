@@ -8,7 +8,7 @@ import BookingWrapper from '../../../../component/bookingWrapper/bookingWrapper'
 
 
 function PastBookings() {
-    let AllBookings = useSelector(state => state.bookingReducer.userBookings)
+    let AllBookings = useSelector(state => state.bookingReducer.allBookings)
 
     let [bookings, setBookings] = useState('')
     let date = new Date()

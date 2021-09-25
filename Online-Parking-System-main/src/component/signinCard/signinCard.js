@@ -88,6 +88,7 @@ function SigninCard({ navigation }) {
                     placeholder="Email"
                     fontSize={vh(2.5)}
                     onChangeText={handleChange('email')}
+                    maxLength={30}
                     value={values.email}
                     autoCapitalize='none'
                   />
@@ -100,6 +101,7 @@ function SigninCard({ navigation }) {
                     style={style.input}
                     variant="underlined"
                     type="password"
+                    maxLength={16}
                     fontSize={vh(2.5)}
                     placeholder="Password"
                     isInvalid={showInvalidInput && errors.password && true}

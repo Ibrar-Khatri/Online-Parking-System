@@ -23,3 +23,10 @@ export const getAllBookings = async details => {
   );
   return resp;
 };
+export const deleteUpcomingBooking = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/booking/delete-upcoming-booking`,
+    details,
+  );
+  return resp;
+};

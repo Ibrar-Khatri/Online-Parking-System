@@ -6,30 +6,45 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         height: '100%'
     },
-    myBookingText: {
-        fontSize: vh(4),
-        fontWeight: 'bold',
-        marginTop: vh(3),
-        marginLeft: vw(6)
+    myBookingTextView: {
+        backgroundColor: 'white',
     },
-    outSideCard: {
-        marginBottom: vh(2),
+    myBookingText: {
+        fontSize: vh(3.5),
+        fontWeight: 'bold',
+        marginTop: vh(1),
+        marginBottom: vh(1),
+        marginLeft: vw(3),
+        fontFamily: 'DMSerifDisplay-Regular',
     },
     bookingCard: {
         borderWidth: 2,
-        width: vw(90),
-        height: vh(17),
-        marginTop: vh(4),
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        borderRadius: vh(2),
-        paddingTop: vh(1.5),
-        paddingBottom: vh(1.5),
+        width: '90%',
+        borderRadius: 20,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: '5%',
+        marginTop: vh(2)
+    },
+    bookingCardText: {
+        alignSelf: 'center',
+        width: '80%',
+        marginTop: vh(2),
+        marginBottom: vh(2),
+    },
+    deleteIconStyle: {
+        height: vh(3),
+        width: vh(3),
+        alignSelf: 'center',
+    },
+    deleteIconStyleView: {
+        alignSelf: 'center',
+        width: '15%',
     },
     textStyle: {
-        fontSize: vh(2.5),
-        fontWeight: 'bold',
-        marginLeft: vw(6),
+        fontSize: vh(2.2),
+        fontWeight: 'bold'
     },
     imageView: {
         alignItems: 'center',

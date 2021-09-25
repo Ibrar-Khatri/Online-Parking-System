@@ -118,6 +118,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                             style={style.inputFieldStyle}
                             value={values.name}
                             onChangeText={handleChange('name')}
+                            maxLength={30}
                             isInvalid={inValidInput && errors.name}
                             placeholder="Name"
                             variant="filled"
@@ -145,6 +146,7 @@ function ProfileScreenCard({ profileImage, setProfileImage }) {
                             style={style.inputFieldStyle}
                             value={confirmPassword}
                             onChangeText={setConfirmPassword}
+                            maxLength={16}
                             placeholder="Password"
                             variant="filled"
                             type='password'
