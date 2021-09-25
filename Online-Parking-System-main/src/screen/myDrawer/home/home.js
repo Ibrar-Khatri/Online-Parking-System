@@ -22,7 +22,7 @@ function Home({ navigation, route }) {
   ];
   useEffect(() => {
     route.params.setNavigationState(navigation)
-  })
+  }, [])
   return (
     <>
       {

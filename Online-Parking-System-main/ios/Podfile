@@ -15,6 +15,13 @@ target 'parkingApp' do
 
   # pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+
+
+
+  
   target 'parkingAppTests' do
     inherit! :complete
     # Pods for testing

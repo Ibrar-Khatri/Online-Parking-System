@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, Platform, PermissionsAndroid } from 'react-native';
+import { Text, View, TouchableOpacity, Platform } from 'react-native';
 import { ScrollView, Image, Actionsheet, useToast } from 'native-base'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useSelector } from 'react-redux'
@@ -7,34 +7,10 @@ import ProfileScreenCard from '../../../component/profileScreenCard/profileScree
 import style from './profileScreenStyle'
 import { heightPercentageToDP as vh } from '../../../responsive/responsive';
 import CustomToast from '../../../component/customToast/customToast'
+import { Permission, PERMISSION_TYPE } from '../../../appPermission/appPermission';
 
 
 function UserProfileScreen({ route, navigation }) {
-
-    const requestCameraPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: "Cool Photo App Camera Permission",
-                    message:
-                        "Cool Photo App needs access to your camera " +
-                        "so you can take awesome pictures.",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("You can use the camera");
-            } else {
-                console.log("Camera permission denied");
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
     let userDetails = useSelector(state => state.userReducer.userDetails)
     let [actionSheetInvoke, setActionSheetInvoke] = useState(false)
     let [profileImageUri, setProfileImageUri] = useState('')
@@ -47,12 +23,13 @@ function UserProfileScreen({ route, navigation }) {
     }, [])
     const toast = useToast()
 
-    let getImageFromLibrary = (conditon) => {
+    let getImageFromLibrary = async (conditon) => {
         setActionSheetInvoke(false)
         var options = {
             mediaType: 'photos',
             includeBase64: true,
         };
+        await Permission.requestMultiple([PERMISSION_TYPE.photo, PERMISSION_TYPE.camera])
         if (conditon === 'camera') {
             launchCamera(options, (image) => {
                 if (image.assets) {
@@ -96,7 +73,6 @@ function UserProfileScreen({ route, navigation }) {
     }
 
     function isIconPress() {
-        requestCameraPermission()
         if (profileImage) {
             setProfileImageUri(userDetails.profileImage)
             setProfileImage('')
