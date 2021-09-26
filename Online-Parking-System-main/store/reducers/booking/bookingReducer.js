@@ -1,6 +1,6 @@
 const initialState = {
   allBookings: null,
-  selectedAreaAllBookings: ''
+  selectedAreaAllBookings: []
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -14,8 +14,17 @@ const bookingReducer = (state = initialState, action) => {
       return initialState;
     case 'userSelectedAreaBooking':
       return { ...state, selectedAreaAllBookings: action.payload };
-    case 'addNewBookingInAllBookings':
+    case 'addNewBookingInSelectedArea':
       return { ...state, selectedAreaAllBookings: [...state.selectedAreaAllBookings, action.payload] };
+    case 'removeUpComingBooking':
+      // console.log('before', action.payload)
+      let updateAllBookings = state.allBookings.filter(bking => bking.id != action.payload)
+      console.log('before ', state.selectedAreaAllBookings.length)
+      let updateSelectedAreaAllBookings = state.selectedAreaAllBookings.filter(bking => bking.id != action.payload)
+      console.log('after ', updateSelectedAreaAllBookings.length)
+      return {
+        ...state, allBookings: updateAllBookings, selectedAreaAllBookings: updateSelectedAreaAllBookings
+      };
     default:
       return state;
   }

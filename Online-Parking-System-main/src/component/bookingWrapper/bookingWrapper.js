@@ -1,26 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment';
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import style from './bookingWrapperStyle'
 import { deleteUpcomingBooking } from '../../apis/bookingApis';
 import { io } from 'socket.io-client';
 import appSetting from '../../../appSetting/appSetting';
+import CustomSpinner from '../customSpinner/customSpinner';
+import CustomToast from '../customToast/customToast';
+import { useToast } from 'native-base';
 
 
 
 function BookingWrapper({ bookings, title, message, upCcomingBooking }) {
     let socket = io(appSetting.severHostedUrl)
+    let [isLoading, setIsLoading] = useState(false)
+
+    let toast = useToast()
 
     function deleteUpComingBooking(bookingId) {
+        setIsLoading(true)
         let bookingID = {
             id: bookingId
         }
         deleteUpcomingBooking(bookingID)
             .then(res => {
-                socket.emit('upcomingBookingDeleted', bookingID)
+                setIsLoading(false)
+                if (res.data.status) {
+                    socket.emit('upcomingBookingDeleted', bookingID)
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        render: () => <CustomToast type='success' description={res.data.message} />
+                    })
+                } else {
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+                    })
+                }
             })
             .catch(error => {
-                console.log(error)
+                setIsLoading(false)
+                toast.show({
+                    placement: "top",
+                    duration: 1500,
+                    render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+                })
             })
     }
 
@@ -50,6 +76,9 @@ function BookingWrapper({ bookings, title, message, upCcomingBooking }) {
                             })
                         }
                     </View>
+                    {
+                        isLoading && <CustomSpinner isLoading={isLoading} />
+                    }
                 </ScrollView>
                 : <View style={style.bgColor}>
                     <View style={style.imageView}>

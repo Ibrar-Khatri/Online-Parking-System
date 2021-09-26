@@ -7,15 +7,11 @@ import style from './myDrawerStyle'
 import Home from './home/home';
 import BookingTab from './bookingsTab/bookingsTab';
 import MyDrawerContent from '../../component/myDrawerContent/myDrawerContent';
-import { CircleIcon, HamburgerIcon, Text, View } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {
-  heightPercentageToDP as vh,
-  widthPercentageToDP as vw,
-} from '../../responsive/responsive';
 import { Image } from 'react-native';
 import AddNewParkingArea from './addNewParkingArea/addNewParkingArea';
 import AllUsersLIst from './userList/userList';
+import { isAdmin } from '../../lib/helperFunction';
 
 
 const Drawer = createDrawerNavigator();
@@ -27,10 +23,8 @@ function MyDrawer() {
   let [navigationState, setNavigationState] = useState('')
 
   useEffect(() => {
-
-
     if (!bookings) {
-      getUsersAllBookings({ userId: userDetails.uid })
+      getUsersAllBookings({ userId: isAdmin(userDetails) ? '' : userDetails.uid })
         .then(res => {
           if (res.data.status) {
             return dispatch({ type: 'allBookings', payload: res.data.bookings });

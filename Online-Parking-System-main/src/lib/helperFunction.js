@@ -1,9 +1,9 @@
 import moment from "moment"
 
 
-export const filterBookings = (allBookings, userBookingDetails) => {
+export const filterBookings = (selectedAreaBookings, userBookingDetails) => {
     let unavailableSlots = []
-    allBookings?.forEach(booking => {
+    selectedAreaBookings?.forEach(booking => {
         let startTime = moment(new Date(userBookingDetails.startTime)).diff(moment(Date.parse(booking.startTime)), 'second')
         let userStart = moment(new Date(userBookingDetails.endTime)).diff(moment(Date.parse(booking.startTime)), 'second')
         let userEnd = moment(new Date(userBookingDetails.startTime)).diff(moment(Date.parse(booking.endTime)), 'second')
@@ -14,3 +14,10 @@ export const filterBookings = (allBookings, userBookingDetails) => {
     })
     return unavailableSlots
 }
+
+
+export const isAdmin = (userDetails) => {
+    return userDetails.uid === 'izzQ49T0TDRypHOAFEpBXgy2oqP2'
+}
+
+

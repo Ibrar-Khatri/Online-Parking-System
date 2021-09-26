@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bookParkingArea } from '../../apis/bookingApis';
 
 import style from './slotTabStyle';
-import AddBookingSpinner from '../addBookingSpinner/addBookingSpinner';
+import CustomSpinner from '../customSpinner/customSpinner';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client'
 import appSetting from '../../../appSetting/appSetting';
@@ -16,23 +16,23 @@ function SlotTab({ location, date, startTime, endTime }) {
 
   let socket = io(appSetting.severHostedUrl)
 
-  let unmounted;
-  useEffect(() => {
-    unmounted = false;
-    socket.on('new-booking-added', (newBooking) => {
-      if (!unmounted) {
-        dispatch({ type: 'addNewBookingInAllBookings', payload: newBooking })
-      }
-    })
-    return () => {
-      unmounted = true;
-    }
-  }, [])
+  // let unmounted;
+  // useEffect(() => {
+  //   unmounted = false;
+  //   socket.on('new-booking-added', (newBooking) => {
+  //     if (!unmounted) {
+  //       dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking })
+  //     }
+  //   })
+  //   return () => {
+  //     unmounted = true;
+  //   }
+  // }, [])
 
   let navigation = useNavigation();
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
-  let allBookings = useSelector(state => state.bookingReducer.selectedAreaAllBookings);
+  let selectedAreaBookings = useSelector(state => state.bookingReducer.selectedAreaAllBookings);
   let [showSlots, setShowSlot] = useState(false);
   let [slotName, setSlotName] = useState('');
   let [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,7 @@ function SlotTab({ location, date, startTime, endTime }) {
       .then(res => {
         if (res.data.status) {
           socket.emit('add-new-booking', details)
-          dispatch({ type: 'addNewBooking', payload: details })
+          // dispatch({ type: 'addNewBooking', payload: details })
           setIsLoading(false);
           toast.show({
             placement: "top",
@@ -86,10 +86,10 @@ function SlotTab({ location, date, startTime, endTime }) {
 
   useEffect(() => {
     if (dateAndTimeFilled) {
-      let booked = filterBookings(allBookings, userBookingDetails)
+      let booked = filterBookings(selectedAreaBookings, userBookingDetails)
       setBookedSlot(booked)
     }
-  }, [allBookings])
+  }, [selectedAreaBookings])
   return (
     <>
       {dateAndTimeFilled ? <>
@@ -144,7 +144,7 @@ function SlotTab({ location, date, startTime, endTime }) {
             onPress={() => bookParking()}>
             <Text style={style.buttonText}>Add Booking</Text>
           </Button>
-          <AddBookingSpinner
+          <CustomSpinner
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />

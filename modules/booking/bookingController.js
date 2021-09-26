@@ -24,8 +24,10 @@ module.exports.bookParkingArea = (req, res) => {
 };
 
 module.exports.getUsersAllBookings = (req, res) => {
-  db.collection("bookings")
-    .where("userId", "==", req.body.userId)
+
+  const dbReference = req.body.userId ? db.collection("bookings")
+    .where("userId", "==", req.body.userId) : db.collection("bookings")
+  dbReference
     .get()
     .then(async (userBookings) => {
       let bookings = []
@@ -67,9 +69,21 @@ module.exports.getAllBookingsOfSelectedArea = (req, res) => {
 };
 
 module.exports.deletUpcomingBookingById = (req, res) => {
-  console.log(req.body)
+  console.log(req.body.id)
 
-  res.send({
-    status: true,
-  })
+  db.collection("bookings").doc(req.body.id).delete()
+    .then(bkingDeleted => {
+      console.log(bkingDeleted)
+      res.send({
+        status: true,
+        message: 'Booking deleted successfully'
+      })
+    })
+    .catch(err => {
+      res.send({
+        status: false,
+        message: 'Sorry something went wrong, Please try again'
+      })
+    })
+
 };

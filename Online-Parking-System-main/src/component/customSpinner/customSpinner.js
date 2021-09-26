@@ -5,7 +5,7 @@ import {
   HStack,
 } from 'native-base';
 
-function AddBookingSpinner({ isLoading, setIsLoading }) {
+function CustomSpinner({ isLoading, setIsLoading }) {
   return (
     <>
       <Modal
@@ -18,4 +18,4 @@ function AddBookingSpinner({ isLoading, setIsLoading }) {
   );
 }
 
-export default AddBookingSpinner;
+export default CustomSpinner;

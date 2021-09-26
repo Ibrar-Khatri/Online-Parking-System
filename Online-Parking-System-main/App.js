@@ -19,11 +19,11 @@ import { heightPercentageToDP as vh } from './src/responsive/responsive';
 import AuthenticationScreen from './src/screen/authenticationScreen/authenticationScreen';
 import MyDrawer from './src/screen/myDrawer/myDrawer';
 import FeatureScreen from './src/screen/featureScreen/featureScreen';
-import { Provider } from 'react-redux';
-import store from './store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { LogBox } from 'react-native';
 import appSetting from './appSetting/appSetting';
 import io from 'socket.io-client'
+import { isAdmin } from './src/lib/helperFunction';
 
 
 LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the navigation state'])
@@ -33,68 +33,72 @@ const Stack = createStackNavigator();
 const App = () => {
 
   let socket = io(appSetting.severHostedUrl)
+  let dispatch = useDispatch()
+  let userDetails = useSelector(state => state.userReducer.userDetails);
 
-  let unmounted;
   useEffect(() => {
-    unmounted = false;
     socket.on('notifyAdminAndUserUpcomingBookingDeleted', (bookingID) => {
-      console.log('Appp', bookingID)
+      dispatch({ type: 'removeUpComingBooking', payload: bookingID.id })
     })
-    return () => {
-      unmounted = true;
-    }
-  }, [])
 
+    socket.on('new-booking-added', (newBooking) => {
+      console.log('hello')
+      dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking })
+      if (isAdmin(userDetails) || userDetails.uid === newBooking.userId) {
+        console.log(userDetails.uid, ' hello ', newBooking.userId)
+        dispatch({ type: 'addNewBooking', payload: newBooking })
+      }
+    })
+    // console.log('userid ', userDetails)
+  }, [])
 
   return (
     <>
       <StatusBar backgroundColor='#00bfff' animated={true} />
-      <Provider store={store}>
-        <NativeBaseProvider>
-          <NavigationContainer>
-            <Stack.Navigator initialRouteName='authentication'>
-              <Stack.Screen
-                name="authentication-screen"
-                component={AuthenticationScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="drawer"
-                component={MyDrawer}
-                options={{
-                  headerShown: false,
-                  // title: 'Online Parking System',
-                  // headerTitleAlign: 'center',
-                  // headerStyle: {
-                  //   backgroundColor: '#00bfff',
-                  //   height: vh(7),
-                  // },
-                  // headerTitleStyle: {
-                  //   fontWeight: 'bold',
-                  //   lineHeight: vh(4),
-                  //   marginBottom: 0,
-                  //   color: 'white',
-                  //   fontFamily:
-                  //     Platform.OS === 'ios'
-                  //       ? 'DM Serif Display'
-                  //       : 'sans-serif-condensed',
-                  //   fontSize: vh(3.5),
-                  // }
-                }}
-              />
-              <Stack.Screen
-                name="featureScreen"
-                component={FeatureScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </NativeBaseProvider>
-      </Provider>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName='authentication'>
+            <Stack.Screen
+              name="authentication-screen"
+              component={AuthenticationScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="drawer"
+              component={MyDrawer}
+              options={{
+                headerShown: false,
+                // title: 'Online Parking System',
+                // headerTitleAlign: 'center',
+                // headerStyle: {
+                //   backgroundColor: '#00bfff',
+                //   height: vh(7),
+                // },
+                // headerTitleStyle: {
+                //   fontWeight: 'bold',
+                //   lineHeight: vh(4),
+                //   marginBottom: 0,
+                //   color: 'white',
+                //   fontFamily:
+                //     Platform.OS === 'ios'
+                //       ? 'DM Serif Display'
+                //       : 'sans-serif-condensed',
+                //   fontSize: vh(3.5),
+                // }
+              }}
+            />
+            <Stack.Screen
+              name="featureScreen"
+              component={FeatureScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
     </>
   );
 };
