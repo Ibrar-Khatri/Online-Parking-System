@@ -53,7 +53,7 @@ function SlotTab({ location, date, startTime, endTime }) {
     bookParkingArea(details)
       .then(res => {
         if (res.data.status) {
-          socket.emit('add-new-booking', details)
+          socket.emit('add-new-booking', (details))
           // dispatch({ type: 'addNewBooking', payload: details })
           setIsLoading(false);
           toast.show({

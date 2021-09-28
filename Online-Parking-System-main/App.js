@@ -35,22 +35,22 @@ const App = () => {
   let socket = io(appSetting.severHostedUrl)
   let dispatch = useDispatch()
   let userDetails = useSelector(state => state.userReducer.userDetails);
-
+  let allBookings = useSelector(state => state.bookingReducer.allBookings);
+  let selectedAreaAllBookings = useSelector(state => state.bookingReducer.selectedAreaAllBookings);
   useEffect(() => {
     socket.on('notifyAdminAndUserUpcomingBookingDeleted', (bookingID) => {
       dispatch({ type: 'removeUpComingBooking', payload: bookingID.id })
     })
 
     socket.on('new-booking-added', (newBooking) => {
-      console.log('hello')
+      console.log(JSON.stringify(userDetails), JSON.stringify(newBooking))
       dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking })
       if (isAdmin(userDetails) || userDetails.uid === newBooking.userId) {
-        console.log(userDetails.uid, ' hello ', newBooking.userId)
         dispatch({ type: 'addNewBooking', payload: newBooking })
       }
     })
-    // console.log('userid ', userDetails)
   }, [])
+  console.log(JSON.stringify(userDetails))
 
   return (
     <>

@@ -3,6 +3,36 @@ const db = firebaseConfig.firestore();
 const firebase = require("firebase");
 require('datejs')
 
+
+module.exports.getAllParkingAreas = (req, res) => {
+  db.collection('locations').get()
+    .then(locations => {
+      console.log(locations)
+      res.send({
+        status: true,
+      })
+    })
+    .catch(error => {
+      res.send({
+        status: false,
+      })
+    })
+};
+module.exports.craeteNewParkingArea = (req, res) => {
+  let locationDetails = req.body
+  db.collection('locations').add(locationDetails)
+    .then(locationAdded => {
+      locationDetails.id = locationAdded.id
+      res.send({
+        status: true, locationDetails, message: 'New location Added Successfully'
+      })
+    })
+    .catch(error => {
+      res.send({
+        status: false, message: 'Sorry something went wrong, Please try again'
+      })
+    })
+};
 module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")
     .add(req.body)

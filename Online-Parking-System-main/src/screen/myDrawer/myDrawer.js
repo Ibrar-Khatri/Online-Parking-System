@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersAllBookings } from '../../apis/bookingApis';
+import { getAllParkingAreas, getUsersAllBookings } from '../../apis/bookingApis';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import style from './myDrawerStyle'
 import Home from './home/home';
@@ -20,6 +20,7 @@ function MyDrawer() {
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let bookings = useSelector(state => state.bookingReducer.allBookings);
+  let locations = useSelector(state => state.bookingReducer.locations);
   let [navigationState, setNavigationState] = useState('')
 
   useEffect(() => {
@@ -33,6 +34,16 @@ function MyDrawer() {
         .catch(err => {
           console.log('Error in get all bookings');
         });
+    }
+    if (!locations) {
+      getAllParkingAreas()
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(error => {
+          console.log(error.message + 'Error in geting all parking areas');
+
+        })
     }
   }, [])
   return (

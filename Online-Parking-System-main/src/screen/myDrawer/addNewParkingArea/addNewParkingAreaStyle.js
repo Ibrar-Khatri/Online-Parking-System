@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { alignItems, fontFamily, height, justifyContent } from 'styled-system';
+import { alignItems, fontFamily, height, justifyContent, right } from 'styled-system';
 import {
     heightPercentageToDP as vh,
     widthPercentageToDP as vw,
@@ -15,11 +15,9 @@ export default StyleSheet.create({
     },
     titleText: {
         fontSize: vh(3.5),
-        fontWeight: 'bold',
         color: 'white',
         marginLeft: vw(6),
         fontFamily: 'AbrilFatface-Regular',
-        backgroundColor: 'red'
     },
     cardStyle: {
         height: vh(8),
@@ -46,8 +44,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     locationText: {
-        fontSize: vh(2.5),
-        color: 'black',
+        fontSize: vh(2.2),
         paddingLeft: vw(2),
     },
     slotsText: {
@@ -62,14 +59,15 @@ export default StyleSheet.create({
     },
     createLocationIconView: {
         width: vw(19),
-        flexDirection: 'column',
         alignSelf: 'flex-end',
-        marginRight: vw(8)
+        marginRight: vw(7),
+        marginBottom: vh(10),
+        position: 'absolute',
+        right: '-1%',
+        top: '85%',
 
     },
     createLocationIcon: {
         height: vh(8),
-        marginTop: vh(-15),
-        alignSelf: 'flex-end'
     }
 });

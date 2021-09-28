@@ -1,11 +1,16 @@
-import { HStack, Spinner, View } from 'native-base';
-import React, { useEffect } from 'react';
+import { HStack, KeyboardAvoidingView, Spinner, View } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, } from 'react-native';
 import { Image } from 'native-base'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import style from './addNewParkingAreaStyle'
+import AddNewParkingAreaModal from '../../../component/addNewParkingAreaModal/addNewParkingAreaModal';
 
 function AddNewParkingArea({ route, navigation }) {
+
+
+  let [showAddNewParkingAreaModal, setShowAddNewParkingAreaModal] = useState(false)
+
   useEffect(() => {
     route.params.setNavigationState(navigation)
   }, [])
@@ -58,14 +63,17 @@ function AddNewParkingArea({ route, navigation }) {
           </View>
         </ScrollView>
         <View style={style.createLocationIconView}>
-          <Image
-            resizeMode='contain'
-            alt='edit icon'
-            style={style.createLocationIcon}
-            source={require('../../../assets/createLocationcon.png')}
-          />
+          <TouchableOpacity activeOpacity={0.6} onPress={() => setShowAddNewParkingAreaModal(true)}>
+            <Image
+              resizeMode='contain'
+              alt='edit icon'
+              style={style.createLocationIcon}
+              source={require('../../../assets/createLocationcon.png')}
+            />
+          </TouchableOpacity>
         </View>
       </ImageBackground>
+      <AddNewParkingAreaModal showAddNewParkingAreaModal={showAddNewParkingAreaModal} setShowAddNewParkingAreaModal={setShowAddNewParkingAreaModal} />
     </>
   )
 }

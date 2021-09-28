@@ -1,6 +1,21 @@
 import axios from 'axios';
 import appSetting from '../../appSetting/appSetting';
 
+
+
+export const getAllParkingAreas = async () => {
+  let resp = await axios.get(
+    `${appSetting.severHostedUrl}/booking/get-all-parking-areas`,
+  );
+  return resp;
+};
+export const addNewParkingArea = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/booking/add-new-location`,
+    details,
+  );
+  return resp;
+};
 export const bookParkingArea = async details => {
   let resp = await axios.post(
     `${appSetting.severHostedUrl}/booking/book-parking`,
