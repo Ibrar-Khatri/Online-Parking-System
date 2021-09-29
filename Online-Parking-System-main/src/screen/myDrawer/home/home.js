@@ -15,39 +15,36 @@ import style from './homeStyle';
 
 function Home({ navigation, route }) {
   let bookings = useSelector(state => state.bookingReducer.allBookings);
-  let parkingAreas = [
-    'DHA Karachi',
-    'Gulshane-e-Iqal Karachi',
-    'Clifton Karachi',
-  ];
+  let locations = useSelector(state => state.bookingReducer.locations);
+
   useEffect(() => {
     route.params.setNavigationState(navigation)
   }, [])
   return (
     <>
       {
-        bookings ?
+        locations ?
           <ImageBackground
             resizeMode="cover"
             source={require('../../../assets/backgroundGif.gif')}
             style={style.backgroundImage}>
             <ScrollView>
               <View style={style.viewStyle}>
-                {parkingAreas.map((area, ind) => {
+                {locations?.map((area, ind) => {
                   return (
                     <TouchableOpacity
                       activeOpacity={0.7}
                       key={ind}
                       onPress={() => {
                         navigation.navigate('featureScreen',
-                          { location: area, initialRouteName: 'add-booking', title: 'Add Booking' });
+                          { area: area, initialRouteName: 'add-booking', title: 'Add Booking' });
                       }}>
                       <View style={style.cardStyle}>
                         <Image
                           style={style.imageStyle}
                           source={require('../../../assets/location.png')}
                         />
-                        <Text style={style.locationText}>{area}</Text>
+                        <Text style={style.locationText}>{area.location}</Text>
                       </View>
                     </TouchableOpacity>
                   );

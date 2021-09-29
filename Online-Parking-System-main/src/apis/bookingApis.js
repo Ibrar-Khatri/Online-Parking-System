@@ -16,6 +16,13 @@ export const addNewParkingArea = async details => {
   );
   return resp;
 };
+export const deleteParkingAreaFromDB = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/booking/remove-parking-area`,
+    details,
+  );
+  return resp;
+};
 export const bookParkingArea = async details => {
   let resp = await axios.post(
     `${appSetting.severHostedUrl}/booking/book-parking`,

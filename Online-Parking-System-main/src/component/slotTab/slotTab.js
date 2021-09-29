@@ -12,32 +12,18 @@ import appSetting from '../../../appSetting/appSetting';
 import { filterBookings } from '../../lib/helperFunction';
 import CustomToast from '../customToast/customToast';
 
-function SlotTab({ location, date, startTime, endTime }) {
+function SlotTab({ area, date, startTime, endTime }) {
 
   let socket = io(appSetting.severHostedUrl)
-
-  // let unmounted;
-  // useEffect(() => {
-  //   unmounted = false;
-  //   socket.on('new-booking-added', (newBooking) => {
-  //     if (!unmounted) {
-  //       dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking })
-  //     }
-  //   })
-  //   return () => {
-  //     unmounted = true;
-  //   }
-  // }, [])
-
   let navigation = useNavigation();
   let dispatch = useDispatch();
   let userDetails = useSelector(state => state.userReducer.userDetails);
   let selectedAreaBookings = useSelector(state => state.bookingReducer.selectedAreaAllBookings);
-  let [showSlots, setShowSlot] = useState(false);
+  let locations = useSelector(state => state.bookingReducer.locations);
   let [slotName, setSlotName] = useState('');
   let [isLoading, setIsLoading] = useState(false);
   let [bookedSlot, setBookedSlot] = useState([])
-  let slots = Array.from({ length: 20 }, () => ({}))
+  let slots = Array.from({ length: area.numberOfSlots }, () => ({}))
 
   let toast = useToast()
 
@@ -48,37 +34,49 @@ function SlotTab({ location, date, startTime, endTime }) {
       endTime: endTime,
       userId: userDetails.uid,
       slotName,
-      location,
+      location: area.location
     };
-    bookParkingArea(details)
-      .then(res => {
-        if (res.data.status) {
-          socket.emit('add-new-booking', (details))
-          // dispatch({ type: 'addNewBooking', payload: details })
-          setIsLoading(false);
-          toast.show({
-            placement: "top",
-            duration: 1500,
-            render: () => <CustomToast type='success' description={res.data.message} />
-          })
-          navigation.navigate('booking', { screen: 'upcoming-booking' })
-        } else {
-          setIsLoading(false);
-          toast.show({
-            placement: "top",
-            duration: 1500,
-            render: () => <CustomToast type='error' description={res.data.message} />
-          })
-        }
-      })
-      .catch(err => {
-        setIsLoading(false);
-        toast.show({
-          placement: "top",
-          duration: 1500,
-          render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+    let isLocationAvailable = locations.some(locat => locat.location === area.location)
+    if (isLocationAvailable) {
+      bookParkingArea(details)
+        .then(res => {
+          if (res.data.status) {
+            socket.emit('add-new-booking', (details))
+            setIsLoading(false);
+            toast.show({
+              placement: "top",
+              duration: 1500,
+              render: () => <CustomToast type='success' description={res.data.message} />
+            })
+            navigation.navigate('booking', { screen: 'upcoming-booking' })
+          } else {
+            setIsLoading(false);
+            toast.show({
+              placement: "top",
+              duration: 1500,
+              render: () => <CustomToast type='error' description={res.data.message} />
+            })
+          }
         })
-      });
+        .catch(err => {
+          setIsLoading(false);
+          toast.show({
+            placement: "top",
+            duration: 1500,
+            render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+          })
+        });
+    } else {
+      setIsLoading(false);
+      toast.show({
+        placement: "top",
+        duration: 1500,
+        render: () => <CustomToast type='info' description='Admin has removed this parking area' />
+      })
+      setTimeout(() => {
+        navigation.navigate('home')
+      }, 1500)
+    }
   }
   let userBookingDetails = { date, startTime, endTime }
   let dateAndTimeFilled =

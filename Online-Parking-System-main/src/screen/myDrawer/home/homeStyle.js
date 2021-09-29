@@ -13,26 +13,25 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    marginTop: vh(13),
+
   },
   cardStyle: {
     height: vh(10),
     width: vw(85),
     backgroundColor: '#005b96',
     borderRadius: vw(5),
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    alignSelf: 'center',
     marginTop: vh(3),
     marginBottom: vh(3),
     display: 'flex',
     flexDirection: 'row',
-    padding: vh(2.5),
+    alignItems: 'center'
   },
-  imageStyle: { width: vw(7), height: vh(5) },
+  imageStyle: { width: vw(7), height: vh(5), marginLeft: vw(5) },
   locationText: {
-    fontSize: vh(3),
+    fontSize: vh(2.7),
     color: 'white',
-    paddingLeft: vw(2),
+    paddingLeft: vw(4),
     display: 'flex',
     flex: 1,
     alignSelf: 'center'

@@ -11,11 +11,10 @@ import { useDispatch } from 'react-redux';
 function AddBookingScreen({ route }) {
 
   let dispatch = useDispatch()
-
   let [date, setDate] = useState(moment(new Date()));
   let [startTime, setStartTime] = useState();
   let [endTime, setEndTime] = useState();
-  let [location] = useState(route.params.location);
+  let [area] = useState(route.params.area);
   let [selectedIndex, setSelectedIndex] = useState(0);
   let [showDateAndTimeTab, setShowDateAndTimeTab] = useState(true);
   let handleSingleIndexSelect = index => {
@@ -28,7 +27,7 @@ function AddBookingScreen({ route }) {
   };
 
   useEffect(() => {
-    let selectedLocation = { location: location }
+    let selectedLocation = { location: area.location }
     getAllBookings(selectedLocation)
       .then((res) => {
         if (res.data.status) {
@@ -68,10 +67,9 @@ function AddBookingScreen({ route }) {
             setStartTime={setStartTime}
             endTime={endTime}
             setEndTime={setEndTime}
-            location={location}
           />
         ) : (
-          <SlotTab date={date} startTime={startTime} endTime={endTime} location={location} />
+          <SlotTab date={date} startTime={startTime} endTime={endTime} area={area} />
         )}
       </View>
     </>

@@ -20,7 +20,7 @@ export default StyleSheet.create({
         fontFamily: 'AbrilFatface-Regular',
     },
     cardStyle: {
-        height: vh(8),
+        // height: vh(8),
         width: vw(93),
         backgroundColor: 'white',
         borderRadius: vw(5),
@@ -46,11 +46,15 @@ export default StyleSheet.create({
     locationText: {
         fontSize: vh(2.2),
         paddingLeft: vw(2),
+        width: vw(75),
+        marginTop: vh(1),
+
     },
     slotsText: {
         fontSize: vh(2),
         color: 'black',
         paddingLeft: vw(3),
+        marginBottom: vh(1),
     },
     spinnerStyle: {
         flex: 1,

@@ -38,11 +38,10 @@ function MyDrawer() {
     if (!locations) {
       getAllParkingAreas()
         .then(res => {
-          console.log(res.data)
+          dispatch({ type: 'allLocation', payload: res.data.locations })
         })
         .catch(error => {
           console.log(error.message + 'Error in geting all parking areas');
-
         })
     }
   }, [])

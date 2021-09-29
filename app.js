@@ -10,12 +10,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get("*", (req, res) => {
-  res.send("<h1>Welcome to online parking system</h1>");
-});
 
 app.use("/user", userRoute);
 app.use("/booking", bookingRoute);
+
+app.get("*", (req, res) => {
+  res.send("<h1>Welcome to online parking system</h1>");
+});
 
 let server = app.listen(port, () => {
   console.log(`Server Started Successfully`);
@@ -24,11 +25,17 @@ let server = app.listen(port, () => {
 let socket = require('socket.io')(server);
 socket.on('connection', (socket) => {
   console.log('Client Connected ...!')
+
+  socket.on('newParkingAreaAdded', (newParking) => {
+    socket.broadcast.emit('newParkingArea', newParking)
+  })
+  socket.on('parkingAreaRemoved', (id) => {
+    socket.broadcast.emit('parkingAreaRemovedByAdmin', id)
+  })
   socket.on('add-new-booking', (newBooking) => {
-    console.log('data emited')
     socket.broadcast.emit('new-booking-added', newBooking)
   })
   socket.on('upcomingBookingDeleted', (bookingID) => {
-    socket.broadcast.emit('notifyAdminAndUserUpcomingBookingDeleted', bookingID)
+    socket.broadcast.emit('bookingDeleted', bookingID)
   })
 })

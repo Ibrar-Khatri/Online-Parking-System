@@ -10,6 +10,9 @@ const bookingReducer = (state = initialState, action) => {
       return { ...state, locations: action.payload };
     case 'addNewLocation':
       return { ...state, locations: [...state.locations, action.payload] };
+    case 'removeLocation':
+      let updatedLocations = state.locations.filter(location => location.id != action.payload)
+      return { ...state, locations: updatedLocations };
     case 'allBookings':
       return { ...state, allBookings: action.payload };
     case 'addNewBooking':

@@ -3,13 +3,15 @@ const db = firebaseConfig.firestore();
 const firebase = require("firebase");
 require('datejs')
 
-
 module.exports.getAllParkingAreas = (req, res) => {
   db.collection('locations').get()
-    .then(locations => {
-      console.log(locations)
+    .then(async parkingsAreas => {
+      let locations = []
+      await parkingsAreas.forEach((location) => {
+        locations.push({ ...location.data(), id: location.id })
+      });
       res.send({
-        status: true,
+        status: true, locations: locations
       })
     })
     .catch(error => {
@@ -25,6 +27,21 @@ module.exports.craeteNewParkingArea = (req, res) => {
       locationDetails.id = locationAdded.id
       res.send({
         status: true, locationDetails, message: 'New location Added Successfully'
+      })
+    })
+    .catch(error => {
+      res.send({
+        status: false, message: 'Sorry something went wrong, Please try again'
+      })
+    })
+};
+
+module.exports.deleteParkingAreaFromDb = (req, res) => {
+  let parkingAreaId = req.body.locationId
+  db.collection("locations").doc(parkingAreaId).delete()
+    .then(locationDeleted => {
+      res.send({
+        status: true, message: 'Parking area removed successfully'
       })
     })
     .catch(error => {
@@ -57,6 +74,7 @@ module.exports.getUsersAllBookings = (req, res) => {
 
   const dbReference = req.body.userId ? db.collection("bookings")
     .where("userId", "==", req.body.userId) : db.collection("bookings")
+
   dbReference
     .get()
     .then(async (userBookings) => {
@@ -83,7 +101,7 @@ module.exports.getAllBookingsOfSelectedArea = (req, res) => {
     .then(async (selectedAreaBookings) => {
       let bookings = []
       await selectedAreaBookings.forEach((bking) => {
-        bookings.push({ ...bking.data() })
+        bookings.push({ ...bking.data(), id: bking.id })
       });
       res.send({
         status: true,
@@ -99,11 +117,8 @@ module.exports.getAllBookingsOfSelectedArea = (req, res) => {
 };
 
 module.exports.deletUpcomingBookingById = (req, res) => {
-  console.log(req.body.id)
-
   db.collection("bookings").doc(req.body.id).delete()
     .then(bkingDeleted => {
-      console.log(bkingDeleted)
       res.send({
         status: true,
         message: 'Booking deleted successfully'

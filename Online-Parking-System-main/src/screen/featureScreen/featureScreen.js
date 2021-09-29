@@ -21,7 +21,7 @@ function FeatureScreen({ route }) {
         }}
         initialRouteName={route.params.initialRouteName}
       >
-        <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ location: route.params.location }} />
+        <Stack.Screen name="add-booking" component={AddBookingScreen} initialParams={{ area: route.params.area }} />
         <Stack.Screen name="user-profile" component={UserProfileScreen} />
       </Stack.Navigator>
     </>

@@ -10,10 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputModalWrapper from '../inputModalWrapper/inputModalWrapper';
 import CustomToast from '../customToast/customToast'
 import { addNewParkingArea } from '../../apis/bookingApis';
+import { io } from 'socket.io-client';
+import appSetting from '../../../appSetting/appSetting';
 
 
 function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParkingAreaModal, }) {
     let dispatch = useDispatch()
+    let socket = io(appSetting.severHostedUrl)
     let [inValidInput, setInvalidInput] = useState(false)
     let [isLoading, setIsLoading] = useState(false)
     let toast = useToast()
@@ -51,7 +54,7 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
                     }
                 })
                 if (res.data.status) {
-                    dispatch({ type: 'addNewLocation', payload: res.data.locationDetails })
+                    socket.emit('newParkingAreaAdded', res.data.locationDetails)
                     toast.show({
                         placement: "top",
                         duration: 1500,
@@ -130,7 +133,7 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
                     </Modal.Body>
                     <Modal.Footer style={style.maodalFooter}>
                         <Button style={style.buttonStyle} onPress={() => setShowAddNewParkingAreaModal(false)}><Text style={style.buttonText}>Cancel</Text></Button>
-                        <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Update password</Text></Button>
+                        <Button style={style.buttonStyle} isLoading={isLoading} onPress={() => { handleSubmit(); setInvalidInput(true) }}><Text style={style.buttonText}>Create</Text></Button>
                     </Modal.Footer>
                 </>)}
             </Formik>
