@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { width } from 'styled-system';
+import { background, width } from 'styled-system';
 import {
     heightPercentageToDP as vh,
     widthPercentageToDP as vw,
@@ -13,6 +13,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         borderTopWidth: 0.5,
         borderBottomWidth: 0.5,
+        backgroundColor: 'white'
     },
     textView: {
         marginLeft: vw(2),
@@ -24,5 +25,22 @@ export default StyleSheet.create({
     emailText: {
         fontSize: vh(1.8)
     },
+    hiddenItemView: {
+        width: vw(30),
+        maxWidth: '100%',
+        flexDirection: 'row',
+        alignSelf: 'flex-end'
+    },
+    buttonStyle: {
+        height: vh(10),
+        width: vw(30),
+        maxWidth: '100%',
+        backgroundColor: 'red'
+    },
+    buttonText: {
+        fontSize: vh(2.2),
+        color: 'white'
+    }
+
 
 });
