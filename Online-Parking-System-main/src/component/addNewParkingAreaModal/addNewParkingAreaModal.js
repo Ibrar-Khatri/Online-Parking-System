@@ -15,7 +15,6 @@ import appSetting from '../../../appSetting/appSetting';
 
 
 function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParkingAreaModal, }) {
-    let dispatch = useDispatch()
     let socket = io(appSetting.severHostedUrl)
     let [inValidInput, setInvalidInput] = useState(false)
     let [isLoading, setIsLoading] = useState(false)
@@ -24,6 +23,7 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
     const createNewParkingAreaValidationSchema = yup.object().shape({
         location: yup
             .string()
+            .trim()
             .min(10, ({ min }) => `Location name may not be less than ${min} characters`)
             .max(50, ({ max }) => `Location name may not be greater than ${max} characters`)
             .required('Required'),
@@ -39,10 +39,9 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
         setInvalidInput(false)
         setIsLoading(true)
         let locationDetails = {
-            location: value.location,
-            numberOfSlots: value.numberOfSlots
+            location: value.location.trim(),
+            numberOfSlots: value.numberOfSlots.trim()
         }
-        console.log(locationDetails)
 
         addNewParkingArea(locationDetails)
             .then(res => {
@@ -67,7 +66,6 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
                         render: () => <CustomToast type='error' description={res.data.message} />
                     })
                 }
-
             })
             .catch(err => {
                 setIsLoading(false)

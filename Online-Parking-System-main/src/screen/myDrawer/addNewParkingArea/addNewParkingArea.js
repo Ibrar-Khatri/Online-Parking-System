@@ -18,9 +18,12 @@ function AddNewParkingArea({ route, navigation }) {
   let toast = useToast()
   let [disabled, setDisabled] = useState(false)
 
-  function deleteParkingArea(id) {
+  Array.isArray(locations) && locations.sort((a, b) => (a.location > b.location) ? 1 : -1)
+
+  console.log(locations)
+  function deleteParkingArea(id, locationName) {
     setDisabled(true)
-    let locationDet = { locationId: id }
+    let locationDet = { locationId: id, location: locationName }
     deleteParkingAreaFromDB(locationDet)
       .then(res => {
         setDisabled(false)
@@ -44,7 +47,7 @@ function AddNewParkingArea({ route, navigation }) {
         toast.show({
           placement: "top",
           duration: 1500,
-          render: () => <CustomToast type='success' description='Sorry something went wrong, Please try again' />
+          render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
         })
       })
 
@@ -74,7 +77,7 @@ function AddNewParkingArea({ route, navigation }) {
                         <Text style={style.locationText}>{area.location}</Text>
                         <Text style={style.slotsText}>{`Slots ${area.numberOfSlots}`}</Text>
                       </View>
-                      <TouchableOpacity style={style.deleteIconView} disabled={disabled} onPress={() => deleteParkingArea(area.id)}>
+                      <TouchableOpacity style={style.deleteIconView} disabled={disabled} onPress={() => deleteParkingArea(area.id, area.location)}>
                         <Image
                           resizeMode='contain'
                           alt='delete icon'

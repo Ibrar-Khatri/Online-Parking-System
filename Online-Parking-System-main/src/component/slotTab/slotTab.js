@@ -36,12 +36,13 @@ function SlotTab({ area, date, startTime, endTime }) {
       slotName,
       location: area.location
     };
+    console.log(details)
     let isLocationAvailable = locations.some(locat => locat.location === area.location)
     if (isLocationAvailable) {
       bookParkingArea(details)
         .then(res => {
           if (res.data.status) {
-            socket.emit('add-new-booking', (details))
+            socket.emit('add-new-booking', ({ newBooking: details, userDetails }))
             setIsLoading(false);
             toast.show({
               placement: "top",

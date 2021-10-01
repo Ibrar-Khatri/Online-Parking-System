@@ -30,14 +30,14 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
         selectedDate.getMonth(),
         selectedDate.getDate(),
       );
-
       if (moment(selected).diff(moment(Date.now()), 'minute') < 0) {
         setModalMessage(
           "Start Time is should not be less than current date's time",
         );
         return setShowModal(true);
       }
-      return setStartTime(moment(selected).format('lll'));
+      // return setStartTime(moment(selected).format('lll'));
+      return setStartTime(Date.parse(selected));
     } else if (condition === 'endTime') {
       setShowEndTimePicker(false);
       if (!startTime) {
@@ -50,13 +50,14 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
         selectedDate.getMonth(),
         selectedDate.getDate(),
       );
-      if (moment(selected).diff(moment(Date.parse(startTime)), 'minute') < 30) {
+      if (moment(selected).diff(moment(startTime), 'minute') < 30) {
         setModalMessage(
           "End time should be greater than 30 minutes from start's time",
         );
         return setShowModal(true);
       }
-      return setEndTime(moment(selected).format('lll'));
+      // return setEndTime(moment(selected).format('lll'));
+      return setEndTime(Date.parse(selected));
     }
   }
   return (
@@ -98,7 +99,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowStartTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {startTime ? moment(startTime, 'lll').format('LT') : 'Select Time'}
+              {startTime ? moment(new Date(startTime), 'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -117,7 +118,7 @@ function DateAndTimeSelector({ date, startTime, endTime, setDate, setStartTime, 
               setShowEndTimePicker(true);
             }}>
             <Text style={style.pickerText}>
-              {endTime ? moment(endTime, 'lll').format('LT') : 'Select Time'}
+              {endTime ? moment(new Date(endTime), 'lll').format('LT') : 'Select Time'}
             </Text>
           </TouchableOpacity>
         </View>

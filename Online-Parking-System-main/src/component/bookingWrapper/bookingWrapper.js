@@ -63,8 +63,8 @@ function BookingWrapper({ bookings, title, message, upCcomingBooking }) {
                                         <View style={style.bookingCardText}>
                                             <Text style={style.textStyle}>Location : {bking.location}</Text>
                                             <Text style={style.textStyle}>Slot Name : {bking.slotName}</Text>
-                                            <Text style={style.textStyle}>Time :{moment(bking.startTime, 'lll').format(' h:mm a') + " - " + moment(bking.endTime, 'lll').format(' h:mm a')}</Text>
-                                            <Text style={style.textStyle}>Date: {moment(bking.startTime, 'lll').format(' D / M / YYYY')}</Text>
+                                            <Text style={style.textStyle}>Time :{moment(new Date(bking.startTime), 'lll').format(' h:mm a') + " - " + moment(new Date(bking.endTime), 'lll').format(' h:mm a')}</Text>
+                                            <Text style={style.textStyle}>Date: {moment(new Date(bking.startTime), 'lll').format(' D / M / YYYY')}</Text>
                                         </View>
                                         {
                                             upCcomingBooking && <TouchableOpacity style={style.deleteIconStyleView} onPress={() => deleteUpComingBooking(bking.id)}>
