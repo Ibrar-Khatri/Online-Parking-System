@@ -37,40 +37,35 @@ module.exports.craeteNewParkingArea = (req, res) => {
 };
 
 module.exports.deleteParkingAreaFromDb = (req, res) => {
-
   let { locationId, location } = req.body
-  db.collection("bookings")
-    // .where("location", "==", location)
-    .where("location", "==", location, '&&', "startTime", ">", Date.parse(new Date()))
-    .get()
-    .then(async (selectedAreaBookings) => {
-      let bookings = []
-      await selectedAreaBookings.forEach((bking) => {
-        bookings.push({ ...bking.data(), id: bking.id })
-      });
-      console.log('bookings', bookings)
-      res.send({
-        status: true, message: 'Parking area removed successfully'
-      })
+
+  db.collection("locations").doc(locationId).delete()
+    .then(locationDeleted => {
+      db.collection("bookings")
+        .where("startTime", ">", Date.now())
+        .where("location", "==", location)
+        .get()
+        .then(async (bookings) => {
+          let removedUpcomingBookings = []
+          await bookings.forEach((bking) => {
+            db.collection("bookings").doc(bking.id).delete()
+            removedUpcomingBookings.push(bking.id)
+          });
+          res.send({
+            status: true, message: 'Parking area removed successfully', removedBookingsId: removedUpcomingBookings
+          })
+        })
+        .catch((error) => {
+          res.send({
+            status: false, message: 'Sorry something went wrong, Please try again'
+          })
+        });
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(error => {
       res.send({
         status: false, message: 'Sorry something went wrong, Please try again'
       })
-    });
-  // db.collection("locations").doc(locationId).delete()
-  //   .then(locationDeleted => {
-  //     // res.send({
-  //     //   status: true, message: 'Parking area removed successfully'
-  //     // })
-
-  //   })
-  //   .catch(error => {
-  //     res.send({
-  //       status: false, message: 'Sorry something went wrong, Please try again'
-  //     })
-  //   })
+    })
 };
 module.exports.bookParkingArea = (req, res) => {
   db.collection("bookings")

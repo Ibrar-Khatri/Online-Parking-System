@@ -20,7 +20,6 @@ function AddNewParkingArea({ route, navigation }) {
 
   Array.isArray(locations) && locations.sort((a, b) => (a.location > b.location) ? 1 : -1)
 
-  console.log(locations)
   function deleteParkingArea(id, locationName) {
     setDisabled(true)
     let locationDet = { locationId: id, location: locationName }
@@ -28,7 +27,7 @@ function AddNewParkingArea({ route, navigation }) {
       .then(res => {
         setDisabled(false)
         if (res.data.status) {
-          socket.emit('parkingAreaRemoved', id)
+          socket.emit('parkingAreaRemoved', { pakringAreaID: id, removedBookingsId: res.data.removedBookingsId })
           toast.show({
             placement: "top",
             duration: 1500,

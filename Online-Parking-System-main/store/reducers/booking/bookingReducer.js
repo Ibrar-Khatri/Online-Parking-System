@@ -1,7 +1,7 @@
 const initialState = {
   allBookings: null,
   selectedAreaAllBookings: [],
-  locations: ''
+  locations: []
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -11,8 +11,11 @@ const bookingReducer = (state = initialState, action) => {
     case 'addNewLocation':
       return { ...state, locations: [...state.locations, action.payload] };
     case 'removeLocation':
-      let updatedLocations = state.locations.filter(location => location.id != action.payload)
-      return { ...state, locations: updatedLocations };
+
+      let updatedLocations = state.locations.filter(location => location.id != action.payload.pakringAreaID)
+      let updatedAllBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)
+      let updatedSelectedAreaBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)
+      return { ...state, locations: updatedLocations, allBookings: updatedAllBookings, selectedAreaAllBookings: updatedSelectedAreaBookings };
     case 'allBookings':
       return { ...state, allBookings: action.payload };
     case 'addNewBooking':
@@ -28,6 +31,12 @@ const bookingReducer = (state = initialState, action) => {
       let updateSelectedAreaAllBookings = state.selectedAreaAllBookings?.filter(bking => bking.id !== action.payload)
       return {
         ...state, allBookings: updateAllBookings, selectedAreaAllBookings: updateSelectedAreaAllBookings
+      };
+    case 'removeAllBookingsOfDeletedUser':
+      let allBookings = state.allBookings?.filter(bking => bking.userId !== action.payload)
+      let selectedAreaAllBookings = state.selectedAreaAllBookings?.filter(bking => bking.userId !== action.payload)
+      return {
+        ...state, allBookings: allBookings, selectedAreaAllBookings: selectedAreaAllBookings
       };
     default:
       return state;

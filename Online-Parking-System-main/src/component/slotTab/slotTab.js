@@ -36,7 +36,6 @@ function SlotTab({ area, date, startTime, endTime }) {
       slotName,
       location: area.location
     };
-    console.log(details)
     let isLocationAvailable = locations.some(locat => locat.location === area.location)
     if (isLocationAvailable) {
       bookParkingArea(details)

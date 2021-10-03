@@ -12,6 +12,7 @@ import { Image } from 'react-native';
 import AddNewParkingArea from './addNewParkingArea/addNewParkingArea';
 import AllUsersLIst from './userList/userList';
 import { isAdmin } from '../../lib/helperFunction';
+import { getAllUsersList } from '../../apis/userApis';
 
 
 const Drawer = createDrawerNavigator();
@@ -24,7 +25,7 @@ function MyDrawer() {
   let [navigationState, setNavigationState] = useState('')
 
   useEffect(() => {
-    if (!bookings) {
+    if (!bookings || !locations) {
       getUsersAllBookings({ userId: isAdmin(userDetails) ? '' : userDetails.uid })
         .then(res => {
           if (res.data.status) {
@@ -34,8 +35,6 @@ function MyDrawer() {
         .catch(err => {
           console.log('Error in get all bookings');
         });
-    }
-    if (!locations) {
       getAllParkingAreas()
         .then(res => {
           dispatch({ type: 'allLocation', payload: res.data.locations })
@@ -43,6 +42,17 @@ function MyDrawer() {
         .catch(error => {
           console.log(error.message + 'Error in geting all parking areas');
         })
+      if (isAdmin(userDetails)) {
+        getAllUsersList()
+          .then(res => {
+            if (res.data.status) {
+              dispatch({ type: 'allUsersList', payload: res.data.users })
+            }
+          })
+          .catch(error => {
+            console.log(error.message + 'Error in geting all users list');
+          })
+      }
     }
   }, [])
   return (

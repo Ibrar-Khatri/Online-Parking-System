@@ -24,6 +24,7 @@ import { LogBox } from 'react-native';
 import appSetting from './appSetting/appSetting';
 import io from 'socket.io-client'
 import { isAdmin } from './src/lib/helperFunction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the navigation state'])
@@ -34,13 +35,29 @@ const App = () => {
 
   let socket = io(appSetting.severHostedUrl)
   let dispatch = useDispatch()
-  // let userDetails = useSelector(state => state.userReducer.userDetails);
-  useEffect(() => {
+  useEffect(async () => {
+    let userDetails = await useSelector(state => state.userReducer.userDetails);
+    socket.on('userDeletedNotifyToUser', async (userDet) => {
+      console.log(userDetails.uid)
+      if (userDetails.uid === userDet.uid) {
+        await AsyncStorage.removeItem('userID')
+        dispatch({ type: 'removeUserDetails' })
+        dispatch({ type: 'removeCurrentUserBooking' })
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'authentication-screen' }],
+        });
+      }
+      if (isAdmin(userDetails)) {
+        dispatch({ type: 'removeUserFromAllUsers', payload: userDet.uid })
+      }
+      dispatch({ type: 'removeAllBookingsOfDeletedUser', payload: userDet.uid })
+    })
     socket.on('newParkingArea', (newParking) => {
       dispatch({ type: 'addNewLocation', payload: newParking })
     })
-    socket.on('parkingAreaRemovedByAdmin', (id) => {
-      dispatch({ type: 'removeLocation', payload: id })
+    socket.on('parkingAreaRemovedByAdmin', (removedParkingAreaDet) => {
+      dispatch({ type: 'removeLocation', payload: removedParkingAreaDet })
     })
     socket.on('bookingDeleted', (bookingID) => {
       dispatch({ type: 'removeUpComingBooking', payload: bookingID.id })

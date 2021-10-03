@@ -6,8 +6,53 @@ import {
 } from '../../../responsive/responsive';
 
 export default StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        flex: 1,
+    },
+    list: {
+        color: '#FFF',
+    },
+    btnText: {
+        color: '#FFF',
+        fontSize: vh(1.8),
+        fontWeight: 'bold'
+    },
+    rowFront: {
+        alignItems: 'center',
+        backgroundColor: 'lightcoral',
+        borderBottomColor: 'black',
+        borderBottomWidth: 0.5,
+        justifyContent: 'center',
+        height: 50,
+    },
+    rowBack: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    actionButton: {
+        alignItems: 'center',
+        bottom: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        width: 75,
+    },
+    closeBtn: {
+        backgroundColor: 'blue',
+        right: 75,
+        height: vh(9)
+    },
+    deleteBtn: {
+        backgroundColor: 'red',
+        right: 0,
+        height: vh(9)
+    },
     usersView: {
-        height: vh(10),
+        height: vh(9),
         flexDirection: 'row',
         paddingLeft: vw(4),
         alignItems: 'center',

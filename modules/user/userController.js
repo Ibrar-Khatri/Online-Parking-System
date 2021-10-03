@@ -106,6 +106,52 @@ module.exports.getUserDetails = (req, res) => {
       });
     });
 };
+
+module.exports.getAllUsersList = (req, res) => {
+  db.collection('user').get()
+    .then(async (usersList) => {
+      let users = []
+      await usersList.forEach((user) => {
+        users.push({ ...user.data(), id: user.id })
+      });
+      res.send({
+        status: true, users: users
+      });
+    })
+    .catch((error) => {
+      res.send({
+        status: false,
+      });
+    });
+};
+module.exports.removeUserFromDB = (req, res) => {
+  adminConfig.auth().deleteUser(req.body.uid)
+    .then(() => {
+      // console.log('Successfully deleted user');
+      db.collection('user').doc(req.body.uid).delete()
+        .then(userDetailsDeleted => {
+          db.collection("bookings")
+            .where("userId", "==", req.body.uid)
+            .get()
+            .then(async (bookings) => {
+              let removeBookings = []
+              await bookings.forEach((bking) => {
+                db.collection("bookings").doc(bking.id).delete()
+                removeBookings.push(bking.id)
+              });
+              res.send({
+                status: true, removedBookingsId: removeBookings, message: "User removed successfully"
+              })
+            })
+        })
+    })
+    .catch((error) => {
+      res.send({
+        status: false, message: 'Sorry something went wrong, Please try again'
+      })
+    });
+}
+
 module.exports.updateUserDetails = (req, res) => {
   let userDetails = JSON.parse(req.body.userDetails)
   userDetails.password = Buffer.from(userDetails.password, 'base64').toString('ascii')

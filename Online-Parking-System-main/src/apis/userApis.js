@@ -41,3 +41,17 @@ export const updateUserPassword = async details => {
   );
   return resp;
 };
+export const getAllUsersList = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/user/get-all-user-list`,
+    details,
+  );
+  return resp;
+};
+export const removeUserFromDb = async details => {
+  let resp = await axios.post(
+    `${appSetting.severHostedUrl}/user/remove-user`,
+    details,
+  );
+  return resp;
+};

@@ -11,6 +11,8 @@ route.post('/signin', userController.signinWithDetails)
 route.post('/get-user-details', userController.getUserDetails)
 route.post('/update-user-details', upload.single("profileImage"), userController.updateUserDetails)
 route.post('/update-password', userController.updateUserPassword)
+route.post('/get-all-user-list', userController.getAllUsersList)
+route.post('/remove-user', userController.removeUserFromDB)
 
 
 

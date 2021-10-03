@@ -1,5 +1,6 @@
 const initialState = {
   userDetails: {},
+  allUsers: []
 };
 
 const userReducer = (state = initialState, action) => {
@@ -9,11 +10,19 @@ const userReducer = (state = initialState, action) => {
         ...state,
         userDetails: action.payload,
       };
-    case 'removeUserDetails':
+    case 'allUsersList':
       return {
         ...state,
-        userDetails: {},
-      }
+        allUsers: action.payload,
+      };
+    case 'removeUserFromAllUsers':
+      let updateUsers = state.allUsers.filter(user => user.id !== action.payload)
+      return {
+        ...state,
+        allUsers: updateUsers,
+      };
+    case 'removeUserDetails':
+      return initialState
     case 'updateUserDetails':
       let updates
       if (action.payload.condition === 'imageAdded') {
