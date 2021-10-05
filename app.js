@@ -26,11 +26,11 @@ let socket = require('socket.io')(server);
 socket.on('connection', (socket) => {
   console.log('Client Connected ...!')
 
-  // socket.on('newUserSignedUp', (newParking) => {
-  //   socket.broadcast.emit('newParkingArea', newParking)
-  // })
-  socket.on('userDeleted', (userDet) => {
-    socket.broadcast.emit('userDeletedNotifyToUser', userDet)
+  socket.on('newUserCreated', (user) => {
+    socket.broadcast.emit('newUserAdded', user)
+  })
+  socket.on('userDeleted', (uid) => {
+    socket.broadcast.emit('userDeletedNotifyToUser', uid)
   })
   socket.on('newParkingAreaAdded', (newParking) => {
     socket.broadcast.emit('newParkingArea', newParking)

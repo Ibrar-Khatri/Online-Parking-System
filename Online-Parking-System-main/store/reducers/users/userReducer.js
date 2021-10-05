@@ -15,8 +15,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         allUsers: action.payload,
       };
+    case 'addNewUserInAllUsers':
+      return {
+        ...state,
+        allUsers: [...state.allUsers, action.payload],
+      };
     case 'removeUserFromAllUsers':
-      let updateUsers = state.allUsers.filter(user => user.id !== action.payload)
+      let updateUsers = state.allUsers.filter(user => user.uid != action.payload)
       return {
         ...state,
         allUsers: updateUsers,

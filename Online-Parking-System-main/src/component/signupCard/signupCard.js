@@ -11,9 +11,12 @@ import WarningModal from '../warningModal/warningModal.js';
 import { useDispatch } from 'react-redux';
 import { heightPercentageToDP as vh } from '../../responsive/responsive';
 import base64 from 'react-native-base64';
+import { io } from 'socket.io-client';
+import appSetting from '../../../appSetting/appSetting';
 
 function SignupCard({ navigation }) {
   const dispatch = useDispatch();
+  let socket = io(appSetting.severHostedUrl);
 
   const loginValidationSchema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -40,6 +43,7 @@ function SignupCard({ navigation }) {
         if (res.data.status) {
           await AsyncStorage.setItem('userID', res.data.user.uid);
           dispatch({ type: 'addUserDetails', payload: res.data.user });
+          socket.emit('newUserCreated', res.data.user)
           setIsLoading(false);
           return navigation.reset({
             index: 0,

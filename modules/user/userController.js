@@ -23,7 +23,6 @@ module.exports.signupWithDetails = (req, res) => {
               uid: user.user.uid,
               displayName: req.body.name,
               email: req.body.email,
-              password: req.body.password
             },
           });
         })
@@ -61,7 +60,6 @@ module.exports.signinWithDetails = (req, res) => {
                 email: req.body.email,
                 displayName: doc.data().displayName,
                 profileImage: doc.data().profileImage,
-                myBookings: doc.data().myBookings,
               },
             });
           }
@@ -93,7 +91,6 @@ module.exports.getUserDetails = (req, res) => {
             uid: req.body.uid,
             email: doc.data().email,
             displayName: doc.data().displayName,
-            myBookings: doc.data().myBookings,
             profileImage: doc.data().profileImage,
           },
         });
@@ -112,7 +109,7 @@ module.exports.getAllUsersList = (req, res) => {
     .then(async (usersList) => {
       let users = []
       await usersList.forEach((user) => {
-        users.push({ ...user.data(), id: user.id })
+        users.push({ ...user.data(), uid: user.id })
       });
       res.send({
         status: true, users: users
@@ -127,7 +124,6 @@ module.exports.getAllUsersList = (req, res) => {
 module.exports.removeUserFromDB = (req, res) => {
   adminConfig.auth().deleteUser(req.body.uid)
     .then(() => {
-      // console.log('Successfully deleted user');
       db.collection('user').doc(req.body.uid).delete()
         .then(userDetailsDeleted => {
           db.collection("bookings")
@@ -140,7 +136,7 @@ module.exports.removeUserFromDB = (req, res) => {
                 removeBookings.push(bking.id)
               });
               res.send({
-                status: true, removedBookingsId: removeBookings, message: "User removed successfully"
+                status: true, message: "User removed successfully"
               })
             })
         })

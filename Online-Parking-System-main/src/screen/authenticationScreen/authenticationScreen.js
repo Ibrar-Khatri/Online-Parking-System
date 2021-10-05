@@ -8,14 +8,16 @@ import SignupScreen from './signup/signupScreen';
 import { getUserDetailsById } from '../../apis/userApis';
 import SplashScreen from 'react-native-splash-screen'
 import NetworkErrorScreen from './networkErrorScreen/networkErrorScreen';
+import { isUserLogin } from '../../lib/helperFunction';
 
 const Stack = createStackNavigator();
 
-function AuthenticationScreen({ navigation }) {
+function AuthenticationScreen({ route, navigation }) {
   const dispatch = useDispatch();
 
   let [isLoading, setIsLoading] = useState(false)
   let [initialRouteName, setInitialRouteName] = useState('');
+
 
   let isUserLogin = async () => {
     let value = await AsyncStorage.getItem('userID')
@@ -56,10 +58,11 @@ function AuthenticationScreen({ navigation }) {
   }, []);
   return (
     <>
+
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         initialRouteName={initialRouteName}>
-        <Stack.Screen name="signin-screen" component={SigninScreen} />
+        <Stack.Screen name="signin-screen" component={SigninScreen} initialParams={{ message: route.params?.message }} />
         <Stack.Screen name="signup-screen" component={SignupScreen} />
         <Stack.Screen
           name="network-error-screen"

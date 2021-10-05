@@ -7,11 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Image,
-  Platform, StatusBar,
-  Text
-} from 'react-native';
+import { Image, Platform, StatusBar, Text } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
@@ -22,101 +18,94 @@ import FeatureScreen from './src/screen/featureScreen/featureScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogBox } from 'react-native';
 import appSetting from './appSetting/appSetting';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 import { isAdmin } from './src/lib/helperFunction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-LogBox.ignoreLogs(['Warning: ...', 'Non-serializable values were found in the navigation state'])
+LogBox.ignoreLogs([
+  'Warning: ...',
+  'Non-serializable values were found in the navigation state',
+]);
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  let socket = io(appSetting.severHostedUrl);
+  let userDetails = useSelector(state => state.userReducer.userDetails);
+  let dispatch = useDispatch();
+  let navigation = useNavigation()
 
-  let socket = io(appSetting.severHostedUrl)
-  let dispatch = useDispatch()
-  useEffect(async () => {
-    let userDetails = await useSelector(state => state.userReducer.userDetails);
-    socket.on('userDeletedNotifyToUser', async (userDet) => {
-      console.log(userDetails.uid)
-      if (userDetails.uid === userDet.uid) {
-        await AsyncStorage.removeItem('userID')
-        dispatch({ type: 'removeUserDetails' })
-        dispatch({ type: 'removeCurrentUserBooking' })
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'authentication-screen' }],
-        });
-      }
-      if (isAdmin(userDetails)) {
-        dispatch({ type: 'removeUserFromAllUsers', payload: userDet.uid })
-      }
-      dispatch({ type: 'removeAllBookingsOfDeletedUser', payload: userDet.uid })
-    })
-    socket.on('newParkingArea', (newParking) => {
-      dispatch({ type: 'addNewLocation', payload: newParking })
-    })
-    socket.on('parkingAreaRemovedByAdmin', (removedParkingAreaDet) => {
-      dispatch({ type: 'removeLocation', payload: removedParkingAreaDet })
-    })
-    socket.on('bookingDeleted', (bookingID) => {
-      dispatch({ type: 'removeUpComingBooking', payload: bookingID.id })
-    })
+  useEffect(() => {
+    socket.on('newParkingArea', newParking => {
+      dispatch({ type: 'addNewLocation', payload: newParking });
+    });
+    socket.on('parkingAreaRemovedByAdmin', removedParkingAreaDet => {
+      dispatch({ type: 'removeLocation', payload: removedParkingAreaDet });
+    });
+    socket.on('bookingDeleted', bookingID => {
+      dispatch({ type: 'removeUpComingBooking', payload: bookingID.id });
+    });
     socket.on('new-booking-added', ({ newBooking, userDetails }) => {
-      dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking })
+      dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking });
       if (isAdmin(userDetails) || userDetails.uid === newBooking.userId) {
-        dispatch({ type: 'addNewBooking', payload: newBooking })
+        dispatch({ type: 'addNewBooking', payload: newBooking });
       }
-    })
-  }, [])
-  // console.log(JSON.stringify(userDetails))
+    });
+  }, []);
+
+  useEffect(() => {
+    if (userDetails?.uid) {
+
+      socket.on('userDeletedNotifyToUser', async uid => {
+        dispatch({ type: 'removeAllBookingsOfDeletedUser', payload: uid });
+        if (userDetails.uid === uid) {
+          await AsyncStorage.removeItem('userID');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'authentication-screen', params: { message: 'Admin removed your account' } }],
+          });
+        }
+        if (isAdmin(userDetails)) {
+          dispatch({ type: 'removeUserFromAllUsers', payload: uid });
+        }
+      });
+      socket.on('newUserAdded', user => {
+        if (isAdmin(userDetails)) {
+          dispatch({ type: 'addNewUserInAllUsers', payload: user })
+        }
+      })
+    }
+  }, [userDetails.uid]);
 
   return (
     <>
-      <StatusBar backgroundColor='#00bfff' animated={true} />
+      <StatusBar backgroundColor="#00bfff" animated={true} />
       <NativeBaseProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName='authentication'>
-            <Stack.Screen
-              name="authentication-screen"
-              component={AuthenticationScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="drawer"
-              component={MyDrawer}
-              options={{
-                headerShown: false,
-                // title: 'Online Parking System',
-                // headerTitleAlign: 'center',
-                // headerStyle: {
-                //   backgroundColor: '#00bfff',
-                //   height: vh(7),
-                // },
-                // headerTitleStyle: {
-                //   fontWeight: 'bold',
-                //   lineHeight: vh(4),
-                //   marginBottom: 0,
-                //   color: 'white',
-                //   fontFamily:
-                //     Platform.OS === 'ios'
-                //       ? 'DM Serif Display'
-                //       : 'sans-serif-condensed',
-                //   fontSize: vh(3.5),
-                // }
-              }}
-            />
-            <Stack.Screen
-              name="featureScreen"
-              component={FeatureScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        {/* <NavigationContainer> */}
+        <Stack.Navigator initialRouteName="authentication">
+          <Stack.Screen
+            name="authentication-screen"
+            component={AuthenticationScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="drawer"
+            component={MyDrawer}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="featureScreen"
+            component={FeatureScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+        {/* </NavigationContainer> */}
       </NativeBaseProvider>
     </>
   );

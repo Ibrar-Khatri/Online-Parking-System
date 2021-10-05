@@ -11,7 +11,6 @@ const bookingReducer = (state = initialState, action) => {
     case 'addNewLocation':
       return { ...state, locations: [...state.locations, action.payload] };
     case 'removeLocation':
-
       let updatedLocations = state.locations.filter(location => location.id != action.payload.pakringAreaID)
       let updatedAllBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)
       let updatedSelectedAreaBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)

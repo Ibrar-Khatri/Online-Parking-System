@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeUserFromDb } from '../../../apis/userApis';
 import { io } from 'socket.io-client';
 import appSetting from '../../../../appSetting/appSetting';
+import CustomSpinner from '../../../component/customSpinner/customSpinner';
 
-export default function AllUser() {
-    let dispatch = useDispatch()
+export default function AllUser({ navigation }) {
     let socket = io(appSetting.severHostedUrl)
     let allUsersList = useSelector(state => state.userReducer.allUsers);
     let allUsers = allUsersList?.map((item, index) => ({ ...item, key: index }))
+    let [isLoading, setIsLoading] = useState(false)
 
     const closeItem = (rowMap, data) => {
         if (rowMap[data.index]) {
@@ -25,28 +26,25 @@ export default function AllUser() {
     };
 
     const deleteItem = (rowMap, data) => {
+        setIsLoading(true)
         closeItem(rowMap, data);
-        let userID = { uid: data.item.id }
-        console.log(userID)
+        let userID = { uid: data.item.uid }
         removeUserFromDb(userID)
             .then(res => {
-                socket.emit('userDeleted', { uid: data.item.id, removedBookingsId: res.data.removedBookingsId })
-                // dispatch({ type: 'removeUserFromAllUsers', payload: data.item.id })
+                setIsLoading(false)
+                socket.emit('userDeleted', data.item.uid)
             })
             .catch(error => {
+                setIsLoading(false)
                 console.log(error)
             })
     };
 
-    const onItemOpen = rowKey => {
-        console.log('This row opened', rowKey);
-    };
-
     const renderItem = data => {
         let imageUri = data.item.profileImage ? data.item.profileImage : undefined
-        return <View style={style.usersView} id={Math.random()}>
+        return <View style={style.usersView} >
             <Avatar size={vh(6)} source={{ uri: imageUri }} >
-                {!imageUri && 'SS'}
+                <Text style={{ color: 'white' }}>SS</Text>
             </Avatar>
             <View style={style.textView}>
                 <Text style={style.nameText}>{data.item.displayName}</Text>
@@ -79,11 +77,11 @@ export default function AllUser() {
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
                 rightOpenValue={-150}
-                previewRowKey={'0'}
+                // previewRowKey={'0'}
                 previewOpenValue={-40}
                 previewOpenDelay={3000}
-                onRowDidOpen={onItemOpen}
             />
+            <CustomSpinner isLoading={isLoading} />
         </View>
     );
 }

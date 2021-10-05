@@ -5,7 +5,7 @@ import {
   HStack,
 } from 'native-base';
 
-function CustomSpinner({ isLoading, setIsLoading }) {
+function CustomSpinner({ isLoading }) {
   return (
     <>
       <Modal
