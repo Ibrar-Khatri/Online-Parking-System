@@ -4,20 +4,28 @@ import {
     heightPercentageToDP as vh,
     widthPercentageToDP as vw,
 } from '../../../responsive/responsive';
-import { Avatar, Image } from 'native-base'
+import { Avatar, Image, useToast } from 'native-base'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import style from './userListStyle'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { removeUserFromDb } from '../../../apis/userApis';
 import { io } from 'socket.io-client';
 import appSetting from '../../../../appSetting/appSetting';
 import CustomSpinner from '../../../component/customSpinner/customSpinner';
+import CustomToast from '../../../component/customToast/customToast';
 
 export default function AllUser({ navigation }) {
     let socket = io(appSetting.severHostedUrl)
     let allUsersList = useSelector(state => state.userReducer.allUsers);
-    let allUsers = allUsersList?.map((item, index) => ({ ...item, key: index }))
+    let [listData, setListData] = useState()
     let [isLoading, setIsLoading] = useState(false)
+
+    const toast = useToast()
+
+    useEffect(() => {
+        setListData(allUsersList?.map((item, index) => ({ ...item, key: index })).sort((a, b) => (a.displayName > b.displayName) ? 1 : -1))
+    }, [allUsersList])
+
 
     const closeItem = (rowMap, data) => {
         if (rowMap[data.index]) {
@@ -26,17 +34,38 @@ export default function AllUser({ navigation }) {
     };
 
     const deleteItem = (rowMap, data) => {
-        setIsLoading(true)
         closeItem(rowMap, data);
+        setIsLoading(true)
         let userID = { uid: data.item.uid }
         removeUserFromDb(userID)
             .then(res => {
                 setIsLoading(false)
-                socket.emit('userDeleted', data.item.uid)
+                const newData = [...listData];
+                const prevIndex = listData.findIndex(item => item.key === data.item.key);
+                newData.splice(prevIndex, 1);
+                setListData(newData);
+                if (res.data.status) {
+                    socket.emit('userDeleted', data.item.uid)
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        render: () => <CustomToast type='success' description={res.data.message} />
+                    })
+                } else {
+                    toast.show({
+                        placement: "top",
+                        duration: 1500,
+                        render: () => <CustomToast type='success' description={res.data.message} />
+                    })
+                }
             })
             .catch(error => {
                 setIsLoading(false)
-                console.log(error)
+                toast.show({
+                    placement: "top",
+                    duration: 1500,
+                    render: () => <CustomToast type='success' description='Sorry something went wrong, Please try again' />
+                })
             })
     };
 
@@ -73,7 +102,8 @@ export default function AllUser({ navigation }) {
     return (
         <View style={style.container}>
             <SwipeListView
-                data={allUsers}
+                data={listData}
+                // data={allUsers}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
                 rightOpenValue={-150}

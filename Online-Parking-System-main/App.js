@@ -36,25 +36,12 @@ const App = () => {
   let navigation = useNavigation()
 
   useEffect(() => {
-    socket.on('newParkingArea', newParking => {
-      dispatch({ type: 'addNewLocation', payload: newParking });
-    });
-    socket.on('parkingAreaRemovedByAdmin', removedParkingAreaDet => {
-      dispatch({ type: 'removeLocation', payload: removedParkingAreaDet });
-    });
-    socket.on('bookingDeleted', bookingID => {
-      dispatch({ type: 'removeUpComingBooking', payload: bookingID.id });
-    });
-    socket.on('new-booking-added', ({ newBooking, userDetails }) => {
-      dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking });
-      if (isAdmin(userDetails) || userDetails.uid === newBooking.userId) {
-        dispatch({ type: 'addNewBooking', payload: newBooking });
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     if (userDetails?.uid) {
+      socket.on('newUserAdded', user => {
+        if (isAdmin(userDetails)) {
+          dispatch({ type: 'addNewUserInAllUsers', payload: user })
+        }
+      })
 
       socket.on('userDeletedNotifyToUser', async uid => {
         dispatch({ type: 'removeAllBookingsOfDeletedUser', payload: uid });
@@ -69,11 +56,21 @@ const App = () => {
           dispatch({ type: 'removeUserFromAllUsers', payload: uid });
         }
       });
-      socket.on('newUserAdded', user => {
-        if (isAdmin(userDetails)) {
-          dispatch({ type: 'addNewUserInAllUsers', payload: user })
+      socket.on('newParkingArea', newParking => {
+        dispatch({ type: 'addNewLocation', payload: newParking });
+      });
+      socket.on('parkingAreaRemovedByAdmin', removedParkingAreaDet => {
+        dispatch({ type: 'removeLocation', payload: removedParkingAreaDet });
+      });
+      socket.on('new-booking-added', (newBooking) => {
+        dispatch({ type: 'addNewBookingInSelectedArea', payload: newBooking });
+        if (isAdmin(userDetails) || userDetails.uid === newBooking.userId) {
+          dispatch({ type: 'addNewBooking', payload: newBooking });
         }
       })
+      socket.on('bookingDeleted', bookingID => {
+        dispatch({ type: 'removeUpComingBooking', payload: bookingID.id });
+      });
     }
   }, [userDetails.uid]);
 
@@ -81,7 +78,6 @@ const App = () => {
     <>
       <StatusBar backgroundColor="#00bfff" animated={true} />
       <NativeBaseProvider>
-        {/* <NavigationContainer> */}
         <Stack.Navigator initialRouteName="authentication">
           <Stack.Screen
             name="authentication-screen"
@@ -105,7 +101,6 @@ const App = () => {
             }}
           />
         </Stack.Navigator>
-        {/* </NavigationContainer> */}
       </NativeBaseProvider>
     </>
   );

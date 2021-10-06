@@ -12,8 +12,8 @@ const bookingReducer = (state = initialState, action) => {
       return { ...state, locations: [...state.locations, action.payload] };
     case 'removeLocation':
       let updatedLocations = state.locations.filter(location => location.id != action.payload.pakringAreaID)
-      let updatedAllBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)
-      let updatedSelectedAreaBookings = state.locations.filter(location => location.id != action.payload.removedBookingsId)
+      let updatedAllBookings = state.allBookings.filter(booking => !action.payload.removedBookingsId.includes(booking.id))
+      let updatedSelectedAreaBookings = state.selectedAreaAllBookings.filter(booking => !action.payload.removedBookingsId.includes(booking.id))
       return { ...state, locations: updatedLocations, allBookings: updatedAllBookings, selectedAreaAllBookings: updatedSelectedAreaBookings };
     case 'allBookings':
       return { ...state, allBookings: action.payload };

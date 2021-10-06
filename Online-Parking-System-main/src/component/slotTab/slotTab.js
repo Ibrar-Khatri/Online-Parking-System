@@ -11,6 +11,7 @@ import io from 'socket.io-client'
 import appSetting from '../../../appSetting/appSetting';
 import { filterBookings } from '../../lib/helperFunction';
 import CustomToast from '../customToast/customToast';
+import moment from 'moment';
 
 function SlotTab({ area, date, startTime, endTime }) {
 
@@ -41,14 +42,18 @@ function SlotTab({ area, date, startTime, endTime }) {
       bookParkingArea(details)
         .then(res => {
           if (res.data.status) {
-            socket.emit('add-new-booking', ({ newBooking: details, userDetails }))
+            socket.emit('add-new-booking', { ...details, id: res.data.slotId })
             setIsLoading(false);
             toast.show({
               placement: "top",
               duration: 1500,
               render: () => <CustomToast type='success' description={res.data.message} />
             })
-            navigation.navigate('booking', { screen: 'upcoming-booking' })
+            if (moment(new Date()).isBetween(new Date(startTime), new Date(endTime))) {
+              navigation.navigate('booking', { screen: 'current-booking' })
+            } else {
+              navigation.navigate('booking', { screen: 'upcoming-booking' })
+            }
           } else {
             setIsLoading(false);
             toast.show({

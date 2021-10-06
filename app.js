@@ -38,8 +38,8 @@ socket.on('connection', (socket) => {
   socket.on('parkingAreaRemoved', (removedParkingAreaDet) => {
     socket.broadcast.emit('parkingAreaRemovedByAdmin', removedParkingAreaDet)
   })
-  socket.on('add-new-booking', ({ newBooking, userDetails }) => {
-    socket.broadcast.emit('new-booking-added', { newBooking, userDetails })
+  socket.on('add-new-booking', newBooking => {
+    socket.broadcast.emit('new-booking-added', newBooking)
   })
   socket.on('upcomingBookingDeleted', (bookingID) => {
     socket.broadcast.emit('bookingDeleted', bookingID)

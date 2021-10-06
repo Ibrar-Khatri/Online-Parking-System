@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { deleteParkingAreaFromDB } from '../../../apis/bookingApis';
 import { io } from 'socket.io-client';
 import CustomToast from '../../../component/customToast/customToast';
+import CustomSpinner from '../../../component/customSpinner/customSpinner';
 
 function AddNewParkingArea({ route, navigation }) {
 
@@ -16,16 +17,17 @@ function AddNewParkingArea({ route, navigation }) {
   let socket = io(appSetting.severHostedUrl)
   let locations = useSelector(state => state.bookingReducer.locations);
   let toast = useToast()
-  let [disabled, setDisabled] = useState(false)
+  let [isLoading, setIsLoading] = useState(false)
+
 
   Array.isArray(locations) && locations.sort((a, b) => (a.location > b.location) ? 1 : -1)
 
   function deleteParkingArea(id, locationName) {
-    setDisabled(true)
+    setIsLoading(true)
     let locationDet = { locationId: id, location: locationName }
     deleteParkingAreaFromDB(locationDet)
       .then(res => {
-        setDisabled(false)
+        setIsLoading(false)
         if (res.data.status) {
           socket.emit('parkingAreaRemoved', { pakringAreaID: id, removedBookingsId: res.data.removedBookingsId })
           toast.show({
@@ -42,7 +44,7 @@ function AddNewParkingArea({ route, navigation }) {
         }
       })
       .catch(error => {
-        setDisabled(false)
+        setIsLoading(false)
         toast.show({
           placement: "top",
           duration: 1500,
@@ -76,7 +78,7 @@ function AddNewParkingArea({ route, navigation }) {
                         <Text style={style.locationText}>{area.location}</Text>
                         <Text style={style.slotsText}>{`Slots ${area.numberOfSlots}`}</Text>
                       </View>
-                      <TouchableOpacity style={style.deleteIconView} disabled={disabled} onPress={() => deleteParkingArea(area.id, area.location)}>
+                      <TouchableOpacity style={style.deleteIconView} disabled={isLoading} onPress={() => deleteParkingArea(area.id, area.location)}>
                         <Image
                           resizeMode='contain'
                           alt='delete icon'
@@ -106,6 +108,7 @@ function AddNewParkingArea({ route, navigation }) {
         </View>
       </ImageBackground>
       <AddNewParkingAreaModal showAddNewParkingAreaModal={showAddNewParkingAreaModal} setShowAddNewParkingAreaModal={setShowAddNewParkingAreaModal} />
+      <CustomSpinner isLoading={isLoading} />
     </>
   )
 }

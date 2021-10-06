@@ -14,10 +14,8 @@ const Stack = createStackNavigator();
 
 function AuthenticationScreen({ route, navigation }) {
   const dispatch = useDispatch();
-
   let [isLoading, setIsLoading] = useState(false)
   let [initialRouteName, setInitialRouteName] = useState('');
-
 
   let isUserLogin = async () => {
     let value = await AsyncStorage.getItem('userID')

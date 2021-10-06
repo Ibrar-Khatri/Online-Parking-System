@@ -8,7 +8,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import style from './homeStyle';
