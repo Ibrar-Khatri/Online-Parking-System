@@ -29,10 +29,11 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
             .required('Required'),
         numberOfSlots: yup
             .number()
+            .integer('Number of slots may be an integer ')
             .typeError('Oops! This is not a number')
             .required('Required')
             .min(10, ({ min }) => `Number of slots may not be less than ${min}`)
-            .max(50, ({ max }) => `Location name may not be greater than ${max} characters`),
+            .max(50, ({ max }) => `Number of slots may not be greater than ${max}`),
     });
 
     function addNewLocation(value, action) {
@@ -43,39 +44,39 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
             numberOfSlots: value.numberOfSlots.trim()
         }
 
-        addNewParkingArea(locationDetails)
-            .then(res => {
-                setIsLoading(false)
-                setShowAddNewParkingAreaModal(false)
-                action.resetForm({
-                    values: {
-                        location: '', numberOfSlots: '',
-                    }
-                })
-                if (res.data.status) {
-                    socket.emit('newParkingAreaAdded', res.data.locationDetails)
-                    toast.show({
-                        placement: "top",
-                        duration: 1500,
-                        render: () => <CustomToast type='success' description={res.data.message} />
-                    })
-                } else {
-                    toast.show({
-                        placement: "top",
-                        duration: 1500,
-                        render: () => <CustomToast type='error' description={res.data.message} />
-                    })
-                }
-            })
-            .catch(err => {
-                setIsLoading(false)
-                setShowAddNewParkingAreaModal(false)
-                toast.show({
-                    placement: "top",
-                    duration: 1500,
-                    render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
-                })
-            })
+        // addNewParkingArea(locationDetails)
+        //     .then(res => {
+        //         setIsLoading(false)
+        //         setShowAddNewParkingAreaModal(false)
+        //         action.resetForm({
+        //             values: {
+        //                 location: '', numberOfSlots: '',
+        //             }
+        //         })
+        //         if (res.data.status) {
+        //             socket.emit('newParkingAreaAdded', res.data.locationDetails)
+        //             toast.show({
+        //                 placement: "top",
+        //                 duration: 1500,
+        //                 render: () => <CustomToast type='success' description={res.data.message} />
+        //             })
+        //         } else {
+        //             toast.show({
+        //                 placement: "top",
+        //                 duration: 1500,
+        //                 render: () => <CustomToast type='error' description={res.data.message} />
+        //             })
+        //         }
+        //     })
+        //     .catch(err => {
+        //         setIsLoading(false)
+        //         setShowAddNewParkingAreaModal(false)
+        //         toast.show({
+        //             placement: "top",
+        //             duration: 1500,
+        //             render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
+        //         })
+        //     })
     }
 
     return <>
@@ -118,7 +119,7 @@ function AddNewParkingAreaModal({ showAddNewParkingAreaModal, setShowAddNewParki
                                 isInvalid={inValidInput && errors.numberOfSlots}
                                 placeholder="Number of slots"
                                 variant="filled"
-                                type='number'
+                                keyboardType='numeric'
                                 h={{
                                     base: '60%',
                                     md: '60%'

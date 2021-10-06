@@ -55,7 +55,7 @@ export default function AllUser({ navigation }) {
                     toast.show({
                         placement: "top",
                         duration: 1500,
-                        render: () => <CustomToast type='success' description={res.data.message} />
+                        render: () => <CustomToast type='error' description={res.data.message} />
                     })
                 }
             })
@@ -64,7 +64,7 @@ export default function AllUser({ navigation }) {
                 toast.show({
                     placement: "top",
                     duration: 1500,
-                    render: () => <CustomToast type='success' description='Sorry something went wrong, Please try again' />
+                    render: () => <CustomToast type='error' description='Sorry something went wrong, Please try again' />
                 })
             })
     };
